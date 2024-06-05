@@ -1,1 +1,5 @@
-# DAMA_Project_25647_26097
+# README
+
+BetterDay
+
+Made by: Luís Costa / Paulo Peixoto
