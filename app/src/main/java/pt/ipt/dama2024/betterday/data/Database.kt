@@ -27,6 +27,11 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val COLUMN_DEADLINE = "deadline"
         private const val COLUMN_CHECKED = "checked"
         private const val COLUMN_AUTHOR = "author"
+        private const val COLUMN_PHOTO1 = "photo1"
+        private const val COLUMN_PHOTO2 = "photo2"
+        private const val COLUMN_PHOTO3 = "photo3"
+        private const val COLUMN_LATITUDE = "latitude"
+        private const val COLUMN_LONGITUDE = "longitude"
     }
 
     /**
@@ -44,7 +49,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 + "$COLUMN_CREATION_DATE INTEGER, "
                 + "$COLUMN_DEADLINE INTEGER, "
                 + "$COLUMN_CHECKED INTEGER, "
-                + "$COLUMN_AUTHOR TEXT)")
+                + "$COLUMN_AUTHOR TEXT)"
+                + "$COLUMN_PHOTO1 BLOB, "
+                + "$COLUMN_PHOTO2 BLOB, "
+                + "$COLUMN_PHOTO3 BLOB, "
+                + "$COLUMN_LATITUDE REAL, "
+                + "$COLUMN_LONGITUDE REAL)")
         db.execSQL(createTable)
     }
 
@@ -75,6 +85,11 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put(COLUMN_DEADLINE, objective.deadline.time) // Convert Date to Long
             put(COLUMN_CHECKED, if (objective.checked) 1 else 0)
             put(COLUMN_AUTHOR, objective.author)
+            put(COLUMN_PHOTO1, objective.photo1)
+            put(COLUMN_PHOTO2, objective.photo2)
+            put(COLUMN_PHOTO3, objective.photo3)
+            put(COLUMN_LATITUDE, objective.latitude)
+            put(COLUMN_LONGITUDE, objective.longitude)
         }
         return db.insert(TABLE_NAME, null, values)
     }
@@ -99,8 +114,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 val deadline = Date(getLong(getColumnIndexOrThrow(COLUMN_DEADLINE))) // Convert Long to Date
                 val checked = getInt(getColumnIndexOrThrow(COLUMN_CHECKED)) == 1 // Convert int to boolean
                 val author = getString(getColumnIndexOrThrow(COLUMN_AUTHOR))
-                objectives.add(Objective(id, title, description, frequency, creationDate, deadline, checked, author))
-            }
+                val photo1 = getBlob(getColumnIndexOrThrow(COLUMN_PHOTO1))
+                val photo2 = getBlob(getColumnIndexOrThrow(COLUMN_PHOTO2))
+                val photo3 = getBlob(getColumnIndexOrThrow(COLUMN_PHOTO3))
+                val latitude = getDouble(getColumnIndexOrThrow(COLUMN_LATITUDE))
+                val longitude = getDouble(getColumnIndexOrThrow(COLUMN_LONGITUDE))
+                objectives.add(Objective(id, title, description, frequency, creationDate, deadline, checked, author, photo1, photo2, photo3, latitude, longitude))            }
         }
         cursor.close()
         return objectives
@@ -122,6 +141,11 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put(COLUMN_DEADLINE, objective.deadline.time) // Convert Date to Long
             put(COLUMN_CHECKED, if (objective.checked) 1 else 0) // Convert boolean to int
             put(COLUMN_AUTHOR, objective.author)
+            put(COLUMN_PHOTO1, objective.photo1)
+            put(COLUMN_PHOTO2, objective.photo2)
+            put(COLUMN_PHOTO3, objective.photo3)
+            put(COLUMN_LATITUDE, objective.latitude)
+            put(COLUMN_LONGITUDE, objective.longitude)
         }
         return db.update(TABLE_NAME, values, "$COLUMN_ID = ?", arrayOf(objective.id.toString()))
     }
