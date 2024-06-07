@@ -6,7 +6,10 @@ import android.database.sqlite.SQLiteOpenHelper
 import pt.ipt.dama2024.betterday.model.Objective
 import android.content.ContentValues
 import pt.ipt.dama2024.betterday.model.Frequency
+import java.security.MessageDigest
 import java.util.Date
+import java.security.NoSuchAlgorithmException
+import android.util.Base64
 
 class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -18,6 +21,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val DATABASE_VERSION = 1
         private const val DATABASE_NAME = "objectives.db"
 
+        // Objectives table columns
         private const val TABLE_NAME = "objectives"
         private const val COLUMN_ID = "id"
         private const val COLUMN_TITLE = "title"
@@ -27,6 +31,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val COLUMN_DEADLINE = "deadline"
         private const val COLUMN_CHECKED = "checked"
         private const val COLUMN_AUTHOR = "author"
+
+        // Users table columns
+        private const val TABLE_USERS = "users"
+        private const val COLUMN_USERNAME = "username"
+        private const val COLUMN_EMAIL = "email"
+        private const val COLUMN_PASSWORD = "password"
     }
 
     /**
@@ -36,7 +46,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
      * Later conversions will be needed to these data types
      */
     override fun onCreate(db: SQLiteDatabase) {
-        val createTable = ("CREATE TABLE $TABLE_NAME ("
+        val createObjectivesTable = ("CREATE TABLE $TABLE_NAME ("
                 + "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "$COLUMN_TITLE TEXT, "
                 + "$COLUMN_DESCRIPTION TEXT, "
@@ -45,7 +55,15 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 + "$COLUMN_DEADLINE INTEGER, "
                 + "$COLUMN_CHECKED INTEGER, "
                 + "$COLUMN_AUTHOR TEXT)")
-        db.execSQL(createTable)
+
+        val createUsersTable = ("CREATE TABLE $TABLE_USERS ("
+                + "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "$COLUMN_USERNAME TEXT UNIQUE, "
+                + "$COLUMN_PASSWORD TEXT, "
+                + "$COLUMN_EMAIL TEXT UNIQUE)")
+
+        db.execSQL(createObjectivesTable)
+        db.execSQL(createUsersTable)
     }
 
     /**
@@ -56,6 +74,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
      */
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_USERS")
         onCreate(db)
     }
 
@@ -132,6 +151,76 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     fun deleteObjective(id: Long): Int {
         val db = this.writableDatabase
         return db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(id.toString()))
+    }
+
+
+    // Methods for managing users
+
+    fun addUser(username: String, password: String, email: String): Boolean {
+
+        if (isUsernameAlreadyInUse(username)) {
+            return false
+        }
+
+        if (isEmailAlreadyInUse(email)) {
+            return false
+        }
+
+        val db = this.writableDatabase
+        val hashedPassword = hashPassword(password)
+        val values = ContentValues().apply {
+            put(COLUMN_USERNAME, username)
+            put(COLUMN_PASSWORD, hashedPassword)
+            put(COLUMN_EMAIL, email)
+        }
+        val success = db.insert(TABLE_USERS, null, values)
+        db.close()
+        return success != -1L
+    }
+
+    fun checkUser(username: String, password: String): Boolean {
+        val db = this.readableDatabase
+        val hashedPassword = hashPassword(password)
+        val query = "SELECT * FROM $TABLE_USERS WHERE $COLUMN_USERNAME = ? AND $COLUMN_PASSWORD = ?"
+        val cursor = db.rawQuery(query, arrayOf(username, hashedPassword))
+        val exists = cursor.count > 0
+        cursor.close()
+        db.close()
+        return exists
+    }
+
+    private fun hashPassword(password: String): String {
+        try {
+            val digest = MessageDigest.getInstance("SHA-256")
+            val hashBytes = digest.digest(password.toByteArray())
+            return Base64.encodeToString(hashBytes, Base64.DEFAULT)
+        } catch (e: NoSuchAlgorithmException) {
+            e.printStackTrace()
+            // Handle error
+            return "Something went wrong"
+        }
+    }
+
+    fun isUsernameAlreadyInUse(username: String): Boolean {
+        val db = this.readableDatabase
+        val query = "SELECT COUNT(*) FROM $TABLE_USERS WHERE $COLUMN_USERNAME = ?"
+        val cursor = db.rawQuery(query, arrayOf(username))
+        cursor.moveToFirst()
+        val count = cursor.getInt(0)
+        cursor.close()
+        db.close()
+        return count > 0
+    }
+
+    fun isEmailAlreadyInUse(email: String): Boolean {
+        val db = this.readableDatabase
+        val query = "SELECT COUNT(*) FROM $TABLE_USERS WHERE $COLUMN_EMAIL = ?"
+        val cursor = db.rawQuery(query, arrayOf(email))
+        cursor.moveToFirst()
+        val count = cursor.getInt(0)
+        cursor.close()
+        db.close()
+        return count > 0
     }
 
 }
