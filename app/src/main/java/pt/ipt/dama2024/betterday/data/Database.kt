@@ -22,7 +22,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val DATABASE_NAME = "objectives.db"
 
         // Objectives table columns
-        private const val TABLE_NAME = "objectives"
+        private const val TABLE_OBJECTIVES = "objectives"
         private const val COLUMN_ID = "id"
         private const val COLUMN_TITLE = "title"
         private const val COLUMN_DESCRIPTION = "description"
@@ -31,6 +31,11 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val COLUMN_DEADLINE = "deadline"
         private const val COLUMN_CHECKED = "checked"
         private const val COLUMN_AUTHOR = "author"
+        private const val COLUMN_PHOTO1 = "photo1"
+        private const val COLUMN_PHOTO2 = "photo2"
+        private const val COLUMN_PHOTO3 = "photo3"
+        private const val COLUMN_LATITUDE = "latitude"
+        private const val COLUMN_LONGITUDE = "longitude"
 
         // Users table columns
         private const val TABLE_USERS = "users"
@@ -46,7 +51,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
      * Later conversions will be needed to these data types
      */
     override fun onCreate(db: SQLiteDatabase) {
-        val createObjectivesTable = ("CREATE TABLE $TABLE_NAME ("
+        val createObjectivesTable = ("CREATE TABLE $TABLE_OBJECTIVES ("
                 + "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "$COLUMN_TITLE TEXT, "
                 + "$COLUMN_DESCRIPTION TEXT, "
@@ -54,7 +59,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 + "$COLUMN_CREATION_DATE INTEGER, "
                 + "$COLUMN_DEADLINE INTEGER, "
                 + "$COLUMN_CHECKED INTEGER, "
-                + "$COLUMN_AUTHOR TEXT)")
+                + "$COLUMN_AUTHOR TEXT)"
+                + "$COLUMN_PHOTO1 BLOB, "
+                + "$COLUMN_PHOTO2 BLOB, "
+                + "$COLUMN_PHOTO3 BLOB, "
+                + "$COLUMN_LATITUDE REAL, "
+                + "$COLUMN_LONGITUDE REAL)")
 
         val createUsersTable = ("CREATE TABLE $TABLE_USERS ("
                 + "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -73,7 +83,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
      *  This prevents incompatibility of types or structure
      */
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_OBJECTIVES")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_USERS")
         onCreate(db)
     }
@@ -94,8 +104,13 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put(COLUMN_DEADLINE, objective.deadline.time) // Convert Date to Long
             put(COLUMN_CHECKED, if (objective.checked) 1 else 0)
             put(COLUMN_AUTHOR, objective.author)
+            put(COLUMN_PHOTO1, objective.photo1)
+            put(COLUMN_PHOTO2, objective.photo2)
+            put(COLUMN_PHOTO3, objective.photo3)
+            put(COLUMN_LATITUDE, objective.latitude)
+            put(COLUMN_LONGITUDE, objective.longitude)
         }
-        return db.insert(TABLE_NAME, null, values)
+        return db.insert(TABLE_OBJECTIVES, null, values)
     }
 
     /**
@@ -107,7 +122,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     fun getAllObjectives(): List<Objective> {
         val objectives = mutableListOf<Objective>()
         val db = this.readableDatabase
-        val cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
+        val cursor = db.query(TABLE_OBJECTIVES, null, null, null, null, null, null)
         with(cursor) {
             while (moveToNext()) {
                 val id = getLong(getColumnIndexOrThrow(COLUMN_ID))
@@ -118,8 +133,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 val deadline = Date(getLong(getColumnIndexOrThrow(COLUMN_DEADLINE))) // Convert Long to Date
                 val checked = getInt(getColumnIndexOrThrow(COLUMN_CHECKED)) == 1 // Convert int to boolean
                 val author = getString(getColumnIndexOrThrow(COLUMN_AUTHOR))
-                objectives.add(Objective(id, title, description, frequency, creationDate, deadline, checked, author))
-            }
+                val photo1 = getBlob(getColumnIndexOrThrow(COLUMN_PHOTO1))
+                val photo2 = getBlob(getColumnIndexOrThrow(COLUMN_PHOTO2))
+                val photo3 = getBlob(getColumnIndexOrThrow(COLUMN_PHOTO3))
+                val latitude = getDouble(getColumnIndexOrThrow(COLUMN_LATITUDE))
+                val longitude = getDouble(getColumnIndexOrThrow(COLUMN_LONGITUDE))
+                objectives.add(Objective(id, title, description, frequency, creationDate, deadline, checked, author, photo1, photo2, photo3, latitude, longitude))            }
         }
         cursor.close()
         return objectives
@@ -141,8 +160,13 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put(COLUMN_DEADLINE, objective.deadline.time) // Convert Date to Long
             put(COLUMN_CHECKED, if (objective.checked) 1 else 0) // Convert boolean to int
             put(COLUMN_AUTHOR, objective.author)
+            put(COLUMN_PHOTO1, objective.photo1)
+            put(COLUMN_PHOTO2, objective.photo2)
+            put(COLUMN_PHOTO3, objective.photo3)
+            put(COLUMN_LATITUDE, objective.latitude)
+            put(COLUMN_LONGITUDE, objective.longitude)
         }
-        return db.update(TABLE_NAME, values, "$COLUMN_ID = ?", arrayOf(objective.id.toString()))
+        return db.update(TABLE_OBJECTIVES, values, "$COLUMN_ID = ?", arrayOf(objective.id.toString()))
     }
 
     /**
@@ -150,7 +174,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
      */
     fun deleteObjective(id: Long): Int {
         val db = this.writableDatabase
-        return db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(id.toString()))
+        return db.delete(TABLE_OBJECTIVES, "$COLUMN_ID = ?", arrayOf(id.toString()))
     }
 
 
