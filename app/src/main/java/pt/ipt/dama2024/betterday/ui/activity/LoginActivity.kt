@@ -1,5 +1,6 @@
 package pt.ipt.dama2024.betterday.ui.activity
 
+import SessionManager
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -7,29 +8,40 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import pt.ipt.dama2024.betterday.data.Database
 import pt.ipt.dama2024.betterday.R
+import pt.ipt.dama2024.betterday.data.UserRepository
+import pt.ipt.dama2024.betterday.utils.ValidationUtils
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var dbHelper: Database
+    private lateinit var userRepository: UserRepository
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        dbHelper = Database(this)
+        userRepository = UserRepository(this)
+        sessionManager = SessionManager(this)
+
+        // Check if the user is already logged in
+        if (sessionManager.isLoggedIn()) {
+            // If logged in, directly open the main activity
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish() // Finish the LoginActivity so the user cannot go back to it
+        }
 
         val loginButton = findViewById<Button>(R.id.login_btn)
         loginButton.setOnClickListener {
             val username = findViewById<EditText>(R.id.username).text.toString()
             val password = findViewById<EditText>(R.id.password).text.toString()
 
-            if (!isValidUsername(username)) {
+            if (!ValidationUtils.isValidUsername(username)) {
 
                 Toast.makeText(this, "Username must have at least 5 characters", Toast.LENGTH_SHORT).show()
 
-            } else if (!isValidPassword(password)) {
+            } else if (!ValidationUtils.isValidPassword(password)) {
 
                 Toast.makeText(
                     this,
@@ -37,14 +49,12 @@ class LoginActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-            } else if (dbHelper.checkUser(username, password)) {
+            } else if (userRepository.checkUser(username, password)) {
+                // SUCCESS
 
-                val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
-                with(sharedPreferences.edit()) {
-                    putString("betterday_username", username)
-                    putString("betterday_password", password)
-                    apply()
-                }
+                // Save the username and password in the session.
+                sessionManager.saveCredentials(username, password)
+
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -61,15 +71,5 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    private fun isValidUsername(username: String): Boolean {
-        return username.length >= 5
-    }
-
-    private fun isValidPassword(password: String): Boolean {
-        val containsUpperCase = password.any { it.isUpperCase() }
-        val containsDigit = password.any { it.isDigit() }
-        return password.length >= 6 && containsUpperCase && containsDigit
     }
 }

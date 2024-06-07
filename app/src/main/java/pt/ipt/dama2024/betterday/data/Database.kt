@@ -10,7 +10,13 @@ import java.security.MessageDigest
 import java.util.Date
 import java.security.NoSuchAlgorithmException
 import android.util.Base64
+import android.util.Log
 
+/**
+ * The Database class manages the SQLite database operations for BetterDay application.
+ *
+ * @param context The application context.
+ */
 class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     /**
@@ -59,7 +65,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 + "$COLUMN_CREATION_DATE INTEGER, "
                 + "$COLUMN_DEADLINE INTEGER, "
                 + "$COLUMN_CHECKED INTEGER, "
-                + "$COLUMN_AUTHOR TEXT)"
+                + "$COLUMN_AUTHOR TEXT, "
                 + "$COLUMN_PHOTO1 BLOB, "
                 + "$COLUMN_PHOTO2 BLOB, "
                 + "$COLUMN_PHOTO3 BLOB, "
@@ -94,7 +100,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
      *
      * Conversions are highlighted with comments when applied
      */
-    fun insertObjective(objective: Objective): Long {
+    fun insertObjective(objective: Objective, username: String): Long {
         val db = this.writableDatabase
         val values = ContentValues().apply {
             put(COLUMN_TITLE, objective.title)
@@ -103,7 +109,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put(COLUMN_CREATION_DATE, objective.creationDate.time) // Convert Date to Long
             put(COLUMN_DEADLINE, objective.deadline.time) // Convert Date to Long
             put(COLUMN_CHECKED, if (objective.checked) 1 else 0)
-            put(COLUMN_AUTHOR, objective.author)
+            put(COLUMN_AUTHOR, username)
             put(COLUMN_PHOTO1, objective.photo1)
             put(COLUMN_PHOTO2, objective.photo2)
             put(COLUMN_PHOTO3, objective.photo3)
@@ -119,10 +125,11 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
      *
      * Conversions are highlighted with comments when applied
      */
-    fun getAllObjectives(): List<Objective> {
+    fun getAllUserObjectives(username: String): List<Objective> {
         val objectives = mutableListOf<Objective>()
         val db = this.readableDatabase
-        val cursor = db.query(TABLE_OBJECTIVES, null, null, null, null, null, null)
+
+        val cursor = db.query(TABLE_OBJECTIVES, null, "$COLUMN_AUTHOR = ?", arrayOf(username), null, null, null)
         with(cursor) {
             while (moveToNext()) {
                 val id = getLong(getColumnIndexOrThrow(COLUMN_ID))
@@ -178,8 +185,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
 
-    // Methods for managing users
-
     fun addUser(username: String, password: String, email: String): Boolean {
 
         if (isUsernameAlreadyInUse(username)) {
@@ -210,6 +215,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val exists = cursor.count > 0
         cursor.close()
         db.close()
+        Log.d("Database", "User exists: $exists")
         return exists
     }
 

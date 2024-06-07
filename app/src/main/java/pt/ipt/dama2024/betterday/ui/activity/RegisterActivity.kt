@@ -7,19 +7,20 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import pt.ipt.dama2024.betterday.data.Database
 import pt.ipt.dama2024.betterday.R
+import pt.ipt.dama2024.betterday.data.UserRepository
+import pt.ipt.dama2024.betterday.utils.ValidationUtils
 
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var dbHelper: Database
+    private lateinit var userRepository: UserRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        dbHelper = Database(this)
+        userRepository = UserRepository(this)
 
         val registerButton = findViewById<Button>(R.id.register_btn)
 
@@ -42,11 +43,11 @@ class RegisterActivity : AppCompatActivity() {
                 )
                     .show()
 
-            } else if (!isValidUsername(username)) {
+            } else if (!ValidationUtils.isValidUsername(username)) {
 
                 Toast.makeText(this, "Username must have at least 5 characters", Toast.LENGTH_SHORT).show()
 
-            } else if (!isValidPassword(password)) {
+            } else if (!ValidationUtils.isValidPassword(password)) {
 
                 Toast.makeText(
                     this,
@@ -54,19 +55,23 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-            } else if (dbHelper.isEmailAlreadyInUse(email)) {
+            } else if (!ValidationUtils.isValidEmail(email)) {
+
+                    Toast.makeText(this, "Invalid email address", Toast.LENGTH_SHORT).show()
+
+            } else if (userRepository.isEmailAlreadyInUse(email)) {
 
                 Toast.makeText(this, "Email is already in use", Toast.LENGTH_SHORT)
                     .show()
 
-            } else if (dbHelper.isUsernameAlreadyInUse(username)) {
+            } else if (userRepository.isUsernameAlreadyInUse(username)) {
 
                 Toast.makeText(this, "Username is already in use", Toast.LENGTH_SHORT)
                     .show()
 
             } else {
                 // SUCCESS
-                if (dbHelper.addUser(username, password, email)) {
+                if (userRepository.addUser(username, password, email)) {
 
                     Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, LoginActivity::class.java)
@@ -86,15 +91,5 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-    }
-
-    private fun isValidUsername(username: String): Boolean {
-        return username.length >= 5
-    }
-
-    private fun isValidPassword(password: String): Boolean {
-        val containsUpperCase = password.any { it.isUpperCase() }
-        val containsDigit = password.any { it.isDigit() }
-        return password.length >= 6 && containsUpperCase && containsDigit
     }
 }

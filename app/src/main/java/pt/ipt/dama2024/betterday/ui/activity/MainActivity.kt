@@ -1,6 +1,5 @@
 package pt.ipt.dama2024.betterday.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +9,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import pt.ipt.dama2024.betterday.MyViewPageAdapter
 import pt.ipt.dama2024.betterday.R
-import pt.ipt.dama2024.betterday.data.Database
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,15 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Check if user is authenticated
-        if (!isAuthenticated()) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-            return
-        }
-
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -67,21 +56,4 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun isAuthenticated(): Boolean {
-        // Retrieve username and password from SharedPreferences
-        val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
-        val username = sharedPreferences.getString("betterday_username", "")
-        val password = sharedPreferences.getString("betterday_password", "")
-
-        // Check if username and password are not empty
-        if (username.isNullOrEmpty() || password.isNullOrEmpty()) {
-            return false
-        }
-
-        // Check authentication status by querying the database
-        val db = Database(this)
-        val authenticated = db.checkUser(username, password)
-
-        return authenticated
-    }
 }
