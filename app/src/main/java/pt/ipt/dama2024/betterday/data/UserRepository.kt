@@ -25,14 +25,14 @@ class UserRepository(context: Context) {
     }
 
     /**
-     * Checks if the provided username and password are valid.
+     * Authenticates a user with the provided username and password.
      *
      * @param username The username to be checked.
      * @param password The password to be checked.
      * @return True if the username and password are valid, false otherwise.
      */
-    fun checkUser(username: String, password: String): Boolean {
-        return db.checkUser(username, password)
+    fun authenticateUser(username: String, password: String): Boolean {
+        return db.authenticateUser(username, password)
     }
 
     /**

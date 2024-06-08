@@ -184,17 +184,21 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return db.delete(TABLE_OBJECTIVES, "$COLUMN_ID = ?", arrayOf(id.toString()))
     }
 
-
+    /**
+     * Adds a new user to the database.
+     *
+     * @param username The username of the user to be added.
+     * @param password The password of the user to be added.
+     * @param email The email of the user to be added.
+     * @return True if the user was added successfully, false otherwise.
+     */
     fun addUser(username: String, password: String, email: String): Boolean {
-
         if (isUsernameAlreadyInUse(username)) {
             return false
         }
-
         if (isEmailAlreadyInUse(email)) {
             return false
         }
-
         val db = this.writableDatabase
         val hashedPassword = hashPassword(password)
         val values = ContentValues().apply {
@@ -207,7 +211,14 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return success != -1L
     }
 
-    fun checkUser(username: String, password: String): Boolean {
+    /**
+     * Authenticates a user with the provided username and password.
+     *
+     * @param username The username of the user to authenticate.
+     * @param password The password of the user to authenticate.
+     * @return True if the user authentication is successful, false otherwise.
+     */
+    fun authenticateUser(username: String, password: String): Boolean {
         val db = this.readableDatabase
         val hashedPassword = hashPassword(password)
         val query = "SELECT * FROM $TABLE_USERS WHERE $COLUMN_USERNAME = ? AND $COLUMN_PASSWORD = ?"
@@ -218,6 +229,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return exists
     }
 
+    /**
+     * Hashes the provided password using SHA-256 algorithm.
+     *
+     * @param password The password to be hashed.
+     * @return The hashed password as a Base64 encoded string.
+     */
     private fun hashPassword(password: String): String {
         try {
             val digest = MessageDigest.getInstance("SHA-256")
@@ -225,11 +242,16 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             return Base64.encodeToString(hashBytes, Base64.DEFAULT)
         } catch (e: NoSuchAlgorithmException) {
             e.printStackTrace()
-            // Handle error
             return "Something went wrong"
         }
     }
 
+    /**
+     * Checks if the specified username is already in use.
+     *
+     * @param username The username to be checked.
+     * @return True if the username is already in use, false otherwise.
+     */
     fun isUsernameAlreadyInUse(username: String): Boolean {
         val db = this.readableDatabase
         val query = "SELECT COUNT(*) FROM $TABLE_USERS WHERE $COLUMN_USERNAME = ?"
@@ -241,6 +263,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return count > 0
     }
 
+    /**
+     * Checks if the specified email is already in use.
+     *
+     * @param email The email to be checked.
+     * @return True if the email is already in use, false otherwise.
+     */
     fun isEmailAlreadyInUse(email: String): Boolean {
         val db = this.readableDatabase
         val query = "SELECT COUNT(*) FROM $TABLE_USERS WHERE $COLUMN_EMAIL = ?"

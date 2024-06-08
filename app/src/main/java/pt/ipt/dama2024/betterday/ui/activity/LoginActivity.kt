@@ -12,15 +12,22 @@ import pt.ipt.dama2024.betterday.R
 import pt.ipt.dama2024.betterday.data.UserRepository
 import pt.ipt.dama2024.betterday.utils.ValidationUtils
 
+/**
+ * Activity responsible for handling user login functionality.
+ */
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var userRepository: UserRepository
     private lateinit var sessionManager: SessionManager
 
+    /**
+     * Called when the activity is starting.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        // Initialize UserRepository and SessionManager
         userRepository = UserRepository(this)
         sessionManager = SessionManager(this)
 
@@ -29,33 +36,44 @@ class LoginActivity : AppCompatActivity() {
             // If logged in, directly open the main activity
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-            finish() // Finish the LoginActivity so the user cannot go back to it
+            // Finish the LoginActivity so the user cannot go back to it
+            finish()
         }
 
+        // Login Button Click Listener
         val loginButton = findViewById<Button>(R.id.login_btn)
+
         loginButton.setOnClickListener {
             val username = findViewById<EditText>(R.id.username).text.toString()
             val password = findViewById<EditText>(R.id.password).text.toString()
 
+            // Validate username
             if (!ValidationUtils.isValidUsername(username)) {
                 Toast.makeText(this, getString(R.string.username_error), Toast.LENGTH_SHORT).show()
-            } else if (!ValidationUtils.isValidPassword(password)) {
+            }
+            // Validate password
+            else if (!ValidationUtils.isValidPassword(password)) {
                 Toast.makeText(this, getString(R.string.password_error), Toast.LENGTH_SHORT).show()
-            } else if (userRepository.checkUser(username, password)) {
+            }
+            // Authenticate user
+            else if (userRepository.authenticateUser(username, password)) {
                 // SUCCESS
                 Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
 
                 // Save the username and password in the session.
                 sessionManager.saveCredentials(username, password)
 
+                // Open MainActivity
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
+                // Authentication failed
                 Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
             }
         }
 
+        // Click Listener for Register Text
         val registerText = findViewById<TextView>(R.id.new_user_btn)
         registerText.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
