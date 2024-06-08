@@ -32,56 +32,44 @@ class RegisterActivity : AppCompatActivity() {
             val confirmPassword = findViewById<EditText>(R.id.confirm_password).text.toString()
 
             if (password != confirmPassword) {
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.passwords_do_not_match), Toast.LENGTH_SHORT).show()
 
             } else if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
 
-                Toast.makeText(
-                    this,
-                    "Username, email or password cannot be empty",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+                Toast.makeText(this, getString(R.string.empty_fields_error), Toast.LENGTH_SHORT).show()
 
             } else if (!ValidationUtils.isValidUsername(username)) {
 
-                Toast.makeText(this, "Username must have at least 5 characters", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.username_error), Toast.LENGTH_SHORT).show()
 
             } else if (!ValidationUtils.isValidPassword(password)) {
 
-                Toast.makeText(
-                    this,
-                    "Password must have at least 6 characters, with at least one capital letter and one number",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this, getString(R.string.password_error), Toast.LENGTH_SHORT).show()
 
             } else if (!ValidationUtils.isValidEmail(email)) {
 
-                    Toast.makeText(this, "Invalid email address", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.email_error), Toast.LENGTH_SHORT).show()
 
             } else if (userRepository.isEmailAlreadyInUse(email)) {
 
-                Toast.makeText(this, "Email is already in use", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, getString(R.string.email_in_use), Toast.LENGTH_SHORT).show()
 
             } else if (userRepository.isUsernameAlreadyInUse(username)) {
 
-                Toast.makeText(this, "Username is already in use", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, getString(R.string.username_in_use), Toast.LENGTH_SHORT).show()
 
             } else {
                 // SUCCESS
                 if (userRepository.addUser(username, password, email)) {
 
-                    Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.registration_success), Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
 
                 } else {
-                    Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.registration_failed), Toast.LENGTH_SHORT).show()
                 }
-
             }
         }
 

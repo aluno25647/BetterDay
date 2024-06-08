@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import pt.ipt.dama2024.betterday.ui.activity.LoginActivity
 
@@ -41,6 +42,8 @@ class FragmentFive : Fragment() {
         view.findViewById<Button>(R.id.logout_btn).setOnClickListener {
             // Clear session data
             sessionManager.logout()
+
+            Toast.makeText(requireContext(), getString(R.string.logout_successful), Toast.LENGTH_SHORT).show()
 
             // Redirect to login activity
             val intent = Intent(requireContext(), LoginActivity::class.java)

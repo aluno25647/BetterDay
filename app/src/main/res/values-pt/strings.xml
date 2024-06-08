@@ -1,4 +1,24 @@
 <resources>
     <string name="app_name">BetterDay</string>
     <string name="current_language">Português</string>
+    <string name="username">Nome de Utilizador</string>
+    <string name="password">Palavra-passe</string>
+    <string name="register">Registar</string>
+    <string name="login">Entrar</string>
+    <string name="insert_username">Inserir Nome de Utilizador</string>
+    <string name="insert_email">Inserir Email</string>
+    <string name="insert_password">Inserir Palavra-passe</string>
+    <string name="repeat_password">Repetir Palavra-passe</string>
+    <string name="username_error">O nome de utilizador deve ter pelo menos 5 caracteres</string>
+    <string name="password_error">A palavra-passe deve ter pelo menos 6 caracteres, com pelo menos uma letra maiúscula e um número</string>
+    <string name="login_success">Login bem-sucedido</string>
+    <string name="login_failed">Login falhou</string>
+    <string name="passwords_do_not_match">As palavras-passe não coincidem</string>
+    <string name="empty_fields_error">O nome de utilizador, email ou palavra-passe não podem estar vazios</string>
+    <string name="email_error">Endereço de email inválido</string>
+    <string name="email_in_use">O email já está em uso</string>
+    <string name="username_in_use">O nome de utilizador já está em uso</string>
+    <string name="registration_success">Registo bem-sucedido</string>
+    <string name="registration_failed">Registo falhou</string>
+    <string name="logout_successful">Logout bem-sucedido</string>
 </resources>

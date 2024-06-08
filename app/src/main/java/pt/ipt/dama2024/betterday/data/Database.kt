@@ -215,7 +215,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val exists = cursor.count > 0
         cursor.close()
         db.close()
-        Log.d("Database", "User exists: $exists")
         return exists
     }
 

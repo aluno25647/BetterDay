@@ -38,19 +38,12 @@ class LoginActivity : AppCompatActivity() {
             val password = findViewById<EditText>(R.id.password).text.toString()
 
             if (!ValidationUtils.isValidUsername(username)) {
-
-                Toast.makeText(this, "Username must have at least 5 characters", Toast.LENGTH_SHORT).show()
-
+                Toast.makeText(this, getString(R.string.username_error), Toast.LENGTH_SHORT).show()
             } else if (!ValidationUtils.isValidPassword(password)) {
-
-                Toast.makeText(
-                    this,
-                    "Password must have at least 6 characters, with at least one capital letter and one number",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                Toast.makeText(this, getString(R.string.password_error), Toast.LENGTH_SHORT).show()
             } else if (userRepository.checkUser(username, password)) {
                 // SUCCESS
+                Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
 
                 // Save the username and password in the session.
                 sessionManager.saveCredentials(username, password)
@@ -58,11 +51,8 @@ class LoginActivity : AppCompatActivity() {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
-
             } else {
-
-                Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
-
+                Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
             }
         }
 

@@ -1,4 +1,24 @@
 <resources>
     <string name="app_name">BetterDay</string>
     <string name="current_language">English</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="insert_username">Insert Username</string>
+    <string name="insert_email">Insert Email</string>
+    <string name="insert_password">Insert Password</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="username_error">Username must have at least 5 characters</string>
+    <string name="password_error">Password must have at least 6 characters, with at least one capital letter and one number</string>
+    <string name="login_success">Login successful</string>
+    <string name="login_failed">Login failed</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="empty_fields_error">Username, email, or password cannot be empty</string>
+    <string name="email_error">Invalid email address</string>
+    <string name="email_in_use">Email is already in use</string>
+    <string name="username_in_use">Username is already in use</string>
+    <string name="registration_success">Registration successful</string>
+    <string name="registration_failed">Registration failed</string>
+    <string name="logout_successful">Logout successful</string>
 </resources>
