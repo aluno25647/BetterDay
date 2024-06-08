@@ -5,9 +5,7 @@
     <string name="password">Palavra-passe</string>
     <string name="register">Registar</string>
     <string name="login">Entrar</string>
-    <string name="insert_username">Inserir Nome de Utilizador</string>
-    <string name="insert_email">Inserir Email</string>
-    <string name="insert_password">Inserir Palavra-passe</string>
+    <string name="email">Email</string>
     <string name="repeat_password">Repetir Palavra-passe</string>
     <string name="username_error">O nome de utilizador deve ter pelo menos 5 caracteres</string>
     <string name="password_error">A palavra-passe deve ter pelo menos 6 caracteres, com pelo menos uma letra maiúscula e um número</string>

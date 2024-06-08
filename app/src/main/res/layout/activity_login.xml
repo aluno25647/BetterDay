@@ -35,11 +35,17 @@
                 android:textAlignment="center"
                 android:textStyle="bold" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/username"
+                android:textSize="20sp"
+                android:layout_marginTop="40dp"/>
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:id="@+id/username"
-                android:layout_marginTop="40dp"
                 android:autofillHints="username"
                 android:inputType="text"
                 android:padding="8dp"
@@ -48,11 +54,17 @@
                 android:textColor="@color/black"
                 android:drawablePadding="8dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/password"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp"/>
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:id="@+id/password"
-                android:layout_marginTop="20dp"
                 android:autofillHints="password"
                 android:inputType="textPassword"
                 android:padding="8dp"
@@ -66,6 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/register"
+                android:textSize="20sp"
                 android:textColor="@color/blue"
                 android:layout_gravity="end"
                 android:layout_marginTop="10dp" />
