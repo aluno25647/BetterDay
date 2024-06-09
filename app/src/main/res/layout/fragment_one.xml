@@ -1,17 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.FragmentOne">
 
+    <!-- TextView for the title -->
     <TextView
-        android:id="@+id/frag1_TextView"
+        android:id="@+id/todayTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/objectives_today_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:padding="16dp" />
+
+    <!-- RecyclerView for displaying the list of objectives -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewObjectives"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="fragment_one"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:layout_below="@id/todayTitle"
+        android:layout_above="@+id/buttonAddObjective"
+        android:padding="16dp"
+        tools:listitem="@layout/objective_item" />
 
-</FrameLayout>
+    <!-- FloatingActionButton for adding a new objective -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonAddObjective"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/add_new_objective_button_context"
+        tools:ignore="VectorDrawableCompat" />
+
+</RelativeLayout>
