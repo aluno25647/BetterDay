@@ -19,4 +19,8 @@
     <string name="registration_success">Registo bem-sucedido</string>
     <string name="registration_failed">Registo falhou</string>
     <string name="logout_successful">Logout bem-sucedido</string>
+    <string name="today_fragment">Hoje</string>
+    <string name="add_new_objective_button_context">Adicionar um novo objetivo</string>
+    <string name="cat_image_context">Imagem de um gato vinda da API</string>
+    <string name="objectives_today_title">Objetivos de Hoje</string>
 </resources>

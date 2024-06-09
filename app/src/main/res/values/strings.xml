@@ -19,4 +19,8 @@
     <string name="registration_success">Registration successful</string>
     <string name="registration_failed">Registration failed</string>
     <string name="logout_successful">Logout successful</string>
+    <string name="today_fragment">Today</string>
+    <string name="add_new_objective_button_context">Add new objective</string>
+    <string name="cat_image_context">Image of a cat from the API</string>
+    <string name="objectives_today_title">Today\'s Objectives</string>
 </resources>
