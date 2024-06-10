@@ -8,7 +8,7 @@ import retrofit2.http.GET
  * function that request data from API
  */
 interface CatService {
-    @GET("api/cat")
+    @GET("cat")
     fun getCatImage(): Call<CatApiResponse>
 
 }
