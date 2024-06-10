@@ -37,6 +37,18 @@ android {
 
 dependencies {
 
+    // Add Retrofit Dependencies
+// https://square.github.io/retrofit/
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.converter.gson)
+    implementation(libs.gson)
+
+    //https://github.com/hdodenhof/CircleImageView
+    implementation (libs.circleimageview)
+
+    //https://github.com/square/picasso
+    implementation(libs.squareup.picasso)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
