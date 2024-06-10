@@ -18,6 +18,7 @@ class FragmentOne : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ObjectiveAdapter
     private lateinit var newObjectiveButton: FloatingActionButton
+
     private lateinit var objectiveRepository: ObjectiveRepository
     private lateinit var sessionManager: SessionManager
 
@@ -25,10 +26,24 @@ class FragmentOne : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_one, container, false)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_one, container, false)
+    }
+
+    /**
+     * Called immediately after the view created, to initialize UI components.
+     */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         recyclerView = view.findViewById(R.id.recyclerViewObjectives)
         recyclerView.layoutManager = LinearLayoutManager(context)
+
+        // Initialize SessionManager
+        sessionManager = SessionManager(requireContext())
+
+        // Initialize ObjectiveRepository
+        objectiveRepository = ObjectiveRepository(requireContext())
 
         val objectives = objectiveRepository.getAllUserObjectives(sessionManager.getUsername())
 
@@ -40,8 +55,6 @@ class FragmentOne : Fragment() {
         newObjectiveButton.setOnClickListener {
             // TODO add new objective action
         }
-
-        return view
     }
 
 }

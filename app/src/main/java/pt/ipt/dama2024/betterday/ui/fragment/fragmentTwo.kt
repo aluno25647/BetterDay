@@ -24,14 +24,20 @@ class FragmentTwo : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_two, container, false)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_two, container, false)
+    }
+
+    /**
+     * Called immediately after the view created, to initialize UI components.
+     */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         catImageView = view.findViewById(R.id.catImageView)
         catTitle = view.findViewById(R.id.catTitle)
 
         fetchCatImage()
-
-        return view
     }
 
     private fun fetchCatImage() {
