@@ -1,4 +1,5 @@
 package pt.ipt.dama2024.betterday.ui.fragment
+import SessionManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ class FragmentOne : Fragment() {
     private lateinit var adapter: ObjectiveAdapter
     private lateinit var newObjectiveButton: FloatingActionButton
     private lateinit var objectiveRepository: ObjectiveRepository
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,8 +30,7 @@ class FragmentOne : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerViewObjectives)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        // TODO username
-        val objectives = objectiveRepository.getAllUserObjectives(username = "")
+        val objectives = objectiveRepository.getAllUserObjectives(sessionManager.getUsername())
 
         adapter = ObjectiveAdapter(objectives)
         recyclerView.adapter = adapter
