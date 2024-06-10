@@ -1,17 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.fragment.FragmentTwo">
 
+    <!-- TextView for the title -->
     <TextView
-        android:id="@+id/frag2_TextView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="fragment_two"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:id="@+id/catTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/cat_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:padding="16dp" />
 
-</FrameLayout>
+    <!-- CircleImageView for displaying the cat photo in a circular form
+    Credit: https://github.com/hdodenhof/CircleImageView
+    -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/catImageView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/cat_image_context" />
+
+    <!-- TextView for the title -->
+    <TextView
+        android:id="@+id/catPositivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/catPositivity"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:padding="16dp" />
+
+</LinearLayout>
