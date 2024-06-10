@@ -23,6 +23,6 @@
     <string name="add_new_objective_button_context">Adicionar um novo objetivo</string>
     <string name="cat_image_context">Imagem de um gato vinda da API</string>
     <string name="objectives_today_title">Objetivos de Hoje</string>
-    <string name="cat_title">Gato do dia</string>
+    <string name="cat_title">Gato da Positividade</string>
     <string name="catPositivity">Espero que tenhas um dia maravilhoso. Muita força, tu consegues!</string>
 </resources>
