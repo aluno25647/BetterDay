@@ -24,12 +24,16 @@ class LoginActivity : AppCompatActivity() {
      * Called when the activity is starting.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
         // Initialize UserRepository and SessionManager
         userRepository = UserRepository(this)
         sessionManager = SessionManager(this)
+
+        // Set the language before the activity is created
+        sessionManager.setLanguage(sessionManager.getCurrentLanguage())
+
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
 
         // Check if the user is already logged in
         if (sessionManager.isLoggedIn()) {

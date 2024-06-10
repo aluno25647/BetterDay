@@ -38,7 +38,8 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="frag 5" />
+            android:text="@string/settings"
+            />
 
     </com.google.android.material.tabs.TabLayout>
 
