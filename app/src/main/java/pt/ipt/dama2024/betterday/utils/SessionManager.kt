@@ -18,7 +18,11 @@ class SessionManager(private val context: Context) {
      * Clears the session data, effectively logging out the user.
      */
     fun logout() {
-        sharedPreferences.edit().clear().apply()
+        with(sharedPreferences.edit()) {
+            remove("username")
+            remove("token")
+            apply()
+        }
     }
 
     /**
@@ -28,7 +32,7 @@ class SessionManager(private val context: Context) {
      */
     fun isLoggedIn(): Boolean {
         // Check if user is logged in based on session data logic
-        return sharedPreferences.contains("username") && sharedPreferences.contains("password")
+        return sharedPreferences.contains("username") && sharedPreferences.contains("token")
     }
 
     /**
@@ -41,15 +45,15 @@ class SessionManager(private val context: Context) {
     }
 
     /**
-     * Saves the username and password in the session.
+     * Saves the username and token in the session.
      *
      * @param username The username to be saved.
-     * @param password The password to be saved.
+     * @param token The token to be saved.
      */
-    fun saveCredentials(username: String, password: String) {
+    fun saveCredentials(username: String, token: String) {
         with(sharedPreferences.edit()) {
             putString("username", username)
-            putString("password", password)
+            putString("token", token)
             apply()
         }
     }

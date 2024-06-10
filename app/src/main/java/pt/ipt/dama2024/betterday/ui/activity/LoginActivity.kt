@@ -60,20 +60,24 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.password_error), Toast.LENGTH_SHORT).show()
             }
             // Authenticate user
-            else if (userRepository.authenticateUser(username, password)) {
-                // SUCCESS
-                Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+            else {
+                // Authenticate and get token
+                val token = userRepository.authenticateUser(username, password)
+                if (token != null) {
+                    // SUCCESS
+                    Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
 
-                // Save the username and password in the session.
-                sessionManager.saveCredentials(username, password)
+                    // Save the username and token in the session.
+                    sessionManager.saveCredentials(username, token)
 
-                // Open MainActivity
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                // Authentication failed
-                Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                    // Open MainActivity
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    // Authentication failed
+                    Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
