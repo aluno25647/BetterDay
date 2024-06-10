@@ -3,7 +3,6 @@ package pt.ipt.dama2024.betterday.ui.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import pt.ipt.dama2024.betterday.ui.fragment.FragmentFour
 import pt.ipt.dama2024.betterday.ui.fragment.FragmentOne
 import pt.ipt.dama2024.betterday.ui.fragment.FragmentThree
 import pt.ipt.dama2024.betterday.ui.fragment.FragmentTwo
@@ -22,10 +21,10 @@ class MyViewPageAdapter(fragmentActivity: FragmentActivity) :
     /**
      * Gets the number of fragments
      *
-     * @return 5
+     * @return 4
      */
     override fun getItemCount(): Int {
-        return 5
+        return 4
     }
 
     /**
@@ -39,8 +38,7 @@ class MyViewPageAdapter(fragmentActivity: FragmentActivity) :
             0-> FragmentOne()
             1-> FragmentTwo()
             2-> FragmentThree()
-            3-> FragmentFour()
-            4-> SettingsFragment()
+            3-> SettingsFragment()
             else -> FragmentOne()
         }
     }

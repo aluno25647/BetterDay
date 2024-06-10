@@ -86,10 +86,8 @@ class SettingsFragment : Fragment() {
     private fun setLocale(languageCode: String) {
         sessionManager.setLanguage(languageCode)
 
-        // Restart the activity to apply the new language
-        //val intent = Intent(requireContext(), MainActivity::class.java)
-        //startActivity(intent)
-        //requireActivity().finish()
+        // Recreate the activity to apply the new language
+        requireActivity().recreate()
     }
 
 

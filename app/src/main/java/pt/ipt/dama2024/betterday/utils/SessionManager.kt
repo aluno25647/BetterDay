@@ -1,5 +1,7 @@
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.content.res.Configuration
+import android.os.LocaleList
 import java.util.Locale
 
 /**
@@ -57,26 +59,20 @@ class SessionManager(private val context: Context) {
      *
      * @param languageCode The language code to set (e.g., "en" for English, "pt" for Portuguese).
      */
+    @Suppress("DEPRECATION")
     fun setLanguage(languageCode: String) {
-        // Create a Locale object with the given language code
-        //val locale = Locale(languageCode)
 
-        // Set the default locale for the application
-        //Locale.setDefault(locale)
-
-        // Get resources and configuration objects
-        //val resources = context.resources
-        //val configuration = resources.configuration
-
-        // Set the locale in the configuration
-        //configuration.setLocale(locale)
+        val resources = context.resources
+        val localeListToSet = LocaleList(Locale(languageCode))
+        LocaleList.setDefault(localeListToSet)
+        resources.configuration.setLocales(localeListToSet)
+        resources.updateConfiguration(resources.configuration, resources.displayMetrics)
 
         // Edit SharedPreferences to store the selected language
-        //val editor = sharedPreferences.edit()
-        //editor.putString("language", languageCode)
-
-        // Apply changes
-        //editor.apply()
+        with(sharedPreferences.edit()) {
+            putString("language", languageCode)
+            apply()
+        }
     }
 
     /**
