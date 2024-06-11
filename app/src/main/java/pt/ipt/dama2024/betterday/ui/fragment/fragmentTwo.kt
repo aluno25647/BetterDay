@@ -14,6 +14,7 @@ class FragmentTwo : Fragment() {
 
     private lateinit var catImageView: ImageView
     private lateinit var catTitle: TextView
+    private lateinit var catPositivity: TextView
     private var imageUrl = "https://cataas.com/cat"
 
     override fun onCreateView(
@@ -24,13 +25,21 @@ class FragmentTwo : Fragment() {
         return inflater.inflate(R.layout.fragment_two, container, false)
     }
 
+    /**
+     * Called immediately after the view created, to initialize UI components.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Initialization of the ImageView and TextViews
         catImageView = view.findViewById(R.id.catImageView)
         catTitle = view.findViewById(R.id.catTitle)
+        catPositivity = view.findViewById(R.id.catPositivity)
     }
 
+    /**
+     * Called when the Fragment is visible to the user
+     */
     override fun onResume() {
         super.onResume()
         loadImageFromUrl(imageUrl, catImageView)

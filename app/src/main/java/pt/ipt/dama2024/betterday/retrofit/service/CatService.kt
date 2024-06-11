@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 /**
- * function that request data from API
+ * Service interface with the objective of making API calls to fetch cat images.
  */
 interface CatService {
     @GET("cat")
