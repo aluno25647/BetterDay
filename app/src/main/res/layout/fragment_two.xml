@@ -23,8 +23,8 @@
     -->
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/catImageView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/cat_image_context" />
