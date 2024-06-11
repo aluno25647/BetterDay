@@ -29,7 +29,7 @@
         android:layout_marginTop="16dp"
         android:contentDescription="@string/cat_image_context" />
 
-    <!-- TextView for the title -->
+    <!-- TextView for the text of positivity -->
     <TextView
         android:id="@+id/catPositivity"
         android:layout_width="wrap_content"
