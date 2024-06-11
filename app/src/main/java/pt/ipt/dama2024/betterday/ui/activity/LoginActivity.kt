@@ -24,12 +24,16 @@ class LoginActivity : AppCompatActivity() {
      * Called when the activity is starting.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
         // Initialize UserRepository and SessionManager
         userRepository = UserRepository(this)
         sessionManager = SessionManager(this)
+
+        // Set the language before the activity is created
+        sessionManager.setLanguage(sessionManager.getCurrentLanguage())
+
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
 
         // Check if the user is already logged in
         if (sessionManager.isLoggedIn()) {
@@ -56,20 +60,24 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.password_error), Toast.LENGTH_SHORT).show()
             }
             // Authenticate user
-            else if (userRepository.authenticateUser(username, password)) {
-                // SUCCESS
-                Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+            else {
+                // Authenticate and get token
+                val token = userRepository.authenticateUser(username, password)
+                if (token != null) {
+                    // SUCCESS
+                    Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
 
-                // Save the username and password in the session.
-                sessionManager.saveCredentials(username, password)
+                    // Save the username and token in the session.
+                    sessionManager.saveCredentials(username, token)
 
-                // Open MainActivity
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                // Authentication failed
-                Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                    // Open MainActivity
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    // Authentication failed
+                    Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                }
             }
         }
 

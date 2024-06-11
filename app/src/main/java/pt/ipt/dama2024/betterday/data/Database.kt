@@ -11,6 +11,7 @@ import java.util.Date
 import java.security.NoSuchAlgorithmException
 import android.util.Base64
 import android.util.Log
+import java.util.UUID
 
 /**
  * The Database class manages the SQLite database operations for BetterDay application.
@@ -48,6 +49,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val COLUMN_USERNAME = "username"
         private const val COLUMN_EMAIL = "email"
         private const val COLUMN_PASSWORD = "password"
+        private const val COLUMN_TOKEN = "token"
     }
 
     /**
@@ -76,7 +78,8 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 + "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "$COLUMN_USERNAME TEXT UNIQUE, "
                 + "$COLUMN_PASSWORD TEXT, "
-                + "$COLUMN_EMAIL TEXT UNIQUE)")
+                + "$COLUMN_EMAIL TEXT UNIQUE, "
+                + "$COLUMN_TOKEN TEXT)")
 
         db.execSQL(createObjectivesTable)
         db.execSQL(createUsersTable)
@@ -213,20 +216,41 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     /**
      * Authenticates a user with the provided username and password.
+     * If authentication is successful, a token is generated, stored in the database,
+     * and returned.
      *
      * @param username The username of the user to authenticate.
      * @param password The password of the user to authenticate.
-     * @return True if the user authentication is successful, false otherwise.
+     * @return The generated token if authentication is successful, null otherwise.
      */
-    fun authenticateUser(username: String, password: String): Boolean {
-        val db = this.readableDatabase
+    fun authenticateUser(username: String, password: String): String? {
+        val db = this.writableDatabase
         val hashedPassword = hashPassword(password)
         val query = "SELECT * FROM $TABLE_USERS WHERE $COLUMN_USERNAME = ? AND $COLUMN_PASSWORD = ?"
         val cursor = db.rawQuery(query, arrayOf(username, hashedPassword))
-        val exists = cursor.count > 0
+
+        var token: String? = null
+
+        if (cursor.count > 0) {
+            token = generateToken()
+            val contentValues = ContentValues()
+            contentValues.put(COLUMN_TOKEN, token)
+            db.update(TABLE_USERS, contentValues, "$COLUMN_USERNAME = ?", arrayOf(username))
+        }
+
         cursor.close()
         db.close()
-        return exists
+        return token
+    }
+
+
+    /**
+     * Generates a new token for the user.
+     *
+     * @return A new token.
+     */
+    private fun generateToken(): String {
+        return UUID.randomUUID().toString()
     }
 
     /**
@@ -236,14 +260,9 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
      * @return The hashed password as a Base64 encoded string.
      */
     private fun hashPassword(password: String): String {
-        try {
-            val digest = MessageDigest.getInstance("SHA-256")
-            val hashBytes = digest.digest(password.toByteArray())
-            return Base64.encodeToString(hashBytes, Base64.DEFAULT)
-        } catch (e: NoSuchAlgorithmException) {
-            e.printStackTrace()
-            return "Something went wrong"
-        }
+        val digest = MessageDigest.getInstance("SHA-256")
+        val hashBytes = digest.digest(password.toByteArray())
+        return Base64.encodeToString(hashBytes, Base64.DEFAULT)
     }
 
     /**

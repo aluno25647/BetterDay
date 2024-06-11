@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">BetterDay</string>
     <string name="current_language">English</string>
+    <string name="english">English</string>
+    <string name="portuguese">Portuguese</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
@@ -19,6 +21,9 @@
     <string name="registration_success">Registration successful</string>
     <string name="registration_failed">Registration failed</string>
     <string name="logout_successful">Logout successful</string>
+    <string name="settings">Settings</string>
+    <string name="change_language">Change Language</string>
+    <string name="logout">Logout</string>
     <string name="today_fragment">Today</string>
     <string name="add_new_objective_button_context">Add new objective</string>
     <string name="cat_image_context">Image of a cat from the API</string>

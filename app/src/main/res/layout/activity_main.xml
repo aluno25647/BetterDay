@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:backgroundTint="#38B6FF"
+        app:tabIndicatorColor="@color/white"
         app:tabTextColor="@color/white">
 
         <com.google.android.material.tabs.TabItem
@@ -33,12 +34,8 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="frag 4" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="frag 5" />
+            android:text="@string/settings"
+            />
 
     </com.google.android.material.tabs.TabLayout>
 
