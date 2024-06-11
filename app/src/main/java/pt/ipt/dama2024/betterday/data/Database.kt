@@ -243,6 +243,42 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return token
     }
 
+    /**
+     * Verifies if the provided token matches the stored token for the given username.
+     *
+     * This method retrieves the token associated with the specified username from the database
+     * and compares it with the provided token. It returns true if the tokens match, otherwise false.
+     *
+     * @param username The username whose token needs to be verified.
+     * @param token The token to be verified.
+     * @return True if the provided token matches the stored token, false otherwise.
+     */
+    fun verifyToken(username: String, token: String): Boolean {
+        // Get a readable instance of the database
+        val db = this.readableDatabase
+
+        // Define the query to retrieve the token for the given username
+        val query = "SELECT $COLUMN_TOKEN FROM $TABLE_USERS WHERE $COLUMN_USERNAME = ?"
+
+        // Execute the query with the username as a parameter
+        val cursor = db.rawQuery(query, arrayOf(username))
+
+        var storedToken: String? = null
+        // Check if the cursor contains a result and retrieve the token
+        if (cursor.moveToFirst()) {
+            storedToken = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TOKEN))
+        }
+
+        // Close the cursor to release resources
+        cursor.close()
+
+        // Close the database connection
+        db.close()
+
+        // Compare the stored token with the provided token and return the result
+        return storedToken == token
+    }
+
 
     /**
      * Generates a new token for the user.

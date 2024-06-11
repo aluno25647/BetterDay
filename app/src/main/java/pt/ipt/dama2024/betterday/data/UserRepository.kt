@@ -36,6 +36,17 @@ class UserRepository(context: Context) {
     }
 
     /**
+     * Verifies if the provided token matches the stored token for the given username.
+     *
+     * @param username The username whose token needs to be verified.
+     * @param token The token to be verified.
+     * @return True if the provided token matches the stored token, false otherwise.
+     */
+    fun verifyToken(username: String, token: String): Boolean {
+        return db.verifyToken(username, token)
+    }
+
+    /**
      * Checks if the provided username is already in use.
      *
      * @param username The username to be checked.

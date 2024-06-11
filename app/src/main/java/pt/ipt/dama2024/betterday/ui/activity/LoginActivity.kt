@@ -42,6 +42,23 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             // Finish the LoginActivity so the user cannot go back to it
             finish()
+
+            // Get the stored username and token from the session
+            val username = sessionManager.getUsername()
+            val token = sessionManager.getToken()
+
+            // Verify the token with the database
+            if (userRepository.verifyToken(username, token)) {
+                // If token is valid, directly open the main activity
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                // Finish the LoginActivity so the user cannot go back to it
+                finish()
+            } else {
+                // If token is invalid, log out the user
+                sessionManager.logout()
+            }
+
         }
 
         // Login Button Click Listener

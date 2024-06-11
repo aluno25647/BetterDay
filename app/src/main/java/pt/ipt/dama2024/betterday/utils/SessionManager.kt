@@ -45,6 +45,15 @@ class SessionManager(private val context: Context) {
     }
 
     /**
+     * Retrieves the token from the session.
+     *
+     * @return The token if available, null otherwise.
+     */
+    fun getToken(): String {
+        return sharedPreferences.getString("token", null).toString()
+    }
+
+    /**
      * Saves the username and token in the session.
      *
      * @param username The username to be saved.
