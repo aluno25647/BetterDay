@@ -43,7 +43,8 @@ dependencies {
     implementation(libs.retrofit2.converter.gson)
     implementation(libs.gson)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    //https://github.com/Kotlin/kotlinx.coroutines
+    implementation(libs.kotlinx.coroutines.android)
 
     //https://github.com/hdodenhof/CircleImageView
     implementation (libs.circleimageview)
