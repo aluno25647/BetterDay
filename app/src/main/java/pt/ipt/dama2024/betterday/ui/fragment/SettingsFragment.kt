@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import pt.ipt.dama2024.betterday.R
 import pt.ipt.dama2024.betterday.ui.activity.LoginActivity
-import pt.ipt.dama2024.betterday.ui.activity.MainActivity
+import pt.ipt.dama2024.betterday.utils.DialogHelper
 
 /**
  * SettingsFragment is responsible for displaying the settings options.
@@ -76,6 +76,12 @@ class SettingsFragment : Fragment() {
                 R.id.portuguese_radio_button -> setLocale("pt")
             }
         }
+
+        // About the App activity
+        val aboutButton: Button = view.findViewById(R.id.button_about_app)
+        aboutButton.setOnClickListener {
+            DialogHelper.showAboutDialog(requireContext())
+        }
     }
 
     /**
@@ -99,7 +105,8 @@ class SettingsFragment : Fragment() {
         sessionManager.logout()
 
         // Show a toast message indicating successful logout
-        Toast.makeText(requireContext(), getString(R.string.logout_successful), Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), getString(R.string.logout_successful), Toast.LENGTH_SHORT)
+            .show()
 
         // Redirect to login activity
         val intent = Intent(requireContext(), LoginActivity::class.java)

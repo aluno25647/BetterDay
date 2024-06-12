@@ -30,4 +30,14 @@
     <string name="objectives_today_title">Objetivos de Hoje</string>
     <string name="cat_title">Gato da Positividade</string>
     <string name="catPositivity">Espero que tenhas um dia maravilhoso. Muita força, tu consegues!</string>
+    <string name="about_app">Sobre a App</string>
+    <string name="close">Fechar</string>
+    <string name="about_app_master">Mestrado de Engenharia Informática</string>
+    <string name="about_app_idc">Internet das Coisas</string>
+    <string name="about_app_dama">Desenvolvimento de Aplicações Móveis Avançadas</string>
+    <string name="about_app_year">2023/24</string>
+    <string name="about_app_creators_title">Criadores:</string>
+    <string name="about_app_creators">Luís Costa - Nº 25647\nPaulo Peixoto - Nº 26097</string>
+    <string name="about_app_libraries_title">Frameworks e Bibliotecas Utilizadas:</string>
+    <string name="about_app_libraries">Retrofit\n</string>
 </resources>

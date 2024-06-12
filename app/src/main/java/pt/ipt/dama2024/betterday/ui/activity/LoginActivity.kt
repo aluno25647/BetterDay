@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import pt.ipt.dama2024.betterday.R
 import pt.ipt.dama2024.betterday.data.UserRepository
+import pt.ipt.dama2024.betterday.utils.DialogHelper
 import pt.ipt.dama2024.betterday.utils.ValidationUtils
 
 /**
@@ -104,5 +105,12 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
+
+        // Click Listener for About the App Dialog
+        val aboutText = findViewById<TextView>(R.id.about_app_btn)
+        aboutText.setOnClickListener {
+            DialogHelper.showAboutDialog(this)
+        }
+
     }
 }
