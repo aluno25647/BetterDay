@@ -54,7 +54,7 @@ class SettingsFragment : Fragment() {
         // Find the logout button and set its click listener
         val logoutButton = view.findViewById<Button>(R.id.logout_btn)
         logoutButton.setOnClickListener {
-            handleLogout()
+            showLogoutConfirmationDialog()
         }
 
         // Find the language radio group and set its change listener
@@ -96,6 +96,14 @@ class SettingsFragment : Fragment() {
         requireActivity().recreate()
     }
 
+    /**
+     * Shows a confirmation dialog before logging out.
+     */
+    private fun showLogoutConfirmationDialog() {
+        DialogHelper.showLogoutConfirmationDialog(requireContext()) {
+            handleLogout()
+        }
+    }
 
     /**
      * Handles the logout process, including clearing session data and navigating to the login screen.

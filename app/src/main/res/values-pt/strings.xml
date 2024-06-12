@@ -29,7 +29,8 @@
     <string name="cat_image_context">Imagem de um gato vinda da API</string>
     <string name="objectives_today_title">Objetivos de Hoje</string>
     <string name="cat_title">Gato da Positividade</string>
-    <string name="catPositivity">Espero que tenhas um dia maravilhoso. Muita força, tu consegues!</string>
+    <string name="cat">Gato</string>
+    <string name="catPositivity">Espero que tenhas um dia maravilhoso.\nMuita força, tu consegues!</string>
     <string name="about_app">Sobre a App</string>
     <string name="close">Fechar</string>
     <string name="about_app_master">Mestrado de Engenharia Informática</string>
@@ -52,4 +53,7 @@
     <string name="empty_description_toast">A descrição do objetivo não pode estar vazia</string>
     <string name="new_objective_saved_toast">Objetivo criado com sucesso</string>
     <string name="error_saving_new_objective_toast">Erro ao criar o novo objetivo</string>
+    <string name="confirm_logout">Tem certeza de que deseja sair?</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
 </resources>

@@ -38,4 +38,35 @@ object DialogHelper {
         val dialog = builder.create()
         dialog.show()
     }
+
+    /**
+     * Displays a confirmation dialog for logging out.
+     *
+     * @param context The context used to build the dialog.
+     * @param onConfirm The action to perform when the user confirms the logout.
+     */
+    fun showLogoutConfirmationDialog(context: Context, onConfirm: () -> Unit) {
+        // Create an AlertDialog builder
+        val builder = AlertDialog.Builder(context)
+
+        // Set the dialog message and title
+        builder.setTitle(context.getString(R.string.logout))
+        builder.setMessage(context.getString(R.string.confirm_logout))
+
+        // Add "Yes" and "No" buttons to the dialog
+        builder.setPositiveButton(context.getString(R.string.yes)) { dialog, _ ->
+            // Perform the logout action
+            onConfirm()
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton(context.getString(R.string.no)) { dialog, _ ->
+            // Dismiss the dialog
+            dialog.dismiss()
+        }
+
+        // Create and show the dialog
+        val dialog = builder.create()
+        dialog.show()
+    }
 }

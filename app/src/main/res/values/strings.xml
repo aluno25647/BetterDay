@@ -29,7 +29,8 @@
     <string name="cat_image_context">Image of a cat from the API</string>
     <string name="objectives_today_title">Today\'s Objectives</string>
     <string name="cat_title">Cat of Positivity</string>
-    <string name="catPositivity">Hope you have an amazing day. You got this!</string>
+    <string name="cat">Cat</string>
+    <string name="catPositivity">Hope you have an amazing day.\nYou got this!</string>
     <string name="about_app">About the App</string>
     <string name="close">Close</string>
     <string name="about_app_master">Mestrado de Engenharia Informática</string>
@@ -52,4 +53,7 @@
     <string name="empty_description_toast">Objective description cannot be empty</string>
     <string name="new_objective_saved_toast">Objective saved successfully</string>
     <string name="error_saving_new_objective_toast">Error saving the new objective</string>
+    <string name="confirm_logout">Are you sure you want to log out?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

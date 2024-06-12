@@ -7,9 +7,7 @@ import pt.ipt.dama2024.betterday.model.Objective
 import android.content.ContentValues
 import java.security.MessageDigest
 import java.util.Date
-import java.security.NoSuchAlgorithmException
 import android.util.Base64
-import android.util.Log
 import java.util.UUID
 
 /**
