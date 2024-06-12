@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragment.FragmentThree">
+    tools:context=".ui.fragment.CreationFragment">
 
     <!-- TextView for the title -->
     <TextView

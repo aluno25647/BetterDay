@@ -17,7 +17,7 @@ import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
-class FragmentTwo : Fragment() {
+class CatsFragment : Fragment() {
 
     private lateinit var catImageView: ImageView
     private lateinit var catTitle: TextView

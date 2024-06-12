@@ -9,13 +9,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import pt.ipt.dama2024.betterday.R
-import pt.ipt.dama2024.betterday.data.Database
 import pt.ipt.dama2024.betterday.data.ObjectiveRepository
 import pt.ipt.dama2024.betterday.model.Objective
 import java.util.Date
 
 
-class FragmentThree : Fragment() {
+class CreationFragment : Fragment() {
     private lateinit var editTextObjectiveTitle: EditText
     private lateinit var editTextObjectiveDescription: EditText
     private lateinit var buttonSaveObjective: Button
@@ -28,7 +27,7 @@ class FragmentThree : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_three, container, false)
+        return inflater.inflate(R.layout.creation_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

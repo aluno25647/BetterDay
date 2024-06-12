@@ -56,4 +56,6 @@
     <string name="confirm_logout">Are you sure you want to log out?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="objectives">Objectives</string>
+    <string name="new_objective">New Objective</string>
 </resources>

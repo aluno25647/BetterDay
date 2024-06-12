@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragment.FragmentTwo"
+    tools:context=".ui.fragment.CatsFragment"
     android:padding="35dp">
 
     <!-- TextView for the title -->

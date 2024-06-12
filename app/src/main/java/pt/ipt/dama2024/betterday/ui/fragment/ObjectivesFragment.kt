@@ -12,8 +12,7 @@ import pt.ipt.dama2024.betterday.R
 import pt.ipt.dama2024.betterday.data.ObjectiveRepository
 import pt.ipt.dama2024.betterday.ui.adapter.ObjectiveAdapter
 
-
-class FragmentOne : Fragment() {
+class ObjectivesFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ObjectiveAdapter
@@ -27,7 +26,7 @@ class FragmentOne : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_one, container, false)
+        return inflater.inflate(R.layout.objectives_fragment, container, false)
     }
 
     /**
@@ -39,16 +38,7 @@ class FragmentOne : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerViewObjectives)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        // Initialize SessionManager
-        sessionManager = SessionManager(requireContext())
 
-        // Initialize ObjectiveRepository
-        objectiveRepository = ObjectiveRepository(requireContext())
-
-        val objectives = objectiveRepository.getAllUserObjectives(sessionManager.getUsername())
-
-        adapter = ObjectiveAdapter(objectives)
-        recyclerView.adapter = adapter
 
         // Initialize FloatingActionButton
         newObjectiveButton = view.findViewById(R.id.buttonAddObjective)
@@ -61,8 +51,16 @@ class FragmentOne : Fragment() {
      */
     override fun onResume() {
         super.onResume()
-        //refresh list of objectives
-        // TODO refresh when switch to fragment
+        // Initialize SessionManager
+        sessionManager = SessionManager(requireContext())
+
+        // Initialize ObjectiveRepository
+        objectiveRepository = ObjectiveRepository(requireContext())
+
+        val objectives = objectiveRepository.getAllUserObjectives(sessionManager.getUsername())
+
+        adapter = ObjectiveAdapter(objectives)
+        recyclerView.adapter = adapter
     }
 
 }
