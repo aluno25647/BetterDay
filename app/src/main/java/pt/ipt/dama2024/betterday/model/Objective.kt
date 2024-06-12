@@ -9,9 +9,7 @@ data class Objective(
     @PrimaryKey(autoGenerate = true) val id: Long = 0, // Unique identifier for the objective
     val title: String, // Title of the objective
     val description: String, // Description of the objective
-    val frequency: Frequency, // Frequency of the objective (daily, weekly, etc)
     val creationDate: Date, // Date when the objective was created
-    val deadline: Date, // Deadline for the objective
     val checked: Boolean = false, // Whether the objective has been checked/completed
     val author: String, // User ID or username of the author/creator
     val photo1: ByteArray? = null,  // ByteArray for the first photo
@@ -33,9 +31,7 @@ data class Objective(
         if (id != other.id) return false
         if (title != other.title) return false
         if (description != other.description) return false
-        if (frequency != other.frequency) return false
         if (creationDate != other.creationDate) return false
-        if (deadline != other.deadline) return false
         if (checked != other.checked) return false
         if (author != other.author) return false
         if (photo1 != null) {
@@ -60,9 +56,7 @@ data class Objective(
         var result = id.hashCode()
         result = 31 * result + title.hashCode()
         result = 31 * result + description.hashCode()
-        result = 31 * result + frequency.hashCode()
         result = 31 * result + creationDate.hashCode()
-        result = 31 * result + deadline.hashCode()
         result = 31 * result + checked.hashCode()
         result = 31 * result + author.hashCode()
         result = 31 * result + (photo1?.contentHashCode() ?: 0)
@@ -72,9 +66,4 @@ data class Objective(
         result = 31 * result + (longitude?.hashCode() ?: 0)
         return result
     }
-}
-
-// Possible frequencies for the objective
-enum class Frequency {
-    DAILY, WEEKLY, MONTHLY, UNIQUE
 }
