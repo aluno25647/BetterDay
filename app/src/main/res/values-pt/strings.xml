@@ -42,4 +42,14 @@
     <string name="about_app_libraries">Retrofit\n</string>
     <string name="show_password">Mostrar Palavra-passe</string>
     <string name="hide_password">Ocultar Palavra-passe</string>
+    <string name="create_a_new_objective">Criar novo objetivo</string>
+    <string name="title_new_objective_creation">Título</string>
+    <string name="enter_your_objective_title">Introduza o seu título</string>
+    <string name="description_new_objective_creation">Descrição</string>
+    <string name="enter_your_objective_description">Introduza a sua descrição</string>
+    <string name="save_new_objective">Guardar novo Objetivo</string>
+    <string name="empty_title_toast">O título do objetivo não pode estar vazio</string>
+    <string name="empty_description_toast">A descrição do objetivo não pode estar vazia</string>
+    <string name="new_objective_saved_toast">Objetivo criado com sucesso</string>
+    <string name="error_saving_new_objective_toast">Erro ao criar o novo objetivo</string>
 </resources>

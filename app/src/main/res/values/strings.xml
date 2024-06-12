@@ -42,4 +42,14 @@
     <string name="about_app_libraries">Retrofit\n</string>
     <string name="show_password">Show Password</string>
     <string name="hide_password">Hide Password</string>
+    <string name="create_a_new_objective">Create a new Objective</string>
+    <string name="title_new_objective_creation">Title</string>
+    <string name="enter_your_objective_title">Enter your objective title</string>
+    <string name="description_new_objective_creation">Description</string>
+    <string name="enter_your_objective_description">Enter your objective description</string>
+    <string name="save_new_objective">Save New Objective</string>
+    <string name="empty_title_toast">Objective title cannot be empty</string>
+    <string name="empty_description_toast">Objective description cannot be empty</string>
+    <string name="new_objective_saved_toast">Objective saved successfully</string>
+    <string name="error_saving_new_objective_toast">Error saving the new objective</string>
 </resources>
