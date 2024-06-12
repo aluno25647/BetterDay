@@ -25,19 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/todayTitle"
-        android:layout_above="@+id/buttonAddObjective"
         android:padding="16dp"
         tools:listitem="@layout/objective_item" />
-
-    <!-- FloatingActionButton for adding a new objective -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonAddObjective"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/add_new_objective_button_context"
-        tools:ignore="VectorDrawableCompat" />
 
 </RelativeLayout>

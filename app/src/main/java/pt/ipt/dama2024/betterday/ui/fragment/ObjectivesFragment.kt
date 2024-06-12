@@ -38,13 +38,6 @@ class ObjectivesFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerViewObjectives)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-
-
-        // Initialize FloatingActionButton
-        newObjectiveButton = view.findViewById(R.id.buttonAddObjective)
-        newObjectiveButton.setOnClickListener {
-            // TODO add new objective action
-        }
     }
     /**
      * Called when the Fragment is visible to the user
