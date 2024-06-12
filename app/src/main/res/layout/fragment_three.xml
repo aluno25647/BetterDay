@@ -1,17 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.fragment.FragmentThree">
 
+    <!-- TextView for the title -->
     <TextView
-        android:id="@+id/frag3_TextView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="fragment_three"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:id="@+id/createNewObjectiveTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/create_a_new_objective"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:padding="16dp" />
 
-</FrameLayout>
+    <!-- Label for the objective title -->
+    <TextView
+        android:id="@+id/textViewNewObjectiveTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_new_objective_creation"
+        android:textSize="18sp"
+        android:paddingBottom="8dp" />
+
+    <!-- EditText for the objective title input -->
+    <EditText
+        android:id="@+id/editTextObjectiveTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_your_objective_title"
+        android:inputType="text" />
+
+    <!-- Label for the objective description -->
+    <TextView
+        android:id="@+id/textViewObjectiveDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/description_new_objective_creation"
+        android:textSize="18sp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp" />
+
+    <!-- EditText for the objective description input -->
+    <EditText
+        android:id="@+id/editTextObjectiveDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_your_objective_description"
+        android:inputType="text" />
+
+    <!-- Button to save the objective -->
+    <Button
+        android:id="@+id/buttonSaveObjective"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/save_new_objective" />
+
+
+</LinearLayout>
