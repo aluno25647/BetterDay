@@ -3,6 +3,8 @@ package pt.ipt.dama2024.betterday.ui.activity
 import SessionManager
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
+import android.text.method.PasswordTransformationMethod
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -83,7 +85,8 @@ class LoginActivity : AppCompatActivity() {
                 val token = userRepository.authenticateUser(username, password)
                 if (token != null) {
                     // SUCCESS
-                    Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT)
+                        .show()
 
                     // Save the username and token in the session.
                     sessionManager.saveCredentials(username, token)
@@ -94,7 +97,8 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                 } else {
                     // Authentication failed
-                    Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
@@ -112,5 +116,68 @@ class LoginActivity : AppCompatActivity() {
             DialogHelper.showAboutDialog(this)
         }
 
+        // Get the EditText and TextView views
+        val passwordEditText = findViewById<EditText>(R.id.password)
+        val showPasswordTextView = findViewById<TextView>(R.id.showPassword)
+
+        // Set a click listener on the TextView to toggle password visibility
+        showPasswordTextView.setOnClickListener {
+            togglePasswordVisibility(passwordEditText)
+        }
+
+        // Set a focus change listener on the EditText to hide the password when it loses focus
+        passwordEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                hidePassword(passwordEditText)
+            }
+        }
+
+        var isPasswordVisible = false
+
+        // Set a click listener on the TextView to toggle password visibility
+        showPasswordTextView.setOnClickListener {
+            if (isPasswordVisible) {
+                // If password is visible, hide it
+                passwordEditText.transformationMethod = PasswordTransformationMethod.getInstance()
+                showPasswordTextView.text = getString(R.string.show_password)
+                isPasswordVisible = false
+            } else {
+                // If password is hidden, show it
+                passwordEditText.transformationMethod = null
+                showPasswordTextView.text = getString(R.string.hide_password)
+                isPasswordVisible = true
+            }
+        }
+
+
     }
+
+    /**
+     * Toggles the visibility of the password in the specified EditText.
+     * If the password is currently hidden, it will be shown, and vice versa.
+     *
+     * @param passwordEditText The EditText containing the password.
+     */
+    private fun togglePasswordVisibility(passwordEditText: EditText) {
+        passwordEditText.apply {
+            transformationMethod =
+                if (transformationMethod == PasswordTransformationMethod.getInstance()) {
+                    // Show password
+                    null
+                } else {
+                    // Hide password
+                    PasswordTransformationMethod.getInstance()
+                }
+        }
+    }
+
+    /**
+     * Hides the password in the specified EditText.
+     *
+     * @param passwordEditText The EditText containing the password.
+     */
+    private fun hidePassword(passwordEditText: EditText) {
+        passwordEditText.transformationMethod = PasswordTransformationMethod.getInstance()
+    }
+
 }
