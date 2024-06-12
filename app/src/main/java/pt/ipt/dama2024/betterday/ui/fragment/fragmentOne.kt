@@ -56,5 +56,13 @@ class FragmentOne : Fragment() {
             // TODO add new objective action
         }
     }
+    /**
+     * Called when the Fragment is visible to the user
+     */
+    override fun onResume() {
+        super.onResume()
+        //refresh list of objectives
+        // TODO refresh when switch to fragment
+    }
 
 }
