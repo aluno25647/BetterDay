@@ -1,5 +1,6 @@
 package pt.ipt.dama2024.betterday.ui.fragment
 import SessionManager
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import pt.ipt.dama2024.betterday.R
 import pt.ipt.dama2024.betterday.data.ObjectiveRepository
+import pt.ipt.dama2024.betterday.ui.activity.ObjectiveDetailActivity
 import pt.ipt.dama2024.betterday.ui.adapter.ObjectiveAdapter
 
 class ObjectivesFragment : Fragment() {
@@ -44,6 +46,7 @@ class ObjectivesFragment : Fragment() {
      */
     override fun onResume() {
         super.onResume()
+
         // Initialize SessionManager
         sessionManager = SessionManager(requireContext())
 
@@ -52,8 +55,20 @@ class ObjectivesFragment : Fragment() {
 
         val objectives = objectiveRepository.getAllUserObjectives(sessionManager.getUsername())
 
-        adapter = ObjectiveAdapter(objectives)
+        adapter = ObjectiveAdapter(objectives) { selectedObjective ->
+            val intent = Intent(requireContext(), ObjectiveDetailActivity::class.java).apply {
+                putExtra("objectiveId", selectedObjective.id)
+                putExtra("title", selectedObjective.title)
+                putExtra("description", selectedObjective.description)
+                putExtra("creationDate", selectedObjective.creationDate.time)
+                putExtra("checked", selectedObjective.checked)
+
+            }
+            startActivity(intent)
+        }
         recyclerView.adapter = adapter
     }
+
+
 
 }

@@ -22,6 +22,9 @@
         <!-- RegisterActivity declaration -->
         <activity android:name=".ui.activity.RegisterActivity"></activity>
 
+        <!-- ObjectiveDetail declaration -->
+        <activity android:name=".ui.activity.ObjectiveDetailActivity"></activity>
+
         <!-- LoginActivity declaration with intent filter to be the launcher activity -->
         <activity
             android:name=".ui.activity.LoginActivity"
