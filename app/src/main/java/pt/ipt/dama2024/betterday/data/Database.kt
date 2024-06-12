@@ -8,9 +8,7 @@ import android.content.ContentValues
 import pt.ipt.dama2024.betterday.model.Frequency
 import java.security.MessageDigest
 import java.util.Date
-import java.security.NoSuchAlgorithmException
 import android.util.Base64
-import android.util.Log
 import java.util.UUID
 
 /**

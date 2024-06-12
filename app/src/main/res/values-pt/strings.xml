@@ -43,4 +43,7 @@
     <string name="about_app_libraries">Retrofit\n</string>
     <string name="show_password">Mostrar Palavra-passe</string>
     <string name="hide_password">Ocultar Palavra-passe</string>
+    <string name="confirm_logout">Tem certeza de que deseja sair?</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
 </resources>
