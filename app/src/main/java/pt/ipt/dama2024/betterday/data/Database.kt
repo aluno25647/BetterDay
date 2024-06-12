@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import pt.ipt.dama2024.betterday.model.Objective
 import android.content.ContentValues
-import pt.ipt.dama2024.betterday.model.Frequency
 import java.security.MessageDigest
 import java.util.Date
 import java.security.NoSuchAlgorithmException
@@ -33,9 +32,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val COLUMN_ID = "id"
         private const val COLUMN_TITLE = "title"
         private const val COLUMN_DESCRIPTION = "description"
-        private const val COLUMN_FREQUENCY = "frequency"
         private const val COLUMN_CREATION_DATE = "creationDate"
-        private const val COLUMN_DEADLINE = "deadline"
         private const val COLUMN_CHECKED = "checked"
         private const val COLUMN_AUTHOR = "author"
         private const val COLUMN_PHOTO1 = "photo1"
@@ -63,9 +60,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 + "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "$COLUMN_TITLE TEXT, "
                 + "$COLUMN_DESCRIPTION TEXT, "
-                + "$COLUMN_FREQUENCY TEXT, "
                 + "$COLUMN_CREATION_DATE INTEGER, "
-                + "$COLUMN_DEADLINE INTEGER, "
                 + "$COLUMN_CHECKED INTEGER, "
                 + "$COLUMN_AUTHOR TEXT, "
                 + "$COLUMN_PHOTO1 BLOB, "
@@ -108,9 +103,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val values = ContentValues().apply {
             put(COLUMN_TITLE, objective.title)
             put(COLUMN_DESCRIPTION, objective.description)
-            put(COLUMN_FREQUENCY, objective.frequency.name) // Retrieve Enum Option
             put(COLUMN_CREATION_DATE, objective.creationDate.time) // Convert Date to Long
-            put(COLUMN_DEADLINE, objective.deadline.time) // Convert Date to Long
             put(COLUMN_CHECKED, if (objective.checked) 1 else 0)
             put(COLUMN_AUTHOR, username)
             put(COLUMN_PHOTO1, objective.photo1)
@@ -138,9 +131,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 val id = getLong(getColumnIndexOrThrow(COLUMN_ID))
                 val title = getString(getColumnIndexOrThrow(COLUMN_TITLE))
                 val description = getString(getColumnIndexOrThrow(COLUMN_DESCRIPTION))
-                val frequency = Frequency.valueOf(getString(getColumnIndexOrThrow(COLUMN_FREQUENCY))) // Retrieve Enum Option
                 val creationDate = Date(getLong(getColumnIndexOrThrow(COLUMN_CREATION_DATE))) // Convert Long to Date
-                val deadline = Date(getLong(getColumnIndexOrThrow(COLUMN_DEADLINE))) // Convert Long to Date
                 val checked = getInt(getColumnIndexOrThrow(COLUMN_CHECKED)) == 1 // Convert int to boolean
                 val author = getString(getColumnIndexOrThrow(COLUMN_AUTHOR))
                 val photo1 = getBlob(getColumnIndexOrThrow(COLUMN_PHOTO1))
@@ -148,7 +139,8 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 val photo3 = getBlob(getColumnIndexOrThrow(COLUMN_PHOTO3))
                 val latitude = getDouble(getColumnIndexOrThrow(COLUMN_LATITUDE))
                 val longitude = getDouble(getColumnIndexOrThrow(COLUMN_LONGITUDE))
-                objectives.add(Objective(id, title, description, frequency, creationDate, deadline, checked, author, photo1, photo2, photo3, latitude, longitude))            }
+                objectives.add(Objective(id, title, description, creationDate, checked, author, photo1, photo2, photo3, latitude, longitude))
+            }
         }
         cursor.close()
         return objectives
@@ -165,9 +157,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val values = ContentValues().apply {
             put(COLUMN_TITLE, objective.title)
             put(COLUMN_DESCRIPTION, objective.description)
-            put(COLUMN_FREQUENCY, objective.frequency.name) // Convert enum to string
             put(COLUMN_CREATION_DATE, objective.creationDate.time) // Convert Date to Long
-            put(COLUMN_DEADLINE, objective.deadline.time) // Convert Date to Long
             put(COLUMN_CHECKED, if (objective.checked) 1 else 0) // Convert boolean to int
             put(COLUMN_AUTHOR, objective.author)
             put(COLUMN_PHOTO1, objective.photo1)
@@ -334,5 +324,4 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         db.close()
         return count > 0
     }
-
 }
