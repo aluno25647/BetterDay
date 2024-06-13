@@ -24,8 +24,8 @@
     -->
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/catImageView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
         android:layout_gravity="center"
         android:src="@drawable/baseline_pets_24"
         android:contentDescription="@string/cat_image_context" />

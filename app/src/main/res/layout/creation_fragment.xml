@@ -1,81 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.fragment.CreationFragment"
-    android:padding="35dp">
+    android:layout_height="match_parent">
 
-    <!-- TextView for the title -->
-    <TextView
-        android:id="@+id/createNewObjectiveTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/create_a_new_objective"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="30dp" />
+    <LinearLayout
 
-    <!-- Label for the objective title -->
-    <TextView
-        android:id="@+id/textViewNewObjectiveTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_new_objective_creation"
-        android:textSize="18sp"
-        android:paddingBottom="8dp" />
-
-    <!-- EditText for the objective title input -->
-    <EditText
-        android:id="@+id/editTextObjectiveTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_your_objective_title"
-        android:inputType="text"
-        android:padding="12dp"
-        android:textSize="16sp"
-        android:background="@drawable/edittext_background"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="35dp"
+        tools:context=".ui.fragment.CreationFragment">
 
-    <!-- Label for the objective description -->
-    <TextView
-        android:id="@+id/textViewObjectiveDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/description_new_objective_creation"
-        android:textSize="18sp"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp" />
+        <!-- TextView for the title -->
+        <TextView
+            android:id="@+id/createNewObjectiveTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:text="@string/create_a_new_objective"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-    <!-- EditText for the objective description input -->
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/editTextObjectiveDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_your_objective_description"
-        android:inputType="textMultiLine"
-        android:minLines="5"
-        android:gravity="top"
-        android:padding="12dp"
-        android:textSize="16sp"
-        android:background="@drawable/edittext_background"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="16dp" />
+        <!-- Label for the objective title -->
+        <TextView
+            android:id="@+id/textViewNewObjectiveTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="@string/title_new_objective_creation"
+            android:textSize="18sp" />
 
-    <!-- Button to save the objective -->
-    <Button
-        android:id="@+id/buttonSaveObjective"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/save_new_objective"
-        android:textSize="18sp"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@color/blue"
-        android:layout_marginTop="30dp"/>
+        <!-- EditText for the objective title input -->
+        <EditText
+            android:id="@+id/editTextObjectiveTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edittext_background"
+            android:hint="@string/enter_your_objective_title"
+            android:inputType="text"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
-</LinearLayout>
+        <!-- Label for the objective description -->
+        <TextView
+            android:id="@+id/textViewObjectiveDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:text="@string/description_new_objective_creation"
+            android:textSize="18sp" />
+
+        <!-- EditText for the objective description input -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextObjectiveDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edittext_background"
+            android:gravity="top"
+            android:hint="@string/enter_your_objective_description"
+            android:inputType="textMultiLine"
+            android:minLines="5"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <!-- Button to save the objective -->
+        <Button
+            android:id="@+id/buttonSaveObjective"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/blue"
+            android:text="@string/save_new_objective"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+</ScrollView>
