@@ -10,7 +10,7 @@ data class Objective(
     val title: String, // Title of the objective
     val description: String, // Description of the objective
     val creationDate: Date, // Date when the objective was created
-    val checked: Boolean = false, // Whether the objective has been checked/completed
+    var checked: Boolean = false, // Whether the objective has been checked/completed
     val author: String, // User ID or username of the author/creator
     val photo1: ByteArray? = null,  // ByteArray for the first photo
     val photo2: ByteArray? = null,  // ByteArray for the second photo
