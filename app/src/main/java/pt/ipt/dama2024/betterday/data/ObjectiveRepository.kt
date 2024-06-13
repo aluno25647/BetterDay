@@ -25,6 +25,16 @@ class ObjectiveRepository(context: Context) {
     }
 
     /**
+     * Retrieves an objective by its ID from the database.
+     *
+     * @param id The ID of the objective to retrieve.
+     * @return The Objective object if found, null otherwise.
+     */
+    fun getObjectiveById(id: Long): Objective? {
+        return db.getObjectiveById(id)
+    }
+
+    /**
      * Retrieves all objectives associated with a specific user from the database.
      *
      * @param username The username of the user whose objectives are to be retrieved.

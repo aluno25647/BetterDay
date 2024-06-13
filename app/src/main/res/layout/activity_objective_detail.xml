@@ -107,15 +107,26 @@
                     android:paddingTop="8dp"
                     android:textColor="@color/green"/>
 
+                <!-- Edit Objective Button -->
+                <Button
+                    android:id="@+id/buttonEditObjective"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit Objective"
+                    android:layout_below="@id/textViewStatus"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25dp"
+                    android:backgroundTint="@color/blue"/>
+
                 <!-- Delete Objective Button -->
                 <Button
                     android:id="@+id/buttonDeleteObjective"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Delete Objective"
-                    android:layout_below="@id/textViewStatus"
+                    android:layout_below="@id/buttonEditObjective"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="10dp"
                     android:backgroundTint="@color/red"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>

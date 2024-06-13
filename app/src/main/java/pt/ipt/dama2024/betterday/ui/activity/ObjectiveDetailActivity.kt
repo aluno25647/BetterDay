@@ -1,8 +1,7 @@
 package pt.ipt.dama2024.betterday.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -10,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import pt.ipt.dama2024.betterday.R
 import pt.ipt.dama2024.betterday.data.ObjectiveRepository
+import pt.ipt.dama2024.betterday.model.Objective
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -17,6 +17,7 @@ import java.util.Locale
 class ObjectiveDetailActivity : AppCompatActivity() {
 
     private lateinit var objectiveRepository: ObjectiveRepository
+    private var objectiveId: Long = -1L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +29,38 @@ class ObjectiveDetailActivity : AppCompatActivity() {
         // Enable the back button in the action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Get data from intent
-        val title = intent.getStringExtra("title")
-        val description = intent.getStringExtra("description")
-        val creationDate = intent.getLongExtra("creationDate", -1L)
-        val checked = intent.getBooleanExtra("checked", false)
-        val objectiveId = intent.getLongExtra("objectiveId", -1L)
+        // Get objectiveId from intent
+        objectiveId = intent.getLongExtra("objectiveId", -1L)
 
+        if (objectiveId == -1L) {
+            Toast.makeText(this, "Objective id not provided", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+
+        // Go back button click listener
+        val buttonBack: Button = findViewById(R.id.buttonBack)
+        buttonBack.setOnClickListener {
+            finish()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (objectiveId != -1L) {
+            // Fetch objective from repository using objectiveId
+            val objective = objectiveRepository.getObjectiveById(objectiveId)
+
+            if (objective != null) {
+                // Update UI with fetched objective data
+                updateUIWithObjective(objective)
+            } else {
+                Toast.makeText(this, "Objective not found", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+    }
+
+    private fun updateUIWithObjective(objective: Objective) {
         // Find views by ID
         val titleTextView = findViewById<TextView>(R.id.textViewTitle)
         val descriptionTextView = findViewById<TextView>(R.id.textViewDescription)
@@ -42,57 +68,52 @@ class ObjectiveDetailActivity : AppCompatActivity() {
         val statusTextView = findViewById<TextView>(R.id.textViewStatus)
 
         // Set the data to views
-        titleTextView.text = title
-        descriptionTextView.text = description
-
-        creationDateTextView.text = formatDate(creationDate)
+        titleTextView.text = objective.title
+        descriptionTextView.text = objective.description
+        creationDateTextView.text = formatDate(objective.creationDate)
 
         // Set status text and color based on "checked" attribute
-        if (checked) {
+        if (objective.checked) {
             statusTextView.text = "Completed"
-            statusTextView.setTextColor(ContextCompat.getColor(this, R.color.green))  // Green color for "Completed"
+            statusTextView.setTextColor(ContextCompat.getColor(this, R.color.green))
         } else {
             statusTextView.text = "Not Completed"
-            statusTextView.setTextColor(ContextCompat.getColor(this, R.color.red))  // Red color for "Not Completed"
-        }
-
-        // Handle custom back button click
-        val backButton: Button = findViewById(R.id.buttonBack)
-        backButton.setOnClickListener {
-            finish()
+            statusTextView.setTextColor(ContextCompat.getColor(this, R.color.red))
         }
 
         // Handle delete objective button click
         val deleteButton: Button = findViewById(R.id.buttonDeleteObjective)
         deleteButton.setOnClickListener {
-            if (objectiveId != -1L) {
-                // Call the deleteObjective function in repository
-                val rowsAffected = objectiveRepository.deleteObjective(objectiveId)
-                if (rowsAffected > 0) {
-                    // Objective deleted successfully
-                    finish()
-                } else {
-                    Toast.makeText(this, "Failed to delete objective", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                Toast.makeText(this, "Failed to delete objective", Toast.LENGTH_SHORT).show()
-            }
+            deleteObjective(objectiveId)
+        }
+
+        // Handle edit objective button click
+        val editButton: Button = findViewById(R.id.buttonEditObjective)
+        editButton.setOnClickListener {
+            navigateToEditObjective(objectiveId)
         }
     }
 
-    private fun formatDate(date: Long): String {
+    private fun deleteObjective(objectiveId: Long) {
+        val rowsAffected = objectiveRepository.deleteObjective(objectiveId)
+        if (rowsAffected > 0) {
+            Toast.makeText(this, "Objective deleted successfully", Toast.LENGTH_SHORT).show()
+            finish()
+        } else {
+            Toast.makeText(this, "Failed to delete objective", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun navigateToEditObjective(objectiveId: Long) {
+        val intent = Intent(this, EditObjectiveActivity::class.java).apply {
+            putExtra("objectiveId", objectiveId)
+        }
+        startActivity(intent)
+    }
+
+    private fun formatDate(date: Date): String {
         val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-        return sdf.format(Date(date))
+        return sdf.format(date)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                // Handle the back button click here
-                finish()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 }

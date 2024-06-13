@@ -108,6 +108,66 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
     /**
+     * Retrieves an objective by its ID from the database.
+     *
+     * @param id The ID of the objective to retrieve.
+     * @return The Objective object if found, null otherwise.
+     */
+    fun getObjectiveById(id: Long): Objective? {
+        val db = this.readableDatabase
+        var objective: Objective? = null
+
+        val cursor = db.query(
+            TABLE_OBJECTIVES,
+            null,
+            "$COLUMN_ID = ?",
+            arrayOf(id.toString()),
+            null,
+            null,
+            null
+        )
+
+        cursor.use { cursor ->
+            if (cursor.moveToFirst()) {
+                val titleIndex = cursor.getColumnIndexOrThrow(COLUMN_TITLE)
+                val descriptionIndex = cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION)
+                val creationDateIndex = cursor.getColumnIndexOrThrow(COLUMN_CREATION_DATE)
+                val checkedIndex = cursor.getColumnIndexOrThrow(COLUMN_CHECKED)
+                val authorIndex = cursor.getColumnIndexOrThrow(COLUMN_AUTHOR)
+                val photo1Index = cursor.getColumnIndexOrThrow(COLUMN_PHOTO1)
+                val latitudeIndex = cursor.getColumnIndexOrThrow(COLUMN_LATITUDE)
+                val longitudeIndex = cursor.getColumnIndexOrThrow(COLUMN_LONGITUDE)
+
+                val title = cursor.getString(titleIndex)
+                val description = cursor.getString(descriptionIndex)
+                val creationDate = Date(cursor.getLong(creationDateIndex))
+                val checked = cursor.getInt(checkedIndex) == 1
+                val author = cursor.getString(authorIndex)
+                val photo1 = cursor.getBlob(photo1Index)
+                val latitude = cursor.getDouble(latitudeIndex)
+                val longitude = cursor.getDouble(longitudeIndex)
+
+                objective = Objective(
+                    id,
+                    title,
+                    description,
+                    creationDate,
+                    checked,
+                    author,
+                    photo1,
+                    latitude,
+                    longitude
+                )
+            }
+        }
+
+        cursor.close()
+        db.close()
+        return objective
+    }
+
+
+    /**
      * Here is prepared the function that returns all objectives currently in the database
      *  in a List of Objectives format
      *
