@@ -71,6 +71,10 @@ dependencies {
     // CameraX Extensions library
     implementation(libs.androidx.camera.extensions)
 
+    // StreetMaps Libs
+    implementation (libs.osmdroid.android)
+    implementation(libs.play.services.maps)
+
     //
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
