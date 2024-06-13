@@ -59,4 +59,7 @@
     <string name="objectives">Objectivos</string>
     <string name="new_objective">Novo Objectivo</string>
     <string name="camera_take_photo_button">Tirar Foto</string>
+    <string name="permission_request_to_use_camera_denied">Pedido de permissão de uso da câmera negado</string>
+    <string name="photo_capture_succeeded">Captura da foto efetuada com sucesso</string>
+    <string name="default_location_ipt">Sala O103, IPT. Esta é a localização base. Se esta não for a localização desejada, corrigir os dados introduzidos</string>
 </resources>
