@@ -58,4 +58,5 @@
     <string name="no">Não</string>
     <string name="objectives">Objectivos</string>
     <string name="new_objective">Novo Objectivo</string>
+    <string name="camera_take_photo_button">Tirar Foto</string>
 </resources>
