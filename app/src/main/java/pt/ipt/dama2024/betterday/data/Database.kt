@@ -1,13 +1,13 @@
 package pt.ipt.dama2024.betterday.data
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Base64
 import pt.ipt.dama2024.betterday.model.Objective
-import android.content.ContentValues
 import java.security.MessageDigest
 import java.util.Date
-import android.util.Base64
 import java.util.UUID
 
 /**
@@ -34,8 +34,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val COLUMN_CHECKED = "checked"
         private const val COLUMN_AUTHOR = "author"
         private const val COLUMN_PHOTO1 = "photo1"
-        private const val COLUMN_PHOTO2 = "photo2"
-        private const val COLUMN_PHOTO3 = "photo3"
         private const val COLUMN_LATITUDE = "latitude"
         private const val COLUMN_LONGITUDE = "longitude"
 
@@ -62,8 +60,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 + "$COLUMN_CHECKED INTEGER, "
                 + "$COLUMN_AUTHOR TEXT, "
                 + "$COLUMN_PHOTO1 BLOB, "
-                + "$COLUMN_PHOTO2 BLOB, "
-                + "$COLUMN_PHOTO3 BLOB, "
                 + "$COLUMN_LATITUDE REAL, "
                 + "$COLUMN_LONGITUDE REAL)")
 
@@ -105,8 +101,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put(COLUMN_CHECKED, if (objective.checked) 1 else 0)
             put(COLUMN_AUTHOR, username)
             put(COLUMN_PHOTO1, objective.photo1)
-            put(COLUMN_PHOTO2, objective.photo2)
-            put(COLUMN_PHOTO3, objective.photo3)
             put(COLUMN_LATITUDE, objective.latitude)
             put(COLUMN_LONGITUDE, objective.longitude)
         }
@@ -133,11 +127,9 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 val checked = getInt(getColumnIndexOrThrow(COLUMN_CHECKED)) == 1 // Convert int to boolean
                 val author = getString(getColumnIndexOrThrow(COLUMN_AUTHOR))
                 val photo1 = getBlob(getColumnIndexOrThrow(COLUMN_PHOTO1))
-                val photo2 = getBlob(getColumnIndexOrThrow(COLUMN_PHOTO2))
-                val photo3 = getBlob(getColumnIndexOrThrow(COLUMN_PHOTO3))
                 val latitude = getDouble(getColumnIndexOrThrow(COLUMN_LATITUDE))
                 val longitude = getDouble(getColumnIndexOrThrow(COLUMN_LONGITUDE))
-                objectives.add(Objective(id, title, description, creationDate, checked, author, photo1, photo2, photo3, latitude, longitude))
+                objectives.add(Objective(id, title, description, creationDate, checked, author, photo1, latitude, longitude))
             }
         }
         cursor.close()
@@ -159,8 +151,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put(COLUMN_CHECKED, if (objective.checked) 1 else 0) // Convert boolean to int
             put(COLUMN_AUTHOR, objective.author)
             put(COLUMN_PHOTO1, objective.photo1)
-            put(COLUMN_PHOTO2, objective.photo2)
-            put(COLUMN_PHOTO3, objective.photo3)
             put(COLUMN_LATITUDE, objective.latitude)
             put(COLUMN_LONGITUDE, objective.longitude)
         }
