@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragment.CreationFragment">
+    tools:context=".ui.fragment.CreationFragment"
+    android:padding="35dp">
 
     <!-- TextView for the title -->
     <TextView
@@ -16,7 +17,7 @@
         android:text="@string/create_a_new_objective"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:padding="16dp" />
+        android:layout_marginBottom="30dp" />
 
     <!-- Label for the objective title -->
     <TextView
@@ -33,7 +34,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_your_objective_title"
-        android:inputType="text" />
+        android:inputType="text"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:background="@drawable/edittext_background"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="16dp" />
 
     <!-- Label for the objective description -->
     <TextView
@@ -46,12 +52,19 @@
         android:paddingBottom="8dp" />
 
     <!-- EditText for the objective description input -->
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/editTextObjectiveDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_your_objective_description"
-        android:inputType="text" />
+        android:inputType="textMultiLine"
+        android:minLines="5"
+        android:gravity="top"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:background="@drawable/edittext_background"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="16dp" />
 
     <!-- Button to save the objective -->
     <Button
@@ -59,7 +72,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/save_new_objective" />
-
+        android:text="@string/save_new_objective"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/blue"
+        android:layout_marginTop="30dp"/>
 
 </LinearLayout>

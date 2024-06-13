@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import pt.ipt.dama2024.betterday.R
 import pt.ipt.dama2024.betterday.data.ObjectiveRepository
 import pt.ipt.dama2024.betterday.ui.activity.ObjectiveDetailActivity
@@ -18,7 +17,6 @@ class ObjectivesFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ObjectiveAdapter
-    private lateinit var newObjectiveButton: FloatingActionButton
 
     private lateinit var objectiveRepository: ObjectiveRepository
     private lateinit var sessionManager: SessionManager
