@@ -108,11 +108,11 @@ class ObjectivesFragment : Fragment() {
 
         // Set incentive message based on the completion percentage
         incentiveMessage.text = when {
-            completionPercentage == 100 -> "Incredible! You've completed all your objectives!"
-            completionPercentage >= 75 -> "Great job! You're almost there!"
-            completionPercentage >= 50 -> "You're doing well! Keep going!"
-            completionPercentage > 0 -> "Good start! Keep up the good work!"
-            else -> "Let's get started! Begin by completing your first objective!"
+            completionPercentage == 100 -> getString(R.string.incentive_message_incredible)
+            completionPercentage >= 75 -> getString(R.string.incentive_message_great_job)
+            completionPercentage >= 50 -> getString(R.string.incentive_message_doing_well)
+            completionPercentage > 0 -> getString(R.string.incentive_message_good_start)
+            else -> getString(R.string.incentive_message_get_started)
         }
     }
 }

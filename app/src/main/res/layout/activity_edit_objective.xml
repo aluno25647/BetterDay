@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
-        android:text="Cancel"
+        android:text="@string/cancel"
         android:backgroundTint="@color/blue"/>
 
     <ScrollView
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20dp"
-                android:text="Edit Objective"
+                android:text="@string/edit_objective"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -92,7 +92,7 @@
                 android:id="@+id/buttonSaveChanges"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Save Changes"
+                android:text="@string/save"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/blue"
                 android:textColor="@android:color/white"

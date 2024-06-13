@@ -62,4 +62,24 @@
     <string name="permission_request_to_use_camera_denied">Pedido de permissão de uso da câmera negado</string>
     <string name="photo_capture_succeeded">Captura da foto efetuada com sucesso</string>
     <string name="default_location_ipt">Sala O103, IPT. Esta é a localização base. Se esta não for a localização desejada, corrigir os dados introduzidos</string>
+    <string name="incentive_message_incredible">Incrível! Completaste todos os teus objetivos!</string>
+    <string name="incentive_message_great_job">Excelente trabalho! Estás quase lá!</string>
+    <string name="incentive_message_doing_well">Estás a ir bem! Continua assim!</string>
+    <string name="incentive_message_good_start">Bom começo! Continua o bom trabalho!</string>
+    <string name="incentive_message_get_started">Vamos começar! Começa por completar o teu primeiro objetivo!</string>
+    <string name="objective_detail_completed">Concluído</string>
+    <string name="objective_detail_not_completed">Não Concluído</string>
+    <string name="toast_objective_id_not_provided">Identificação do objetivo não fornecida</string>
+    <string name="toast_objective_not_found">Objetivo não encontrado</string>
+    <string name="toast_objective_deleted_success">Objetivo eliminado com sucesso</string>
+    <string name="toast_failed_to_delete_objective">Falha ao eliminar o objetivo</string>
+    <string name="button_edit_objective">Editar</string>
+    <string name="button_delete_objective">Eliminar</string>
+    <string name="creation_date_label">Data de Criação</string>
+    <string name="status_label">Estado</string>
+    <string name="go_back">Voltar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="edit_objective">Editar Objetivo</string>
+    <string name="save">Guardar</string>
+
 </resources>
