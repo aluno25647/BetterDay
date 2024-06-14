@@ -1,6 +1,7 @@
 package pt.ipt.dama2024.betterday.ui.fragment
 
 import SessionManager
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -92,8 +93,14 @@ class SettingsFragment : Fragment() {
     private fun setLocale(languageCode: String) {
         sessionManager.setLanguage(languageCode)
 
-        // Recreate the activity to apply the new language
-        requireActivity().recreate()
+        // Define transition animations
+        val slideIn = ActivityOptions.makeCustomAnimation(requireContext(), R.drawable.slide_in, R.drawable.slide_out)
+
+        // Restart the activity smoothly
+        requireActivity().apply {
+            finish()
+            startActivity(intent, slideIn.toBundle())
+        }
     }
 
     /**
