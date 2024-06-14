@@ -2,8 +2,12 @@ package pt.ipt.dama2024.betterday.ui.activity
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -21,9 +25,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pt.ipt.dama2024.betterday.R
-import pt.ipt.dama2024.betterday.data.ObjectiveRepository
 import pt.ipt.dama2024.betterday.databinding.ActivityTakePhotoBinding
-import pt.ipt.dama2024.betterday.model.Objective
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -33,18 +35,20 @@ import java.util.Locale
  * The difference lies in the adaptation from only saving locally to also saving in the database
  * https://github.com/IPT-MEI-DAMA-2023-2024/Camera-X
  */
-class TakePhotoActivity : AppCompatActivity() {
+class TakePhotoActivity : AppCompatActivity(), LocationListener {
 
     private lateinit var binding: ActivityTakePhotoBinding
     private lateinit var imageCapture: ImageCapture
-    private lateinit var objectiveRepository: ObjectiveRepository
-    private lateinit var objective: Objective
+    private lateinit var locationManager: LocationManager
+    private var location: Location? = null
+    private val locationPermissionCode = 2
+    private var latitude = 0.0
+    private var longitude = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTakePhotoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         // Check and request necessary permissions
         if (allPermissionsGranted()) {
@@ -52,10 +56,13 @@ class TakePhotoActivity : AppCompatActivity() {
         } else {
             requestPermissions()
         }
+        getLocation()
+
 
         // Set click listener for capture button
         binding.imageCaptureButton.setOnClickListener {
             takePhoto()
+
         }
     }
 
@@ -129,8 +136,32 @@ class TakePhotoActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
     }
 
+    private fun getLocation() {
+        locationManager = getSystemService(Context.LOCATION_SERVICE)
+                as LocationManager
+        if ((ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED)
+        ) {
+            requestPermissions(
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                locationPermissionCode
+            )
+        }
+        /*  Inicia o GPS, que vai autilizar a posição de 5 em 5 segundos,
+            se a nova localização estiver pelo menos a 5 metros da última
+            localização  */
+        locationManager.requestLocationUpdates(
+            LocationManager.GPS_PROVIDER,
+            500,
+            5f,
+            this
+        )
+    }
+
     /**
-     * function to take the photo and save it to storage
+     * function to take the photo and retrieve coordinates
      */
     private fun takePhoto() {
         // Get a stable reference of the modifiable image capture use case
@@ -172,41 +203,38 @@ class TakePhotoActivity : AppCompatActivity() {
                         val photoByteArray = inputStream?.readBytes()
                         inputStream?.close()
 
-                        if (photoByteArray != null) {
-                            updateObjectiveWithPhoto(photoByteArray)
+
+                        val intent = Intent().apply {
+                            putExtra("latitude", this@TakePhotoActivity.latitude )
+                            putExtra("longitude", this@TakePhotoActivity.longitude)
+                            putExtra("photo", photoByteArray)
                         }
+                        setResult(RESULT_OK, intent)
+                        finish()
                     }
                 }
             })
     }
 
     /**
-     * Function to update the objective with the captured photo byte array
+     * Asks for authorization to access GPS
      */
-    private fun updateObjectiveWithPhoto(photoByteArray: ByteArray) {
-        // get the objectiveId
-        val objectiveId = intent.getLongExtra("objectiveId", -1)
-        objective = objectiveRepository.getObjectiveById(objectiveId) ?: return
-
-        val objective = objectiveRepository.getObjectiveById(objectiveId)
-        if (objective != null) {
-            objective.photo1 = photoByteArray
-
-            val updatedRows = objectiveRepository.updateObjective(objective)
-            if (updatedRows > 0) {
-                Log.d(TAG, "Objective updated successfully with photo")
-                navigateToEditObjective(objectiveId)
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == locationPermissionCode) {
+            if (grantResults.isNotEmpty() &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT)
+                    .show()
             } else {
-                Log.e(TAG, "Failed to update objective with photo")
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
-    }
-
-    private fun navigateToEditObjective(objectiveId: Long) {
-        val intent = Intent(this, EditObjectiveActivity::class.java).apply {
-            putExtra("objectiveId", objectiveId)
-        }
-        startActivity(intent)
     }
 
     companion object {
@@ -214,11 +242,24 @@ class TakePhotoActivity : AppCompatActivity() {
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private val REQUIRED_PERMISSIONS =
             mutableListOf(
-                Manifest.permission.CAMERA
+                Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
             ).apply {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
                     add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 }
             }.toTypedArray()
+    }
+
+    override fun onLocationChanged(location: Location) {
+        Log.d(TAG, "Location update received: $location")
+        this.location = location // Update the location
+        updateCoordinates(location.latitude, location.longitude)
+    }
+
+    private fun updateCoordinates(latitude: Double, longitude: Double) {
+        this@TakePhotoActivity.latitude =latitude
+        this@TakePhotoActivity.longitude = longitude
     }
 }
