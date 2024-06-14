@@ -63,4 +63,13 @@ class ObjectiveRepository(context: Context) {
     fun deleteObjective(id: Long): Int {
         return db.deleteObjective(id)
     }
+
+    /**
+     * Updates the 'checked' field of all objectives of a user to false.
+     *
+     * @return The number of objectives updated.
+     */
+    fun uncheckAllObjectives(username: String): Int {
+        return db.uncheckAllObjectives(username)
+    }
 }

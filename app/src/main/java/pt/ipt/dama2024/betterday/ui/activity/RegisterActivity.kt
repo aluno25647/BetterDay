@@ -13,6 +13,7 @@ import pt.ipt.dama2024.betterday.R
 import pt.ipt.dama2024.betterday.data.UserRepository
 import pt.ipt.dama2024.betterday.utils.DialogHelper
 import pt.ipt.dama2024.betterday.utils.ValidationUtils
+import java.util.Date
 
 /**
  * Activity responsible for user registration functionality.
@@ -92,7 +93,7 @@ class RegisterActivity : AppCompatActivity() {
 
             } else {
                 // Register user
-                if (userRepository.addUser(username, password, email)) {
+                if (userRepository.addUser(username, password, email, Date())) {
                     // SUCCESS
                     Toast.makeText(
                         this,

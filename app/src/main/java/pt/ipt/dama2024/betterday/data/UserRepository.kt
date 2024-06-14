@@ -1,6 +1,8 @@
 package pt.ipt.dama2024.betterday.data
 
 import android.content.Context
+import java.util.Calendar
+import java.util.Date
 
 /**
  * The UserRepository class provides a cleaner and more organized way to interact with the database.
@@ -20,8 +22,8 @@ class UserRepository(context: Context) {
      * @param email The email address of the new user.
      * @return True if the user was successfully added, false otherwise.
      */
-    fun addUser(username: String, password: String, email: String): Boolean {
-        return db.addUser(username, password, email)
+    fun addUser(username: String, password: String, email: String, currentDate: Date): Boolean {
+        return db.addUser(username, password, email, currentDate)
     }
 
     /**
@@ -65,4 +67,59 @@ class UserRepository(context: Context) {
     fun isEmailAlreadyInUse(email: String): Boolean {
         return db.isEmailAlreadyInUse(email)
     }
+
+    /**
+     * Checks if the current system date (ignoring time) matches the date retrieved from the database
+     * for the specified user.
+     *
+     * @param username The username of the user whose current date is to be retrieved and validated.
+     * @return True if the current system date (ignoring time) matches the date from the database,
+     * false otherwise or if the date is not found.
+     */
+    fun isCurrentDateValidForUser(username: String): Boolean {
+        // Retrieve the date stored in the database for the user
+        val currentDateFromDb = db.getCurrentDateByUsername(username) ?: return false
+
+        // Get the current system date
+        val currentDate = Date()
+
+        // Create Calendar objects to compare year, month, and day
+        val calendarDb = Calendar.getInstance().apply {
+            time = currentDateFromDb
+            // Reset time fields to compare only year, month, and day
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        val calendarCurrent = Calendar.getInstance().apply {
+            time = currentDate
+            // Reset time fields to compare only year, month, and day
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        // Compare year, month, and day
+        return calendarDb.get(Calendar.YEAR) == calendarCurrent.get(Calendar.YEAR) &&
+                calendarDb.get(Calendar.MONTH) == calendarCurrent.get(Calendar.MONTH) &&
+                calendarDb.get(Calendar.DAY_OF_MONTH) == calendarCurrent.get(Calendar.DAY_OF_MONTH)
+    }
+
+
+
+    /**
+     * Updates the current date for the specified user to today's date.
+     *
+     * @param username The username of the user whose current date is to be updated.
+     * @return True if the current date was successfully updated, false otherwise.
+     */
+    fun updateCurrentDate(username: String): Boolean {
+        val currentDate = Date() // Today's date
+        return db.updateCurrentDateByUsername(username, currentDate)
+    }
+
+
 }
