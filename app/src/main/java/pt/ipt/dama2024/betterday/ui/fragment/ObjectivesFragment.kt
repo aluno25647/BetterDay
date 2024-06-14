@@ -31,6 +31,7 @@ class ObjectivesFragment : Fragment() {
     private lateinit var objectiveRepository: ObjectiveRepository
     private lateinit var sessionManager: SessionManager
     private lateinit var incentiveMessage: TextView
+    private lateinit var noObjectivesMessage: TextView
 
     /**
      * Called to have the fragment instantiate its user interface view.
@@ -51,6 +52,7 @@ class ObjectivesFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerViewObjectives)
         recyclerView.layoutManager = LinearLayoutManager(context)
         incentiveMessage = view.findViewById(R.id.incentiveMessage)
+        noObjectivesMessage = view.findViewById(R.id.noObjectivesMessage)
 
         // Initialize session manager and repository
         sessionManager = SessionManager(requireContext())
@@ -82,6 +84,9 @@ class ObjectivesFragment : Fragment() {
             val intent = Intent(requireContext(), CreationActivity::class.java)
             startActivity(intent)
         }
+
+        // In case there are no objectives safeguard
+        incentiveMessage.text = getString(R.string.incentive_message_get_started)
     }
 
     /**
@@ -98,8 +103,17 @@ class ObjectivesFragment : Fragment() {
     private fun loadObjectives() {
         GlobalScope.launch(Dispatchers.Main) {
             val objectives = objectiveRepository.getAllUserObjectives(sessionManager.getUsername())
-            adapter.updateObjectives(objectives)
-            updateIncentiveMessage(objectives)
+            if (objectives.isEmpty()) {
+                // Show no objectives message
+                recyclerView.visibility = View.GONE
+                noObjectivesMessage.visibility = View.VISIBLE
+            } else {
+                // Show objectives list
+                recyclerView.visibility = View.VISIBLE
+                noObjectivesMessage.visibility = View.GONE
+                adapter.updateObjectives(objectives)
+                updateIncentiveMessage(objectives)
+            }
         }
     }
 
