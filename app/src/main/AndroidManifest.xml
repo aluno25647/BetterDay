@@ -36,6 +36,11 @@
             android:name=".ui.activity.RegisterActivity"
             android:screenOrientation="portrait"></activity>
 
+        <!-- MainActivity declaration -->
+        <activity
+            android:name=".ui.activity.CreationActivity"
+            android:screenOrientation="portrait"></activity>
+
         <!-- ObjectiveDetail declaration -->
         <activity
             android:name=".ui.activity.ObjectiveDetailActivity"

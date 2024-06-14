@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 import pt.ipt.dama2024.betterday.R
 import pt.ipt.dama2024.betterday.data.ObjectiveRepository
 import pt.ipt.dama2024.betterday.model.Objective
+import pt.ipt.dama2024.betterday.ui.activity.CreationActivity
 import pt.ipt.dama2024.betterday.ui.activity.ObjectiveDetailActivity
 
 /**
@@ -73,6 +75,13 @@ class ObjectivesFragment : Fragment() {
         })
 
         recyclerView.adapter = adapter
+
+        // Setup button to navigate to CreationActivity
+        val createNewObjectiveButton: Button = view.findViewById(R.id.create_new_objective_btn)
+        createNewObjectiveButton.setOnClickListener {
+            val intent = Intent(requireContext(), CreationActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     /**
