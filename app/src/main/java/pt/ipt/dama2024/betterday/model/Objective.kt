@@ -12,9 +12,6 @@ data class Objective(
     var creationDate: Date, // Date when the objective was created
     var checked: Boolean = false, // Whether the objective has been checked/completed
     val author: String, // User ID or username of the author/creator
-    var photo1: ByteArray? = null,  // ByteArray for the first photo
-    var latitude: Double? = null,   // Latitude for GPS coordinates
-    var longitude: Double? = null   // Longitude for GPS coordinates
 ) {
     /**
      * Since we are using an array type data class, android studio recommends us to generate
@@ -32,13 +29,6 @@ data class Objective(
         if (creationDate != other.creationDate) return false
         if (checked != other.checked) return false
         if (author != other.author) return false
-        if (photo1 != null) {
-            if (other.photo1 == null) return false
-            if (!photo1.contentEquals(other.photo1)) return false
-        } else if (other.photo1 != null) return false
-        if (latitude != other.latitude) return false
-        if (longitude != other.longitude) return false
-
         return true
     }
 
@@ -49,9 +39,6 @@ data class Objective(
         result = 31 * result + creationDate.hashCode()
         result = 31 * result + checked.hashCode()
         result = 31 * result + author.hashCode()
-        result = 31 * result + (photo1?.contentHashCode() ?: 0)
-        result = 31 * result + (latitude?.hashCode() ?: 0)
-        result = 31 * result + (longitude?.hashCode() ?: 0)
         return result
     }
 }

@@ -33,9 +33,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val COLUMN_CREATION_DATE = "creationDate"
         private const val COLUMN_CHECKED = "checked"
         private const val COLUMN_AUTHOR = "author"
-        private const val COLUMN_PHOTO1 = "photo1"
-        private const val COLUMN_LATITUDE = "latitude"
-        private const val COLUMN_LONGITUDE = "longitude"
 
         // Users table columns
         private const val TABLE_USERS = "users"
@@ -58,10 +55,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 + "$COLUMN_DESCRIPTION TEXT, "
                 + "$COLUMN_CREATION_DATE INTEGER, "
                 + "$COLUMN_CHECKED INTEGER, "
-                + "$COLUMN_AUTHOR TEXT, "
-                + "$COLUMN_PHOTO1 BLOB, "
-                + "$COLUMN_LATITUDE REAL, "
-                + "$COLUMN_LONGITUDE REAL)")
+                + "$COLUMN_AUTHOR TEXT, ")
 
         val createUsersTable = ("CREATE TABLE $TABLE_USERS ("
                 + "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -100,9 +94,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put(COLUMN_CREATION_DATE, objective.creationDate.time) // Convert Date to Long
             put(COLUMN_CHECKED, if (objective.checked) 1 else 0)
             put(COLUMN_AUTHOR, username)
-            put(COLUMN_PHOTO1, objective.photo1)
-            put(COLUMN_LATITUDE, objective.latitude)
-            put(COLUMN_LONGITUDE, objective.longitude)
         }
         return db.insert(TABLE_OBJECTIVES, null, values)
     }
@@ -134,18 +125,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 val creationDateIndex = cursor.getColumnIndexOrThrow(COLUMN_CREATION_DATE)
                 val checkedIndex = cursor.getColumnIndexOrThrow(COLUMN_CHECKED)
                 val authorIndex = cursor.getColumnIndexOrThrow(COLUMN_AUTHOR)
-                val photo1Index = cursor.getColumnIndexOrThrow(COLUMN_PHOTO1)
-                val latitudeIndex = cursor.getColumnIndexOrThrow(COLUMN_LATITUDE)
-                val longitudeIndex = cursor.getColumnIndexOrThrow(COLUMN_LONGITUDE)
 
                 val title = cursor.getString(titleIndex)
                 val description = cursor.getString(descriptionIndex)
                 val creationDate = Date(cursor.getLong(creationDateIndex))
                 val checked = cursor.getInt(checkedIndex) == 1
                 val author = cursor.getString(authorIndex)
-                val photo1 = cursor.getBlob(photo1Index)
-                val latitude = cursor.getDouble(latitudeIndex)
-                val longitude = cursor.getDouble(longitudeIndex)
 
                 objective = Objective(
                     id,
@@ -153,10 +138,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                     description,
                     creationDate,
                     checked,
-                    author,
-                    photo1,
-                    latitude,
-                    longitude
+                    author
                 )
             }
         }
@@ -186,10 +168,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 val creationDate = Date(getLong(getColumnIndexOrThrow(COLUMN_CREATION_DATE))) // Convert Long to Date
                 val checked = getInt(getColumnIndexOrThrow(COLUMN_CHECKED)) == 1 // Convert int to boolean
                 val author = getString(getColumnIndexOrThrow(COLUMN_AUTHOR))
-                val photo1 = getBlob(getColumnIndexOrThrow(COLUMN_PHOTO1))
-                val latitude = getDouble(getColumnIndexOrThrow(COLUMN_LATITUDE))
-                val longitude = getDouble(getColumnIndexOrThrow(COLUMN_LONGITUDE))
-                objectives.add(Objective(id, title, description, creationDate, checked, author, photo1, latitude, longitude))
+                objectives.add(Objective(id, title, description, creationDate, checked, author))
             }
         }
         cursor.close()
@@ -210,9 +189,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put(COLUMN_CREATION_DATE, objective.creationDate.time) // Convert Date to Long
             put(COLUMN_CHECKED, if (objective.checked) 1 else 0) // Convert boolean to int
             put(COLUMN_AUTHOR, objective.author)
-            put(COLUMN_PHOTO1, objective.photo1)
-            put(COLUMN_LATITUDE, objective.latitude)
-            put(COLUMN_LONGITUDE, objective.longitude)
         }
         return db.update(TABLE_OBJECTIVES, values, "$COLUMN_ID = ?", arrayOf(objective.id.toString()))
     }
