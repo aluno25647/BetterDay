@@ -109,18 +109,11 @@ object DialogHelper {
      * @param context The context used to build the dialog.
      */
     fun showLoginRequirementsDialog(context: Context) {
-        // Create a TextView for the dialog message
-        val messageTextView = TextView(context).apply {
-            text = context.getString(R.string.requirements)
-            gravity = Gravity.CENTER
-            setPadding(25, 25, 25, 25)
-            textSize = 16f
-        }
 
         // Create an AlertDialog builder
         val builder = AlertDialog.Builder(context)
             .setTitle(context.getString(R.string.requirements_title))
-            .setView(messageTextView)
+            .setMessage(context.getString(R.string.requirements))
             .setPositiveButton(context.getString(R.string.close)) { dialog, _ ->
                 dialog.dismiss()
             }
