@@ -3,6 +3,7 @@ package pt.ipt.dama2024.betterday.ui.activity
 import SessionManager
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import pt.ipt.dama2024.betterday.R
@@ -57,8 +58,8 @@ class EditObjectiveActivity : AppCompatActivity() {
             finish()
         }
 
-        //  Go back button click listener
-        val buttonGoBackToDetail: Button = findViewById(R.id.buttonGoBackToDetail)
+        // Go back button click listener
+        val buttonGoBackToDetail: ImageView = findViewById(R.id.buttonGoBackToDetail)
         buttonGoBackToDetail.setOnClickListener {
             finish()
         }

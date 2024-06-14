@@ -5,15 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- Custom Back Button -->
-    <Button
+    <!-- Custom Back Button (ImageView) -->
+    <ImageView
         android:id="@+id/buttonGoBackToDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:text="@string/cancel"
-        android:backgroundTint="@color/blue"/>
+        android:layout_marginStart="25dp"
+        android:src="@drawable/baseline_keyboard_backspace_24"
+        android:contentDescription="@string/go_back" />
 
     <ScrollView
         android:layout_width="match_parent"
