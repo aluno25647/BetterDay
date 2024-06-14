@@ -85,5 +85,19 @@
     <string name="confirm_delete_objective">Tem a certeza de que deseja eliminar este objetivo?</string>
     <string name="requirements">O nome de utilizador deve ter pelo menos 5 caracteres.\nA palavra-passe deve ter pelo menos 6 caracteres, com pelo menos uma letra maiúscula e um número.</string>
     <string name="requirements_title">Requisitos</string>
-
+    <string name="coordinates_new_objective_creation">Coordenadas</string>
+    <string name="latitude_new_objective_creation">Latitude</string>
+    <string name="longitude_new_objective_creation">Longitude</string>
+    <string name="Photo_new_objective_creation">Foto</string>
+    <string name="enter_your_Latitude_value">Introduza o seu valor de latitude</string>
+    <string name="enter_your_longitude_value">Introduza o seu valor delongitude</string>
+    <string name="take_photo">Tirar Foto</string>
+    <string name="save_changes">Guardar Alterações</string>
+    <string name="delete_photo">Apagar Foto</string>
+    <string name="photo_deleted">Foto Apagada</string>
+    <string name="Optional_new_objective_creation">Elementos Opcionais:</string>
+    <string name="take_photo_new_objective_creation">Deseja adicionar uma foto?</string>
+    <string name="photo_taken_upon_saving">*Foto é tirada no momento de gravação</string>
+    <string name="photo">Foto</string>
+    <string name="button_show_map">Show Map</string>
 </resources>

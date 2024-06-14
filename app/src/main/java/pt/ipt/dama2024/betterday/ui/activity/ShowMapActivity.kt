@@ -1,6 +1,5 @@
 package pt.ipt.dama2024.betterday.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -81,16 +80,10 @@ class ShowMapActivity : AppCompatActivity() {
         // Set up the return button
         val returnButton: Button = findViewById(R.id.button_return_from_map)
         returnButton.setOnClickListener {
-            navigateToEditObjective(objectiveId)
+            // Finish activity and return to previous screen
+            finish()
         }
 
-    }
-
-    private fun navigateToEditObjective(objectiveId: Long) {
-        val intent = Intent(this, EditObjectiveActivity::class.java).apply {
-            putExtra("objectiveId", objectiveId)
-        }
-        startActivity(intent)
     }
 
 

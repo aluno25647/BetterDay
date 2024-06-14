@@ -71,6 +71,113 @@
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
+
+        <!-- Label for the objective title -->
+        <TextView
+            android:id="@+id/textViewNewObjectiveOptional"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="@string/Optional_new_objective_creation"
+            android:textSize="20sp" />
+
+        <!-- Label for the objective Photo -->
+        <TextView
+            android:id="@+id/textViewNewObjectivePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/take_photo_new_objective_creation"
+            android:textSize="18sp" />
+
+            <!-- RadioGroup for Yes/No options -->
+            <RadioGroup
+                android:id="@+id/radioGroupTakePhoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start">
+
+                <RadioButton
+                    android:id="@+id/radioButtonYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yes"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no"
+                    android:textSize="14sp" />
+            </RadioGroup>
+
+        <!-- Label to indicate procedure for photo -->
+        <TextView
+            android:id="@+id/textViewPhotoInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"
+            android:text="@string/photo_taken_upon_saving"
+            android:textSize="11sp" />
+
+        <!-- Label for the objective title -->
+        <TextView
+            android:id="@+id/textViewNewObjectiveCoordinates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="@string/coordinates_new_objective_creation"
+            android:textSize="18sp" />
+
+        <!-- Label for the objective Latitude -->
+        <TextView
+            android:id="@+id/textViewNewObjectiveLatitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="@string/latitude_new_objective_creation"
+            android:textSize="16sp" />
+
+        <!-- EditText for the objective Latitude input -->
+        <EditText
+            android:id="@+id/editTextObjectiveLatitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edittext_background"
+            android:hint="@string/enter_your_Latitude_value"
+            android:inputType="text"
+            android:padding="12dp"
+            android:minHeight="48dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <!-- Label for the objective Longitude -->
+        <TextView
+            android:id="@+id/textViewNewObjectiveLongitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="@string/longitude_new_objective_creation"
+            android:textSize="16sp" />
+
+        <!-- EditText for the objective Longitude input -->
+        <EditText
+            android:id="@+id/editTextObjectiveLongitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edittext_background"
+            android:hint="@string/enter_your_longitude_value"
+            android:inputType="text"
+            android:padding="12dp"
+            android:minHeight="48dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+
         <!-- Button to save the objective -->
         <Button
             android:id="@+id/buttonSaveObjective"

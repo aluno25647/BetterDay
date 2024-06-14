@@ -2,8 +2,11 @@ package pt.ipt.dama2024.betterday.ui.activity
 
 import SessionManager
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +18,7 @@ import pt.ipt.dama2024.betterday.utils.DialogHelper
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+
 
 class ObjectiveDetailActivity : AppCompatActivity() {
 
@@ -78,6 +82,12 @@ class ObjectiveDetailActivity : AppCompatActivity() {
         val descriptionTextView = findViewById<TextView>(R.id.textViewDescription)
         val creationDateTextView = findViewById<TextView>(R.id.textViewCreationDate)
         val statusTextView = findViewById<TextView>(R.id.textViewStatus)
+        val imageViewPhoto = findViewById<ImageView>(R.id.imageViewPhoto)
+        val textViewLatitudeLabel = findViewById<TextView>(R.id.textViewLatitudeLabel)
+        val textViewLongitudeLabel = findViewById<TextView>(R.id.textViewLongitudeLabel)
+        val textViewLatitude = findViewById<TextView>(R.id.textViewLatitude)
+        val textViewLongitude = findViewById<TextView>(R.id.textViewLongitude)
+        val buttonShowMap = findViewById<Button>(R.id.buttonShowMap);
 
         // Set the data to views
         titleTextView.text = objective.title
@@ -92,6 +102,44 @@ class ObjectiveDetailActivity : AppCompatActivity() {
             statusTextView.text =  getString(R.string.objective_detail_not_completed)
             statusTextView.setTextColor(ContextCompat.getColor(this, R.color.red))
         }
+
+
+        // Handle Photo
+        val photoByteArray: ByteArray? = objective.photo1
+        if (photoByteArray != null) {
+            val bitmap = BitmapFactory.decodeByteArray(photoByteArray, 0, photoByteArray.size)
+            imageViewPhoto.setImageBitmap(bitmap)
+        } else {
+            imageViewPhoto.visibility = View.GONE
+        }
+
+
+        // Handle Latitude
+        if (objective.latitude != null) {
+            textViewLatitude.text = objective.latitude.toString();
+        } else {
+            textViewLatitude.visibility = View.GONE;
+            textViewLatitudeLabel.visibility = View.GONE;
+        }
+
+        // Handle Longitude
+        if (objective.longitude != null) {
+            textViewLongitude.text = objective.longitude.toString();
+        } else {
+            textViewLongitude.visibility = View.GONE;
+            textViewLongitudeLabel.visibility = View.GONE;
+        }
+
+
+        // Map Button Click Listener
+        if (objective.latitude != null && objective.longitude != null) {
+            buttonShowMap.setOnClickListener {
+                navigateToShowMap(objectiveId)
+            }
+        } else {
+            buttonShowMap.visibility = View.GONE
+        }
+
 
         // Handle delete objective button click
         val deleteButton: Button = findViewById(R.id.buttonDeleteObjective)
@@ -124,6 +172,16 @@ class ObjectiveDetailActivity : AppCompatActivity() {
 
     private fun navigateToEditObjective(objectiveId: Long) {
         val intent = Intent(this, EditObjectiveActivity::class.java).apply {
+            putExtra("objectiveId", objectiveId)
+        }
+        startActivity(intent)
+    }
+
+    /**
+     * Navigate to ShowMapActivity and pass the objective ID
+     */
+    private fun navigateToShowMap(objectiveId: Long) {
+        val intent = Intent(this, ShowMapActivity::class.java).apply {
             putExtra("objectiveId", objectiveId)
         }
         startActivity(intent)

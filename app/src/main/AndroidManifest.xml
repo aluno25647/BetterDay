@@ -29,22 +29,31 @@
         <!-- MainActivity declaration -->
         <activity
             android:name=".ui.activity.MainActivity"
+            android:label="Main Activity"
             android:screenOrientation="portrait"></activity>
 
         <!-- RegisterActivity declaration -->
         <activity
             android:name=".ui.activity.RegisterActivity"
+            android:label="Register Activity"
             android:screenOrientation="portrait"></activity>
 
         <!-- ObjectiveDetail declaration -->
         <activity
             android:name=".ui.activity.ObjectiveDetailActivity"
+            android:label="Objective Detail Activity"
             android:screenOrientation="portrait"></activity>
 
         <!-- EditObjective declaration -->
         <activity
             android:name=".ui.activity.EditObjectiveActivity"
+            android:label="Edit Objective Activity"
             android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".ui.activity.TakePhotoActivity"
+            android:label="Take Photo Activity">
+        </activity>
 
         <!-- ShowMap declaration -->
         <activity android:name=".ui.activity.ShowMapActivity"></activity>

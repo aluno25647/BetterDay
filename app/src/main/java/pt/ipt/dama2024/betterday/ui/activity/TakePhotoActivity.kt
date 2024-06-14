@@ -2,7 +2,6 @@ package pt.ipt.dama2024.betterday.ui.activity
 
 import android.Manifest
 import android.content.ContentValues
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -195,18 +194,11 @@ class TakePhotoActivity : AppCompatActivity() {
             val updatedRows = objectiveRepository.updateObjective(objective)
             if (updatedRows > 0) {
                 Log.d(TAG, "Objective updated successfully with photo")
-                navigateToEditObjective(objectiveId)
+                finish()
             } else {
                 Log.e(TAG, "Failed to update objective with photo")
             }
         }
-    }
-
-    private fun navigateToEditObjective(objectiveId: Long) {
-        val intent = Intent(this, EditObjectiveActivity::class.java).apply {
-            putExtra("objectiveId", objectiveId)
-        }
-        startActivity(intent)
     }
 
     companion object {

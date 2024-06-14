@@ -87,14 +87,56 @@
                     android:layout_below="@id/textViewDescriptionLabel"
                     android:paddingTop="8dp" />
 
-                <!-- Description Label TextView -->
+                <!-- Latitude Label TextView -->
+                <TextView
+                    android:id="@+id/textViewLatitudeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/latitude_new_objective_creation"
+                    android:textSize="18sp"
+                    android:layout_below="@id/textViewDescription"
+                    android:textStyle="bold"
+                    android:paddingTop="20dp"
+                    android:textColor="@color/blue" />
+
+                <!-- Latitude TextView -->
+                <TextView
+                    android:id="@+id/textViewLatitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewLatitudeLabel"
+                    android:paddingTop="8dp" />
+
+                <!-- Longitude Label TextView -->
+                <TextView
+                    android:id="@+id/textViewLongitudeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/longitude_new_objective_creation"
+                    android:textSize="18sp"
+                    android:layout_below="@id/textViewLatitude"
+                    android:textStyle="bold"
+                    android:paddingTop="20dp"
+                    android:textColor="@color/blue" />
+
+                <!-- Longitude TextView -->
+                <TextView
+                    android:id="@+id/textViewLongitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewLongitudeLabel"
+                    android:paddingTop="8dp" />
+
+
+
+                <!-- Status Label TextView -->
                 <TextView
                     android:id="@+id/textViewStatusLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/status_label"
                     android:textSize="18sp"
-                    android:layout_below="@id/textViewDescription"
+                    android:layout_below="@id/textViewLongitude"
                     android:textStyle="bold"
                     android:paddingTop="20dp"
                     android:textColor="@color/blue" />
@@ -107,13 +149,37 @@
                     android:paddingTop="8dp"
                     android:textColor="@color/green"/>
 
+
+
+                <!-- Photo ImageView -->
+                <ImageView
+                    android:id="@+id/imageViewPhoto"
+                    android:layout_width="280dp"
+                    android:layout_height="280dp"
+                    android:layout_below="@id/textViewStatus"
+                    android:layout_marginTop="20dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/photo" />
+
+                <!-- Map Button -->
+                <Button
+                    android:id="@+id/buttonShowMap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_show_map"
+                    android:layout_below="@id/imageViewPhoto"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/blue"/>
+
                 <!-- Edit Objective Button -->
                 <Button
                     android:id="@+id/buttonEditObjective"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/button_edit_objective"
-                    android:layout_below="@id/textViewStatus"
+                    android:layout_below="@id/buttonShowMap"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="25dp"
                     android:backgroundTint="@color/blue"/>
