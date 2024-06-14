@@ -1,5 +1,6 @@
 package pt.ipt.dama2024.betterday.ui.activity
 
+import SessionManager
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -10,6 +11,7 @@ import androidx.core.content.ContextCompat
 import pt.ipt.dama2024.betterday.R
 import pt.ipt.dama2024.betterday.data.ObjectiveRepository
 import pt.ipt.dama2024.betterday.model.Objective
+import pt.ipt.dama2024.betterday.utils.DialogHelper
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -17,6 +19,7 @@ import java.util.Locale
 class ObjectiveDetailActivity : AppCompatActivity() {
 
     private lateinit var objectiveRepository: ObjectiveRepository
+    private lateinit var sessionManager: SessionManager
     private var objectiveId: Long = -1L
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +28,12 @@ class ObjectiveDetailActivity : AppCompatActivity() {
 
         // Initialize ObjectiveRepository
         objectiveRepository = ObjectiveRepository(this)
+
+        // Initialize SessionManager
+        sessionManager = SessionManager(this)
+
+        // Set the language before the activity is created
+        sessionManager.setLanguage(sessionManager.getCurrentLanguage())
 
         // Enable the back button in the action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -84,13 +93,19 @@ class ObjectiveDetailActivity : AppCompatActivity() {
         // Handle delete objective button click
         val deleteButton: Button = findViewById(R.id.buttonDeleteObjective)
         deleteButton.setOnClickListener {
-            deleteObjective(objectiveId)
+            showDeleteConfirmationDialog(objectiveId)
         }
 
         // Handle edit objective button click
         val editButton: Button = findViewById(R.id.buttonEditObjective)
         editButton.setOnClickListener {
             navigateToEditObjective(objectiveId)
+        }
+    }
+
+    private fun showDeleteConfirmationDialog(objectiveId: Long) {
+        DialogHelper.showDeleteConfirmationDialog(this) {
+            deleteObjective(objectiveId)
         }
     }
 

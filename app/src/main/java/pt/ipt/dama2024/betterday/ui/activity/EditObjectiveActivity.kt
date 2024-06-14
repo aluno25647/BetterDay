@@ -1,5 +1,6 @@
 package pt.ipt.dama2024.betterday.ui.activity
 
+import SessionManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -12,6 +13,7 @@ class EditObjectiveActivity : AppCompatActivity() {
 
     private lateinit var objective: Objective
     private lateinit var objectiveRepository: ObjectiveRepository
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +21,12 @@ class EditObjectiveActivity : AppCompatActivity() {
 
         // Initialize ObjectiveRepository
         objectiveRepository = ObjectiveRepository(this)
+
+        // Initialize SessionManager
+        sessionManager = SessionManager(this)
+
+        // Set the language before the activity is created
+        sessionManager.setLanguage(sessionManager.getCurrentLanguage())
 
         // Retrieve objective details from intent extras (or from database if needed)
         val objectiveId = intent.getLongExtra("objectiveId", -1)

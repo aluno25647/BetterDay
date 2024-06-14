@@ -81,5 +81,7 @@
     <string name="cancel">Cancel</string>
     <string name="edit_objective">Edit Objective</string>
     <string name="save">Save</string>
+    <string name="delete_objective">Delete Objective</string>
+    <string name="confirm_delete_objective">Are you sure you want to delete this objective?</string>
 
 </resources>
