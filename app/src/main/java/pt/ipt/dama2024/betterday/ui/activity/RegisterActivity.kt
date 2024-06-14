@@ -1,14 +1,17 @@
 package pt.ipt.dama2024.betterday.ui.activity
 
+import SessionManager
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import pt.ipt.dama2024.betterday.R
 import pt.ipt.dama2024.betterday.data.UserRepository
+import pt.ipt.dama2024.betterday.utils.DialogHelper
 import pt.ipt.dama2024.betterday.utils.ValidationUtils
 
 /**
@@ -17,17 +20,24 @@ import pt.ipt.dama2024.betterday.utils.ValidationUtils
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var userRepository: UserRepository
+    private lateinit var sessionManager: SessionManager
 
     /**
      * Called when the activity is starting.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        // Initialize UserRepository and SessionManager
+        userRepository = UserRepository(this)
+        sessionManager = SessionManager(this)
+
+        // Set the language before the activity is created
+        sessionManager.setLanguage(sessionManager.getCurrentLanguage())
+
+        // set language before the content view!!!
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-
-        // Initialize UserRepository
-        userRepository = UserRepository(this)
 
         // Register Button Click Listener
         val registerButton = findViewById<Button>(R.id.register_btn)
@@ -109,6 +119,12 @@ class RegisterActivity : AppCompatActivity() {
         loginText.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+        }
+
+        // Click listener for login requirements info icon
+        val loginRequirementsIcon = findViewById<ImageView>(R.id.register_requirements_icon)
+        loginRequirementsIcon.setOnClickListener {
+            DialogHelper.showLoginRequirementsDialog(this)
         }
 
     }

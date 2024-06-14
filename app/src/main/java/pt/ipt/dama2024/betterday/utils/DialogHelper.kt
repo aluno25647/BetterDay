@@ -2,7 +2,9 @@ package pt.ipt.dama2024.betterday.utils
 
 import android.app.AlertDialog
 import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.widget.TextView
 import pt.ipt.dama2024.betterday.R
 
 /**
@@ -100,4 +102,32 @@ object DialogHelper {
         val dialog = builder.create()
         dialog.show()
     }
+
+    /**
+     * Displays a dialog for login requirements.
+     *
+     * @param context The context used to build the dialog.
+     */
+    fun showLoginRequirementsDialog(context: Context) {
+        // Create a TextView for the dialog message
+        val messageTextView = TextView(context).apply {
+            text = context.getString(R.string.requirements)
+            gravity = Gravity.CENTER
+            setPadding(25, 25, 25, 25)
+            textSize = 16f
+        }
+
+        // Create an AlertDialog builder
+        val builder = AlertDialog.Builder(context)
+            .setTitle(context.getString(R.string.requirements_title))
+            .setView(messageTextView)
+            .setPositiveButton(context.getString(R.string.close)) { dialog, _ ->
+                dialog.dismiss()
+            }
+
+        // Create and show the dialog
+        val dialog = builder.create()
+        dialog.show()
+    }
+
 }

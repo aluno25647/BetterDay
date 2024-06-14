@@ -7,6 +7,7 @@ import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -147,6 +148,12 @@ class LoginActivity : AppCompatActivity() {
                 showPasswordTextView.text = getString(R.string.hide_password)
                 isPasswordVisible = true
             }
+        }
+
+        // Click listener for login requirements info icon
+        val loginRequirementsIcon = findViewById<ImageView>(R.id.login_requirements_icon)
+        loginRequirementsIcon.setOnClickListener {
+            DialogHelper.showLoginRequirementsDialog(this)
         }
 
 

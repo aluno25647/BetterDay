@@ -16,8 +16,6 @@ class EditObjectiveActivity : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_objective)
 
         // Initialize ObjectiveRepository
         objectiveRepository = ObjectiveRepository(this)
@@ -27,6 +25,11 @@ class EditObjectiveActivity : AppCompatActivity() {
 
         // Set the language before the activity is created
         sessionManager.setLanguage(sessionManager.getCurrentLanguage())
+
+        // set language before the content view!!!
+
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit_objective)
 
         // Retrieve objective details from intent extras (or from database if needed)
         val objectiveId = intent.getLongExtra("objectiveId", -1)

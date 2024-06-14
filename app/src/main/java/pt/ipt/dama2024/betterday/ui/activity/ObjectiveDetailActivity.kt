@@ -23,8 +23,6 @@ class ObjectiveDetailActivity : AppCompatActivity() {
     private var objectiveId: Long = -1L
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_objective_detail)
 
         // Initialize ObjectiveRepository
         objectiveRepository = ObjectiveRepository(this)
@@ -34,6 +32,11 @@ class ObjectiveDetailActivity : AppCompatActivity() {
 
         // Set the language before the activity is created
         sessionManager.setLanguage(sessionManager.getCurrentLanguage())
+
+        // set language before the content view!!!
+
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_objective_detail)
 
         // Enable the back button in the action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
