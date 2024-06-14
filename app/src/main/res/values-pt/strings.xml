@@ -10,7 +10,8 @@
     <string name="email">Email</string>
     <string name="repeat_password">Repetir Palavra-passe</string>
     <string name="username_error">O nome de utilizador deve ter pelo menos 5 caracteres</string>
-    <string name="password_error">A palavra-passe deve ter pelo menos 6 caracteres, com pelo menos uma letra maiúscula e um número</string>
+    <string name="password_length_error">A palavra-passe deve ter pelo menos 6 caracteres.</string>
+    <string name="password_complexity_error">A palavra-passe deve conter pelo menos uma letra maiúscula e um número.</string>
     <string name="login_success">Login bem-sucedido</string>
     <string name="login_failed">Login falhou</string>
     <string name="passwords_do_not_match">As palavras-passe não coincidem</string>
