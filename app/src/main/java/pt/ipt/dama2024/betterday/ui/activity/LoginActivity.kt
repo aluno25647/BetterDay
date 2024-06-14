@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import pt.ipt.dama2024.betterday.R
+import pt.ipt.dama2024.betterday.data.ObjectiveRepository
 import pt.ipt.dama2024.betterday.data.UserRepository
 import pt.ipt.dama2024.betterday.utils.DialogHelper
 import pt.ipt.dama2024.betterday.utils.ValidationUtils
@@ -53,6 +54,10 @@ class LoginActivity : AppCompatActivity() {
 
             // Verify the token with the database
             if (userRepository.verifyToken(username, token)) {
+
+                // Resets Objectives if is new day
+                checkObjectives(username)
+
                 // If token is valid, directly open the main activity
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
@@ -91,6 +96,9 @@ class LoginActivity : AppCompatActivity() {
 
                     // Save the username and token in the session.
                     sessionManager.saveCredentials(username, token)
+
+                    // Resets Objectives if is new day
+                    checkObjectives(username)
 
                     // Open MainActivity
                     val intent = Intent(this, MainActivity::class.java)
@@ -185,6 +193,44 @@ class LoginActivity : AppCompatActivity() {
      */
     private fun hidePassword(passwordEditText: EditText) {
         passwordEditText.transformationMethod = PasswordTransformationMethod.getInstance()
+    }
+
+    /**
+     * Checks the objectives for the specified user and updates them if necessary.
+     *
+     * This function verifies if the current date is valid for the user. If the date is not valid,
+     * it will uncheck all objectives for the user.
+     *
+     * @param username The username of the user whose objectives are to be checked.
+     */
+    private fun checkObjectives(username: String) {
+        val repository = ObjectiveRepository(this)
+
+        // Check if the current date is valid for the user
+        val currentDateValid = userRepository.isCurrentDateValidForUser(username)
+
+        if (!currentDateValid) {
+            // Uncheck all objectives for the user
+            val updatedCount = repository.uncheckAllObjectives(username)
+
+            if (updatedCount > 0) {
+                Toast.makeText(this, "Successfully updated objectives for user.", Toast.LENGTH_SHORT).show()
+
+                val currentDateUpdated = userRepository.updateCurrentDate(username)
+
+                if (currentDateUpdated) {
+                    Toast.makeText(this, "Current date updated successfully for user.", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Failed to update current date for user.", Toast.LENGTH_SHORT).show()
+                }
+
+            } else {
+                Toast.makeText(this, "No objectives were updated for user.", Toast.LENGTH_SHORT).show()
+            }
+
+        } else {
+            Toast.makeText(this, "Everything is ok.", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }

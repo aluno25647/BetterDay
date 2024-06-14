@@ -40,6 +40,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val COLUMN_EMAIL = "email"
         private const val COLUMN_PASSWORD = "password"
         private const val COLUMN_TOKEN = "token"
+        private const val COLUMN_CURRENT_DATE = "currentDate"
     }
 
     /**
@@ -62,7 +63,8 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 + "$COLUMN_USERNAME TEXT UNIQUE, "
                 + "$COLUMN_PASSWORD TEXT, "
                 + "$COLUMN_EMAIL TEXT UNIQUE, "
-                + "$COLUMN_TOKEN TEXT)")
+                + "$COLUMN_TOKEN TEXT, "
+                + "$COLUMN_CURRENT_DATE INTEGER)")
 
         db.execSQL(createObjectivesTable)
         db.execSQL(createUsersTable)
@@ -148,7 +150,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return objective
     }
 
-
     /**
      * Here is prepared the function that returns all objectives currently in the database
      *  in a List of Objectives format
@@ -194,6 +195,23 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
     /**
+     * Updates the 'checked' field of all objectives for the specified user to false.
+     *
+     * @param username The username of the user whose objectives are to be updated.
+     * @return The number of objectives updated.
+     */
+    fun uncheckAllObjectives(username: String): Int {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put(COLUMN_CHECKED, 0) // Set checked to false (0)
+        }
+        val selection = "$COLUMN_AUTHOR = ?"
+        val selectionArgs = arrayOf(username)
+        return db.update(TABLE_OBJECTIVES, values, selection, selectionArgs)
+    }
+
+
+    /**
      * This function allows the deletion of an Objective that no longer is needed in the database
      */
     fun deleteObjective(id: Long): Int {
@@ -207,9 +225,10 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
      * @param username The username of the user to be added.
      * @param password The password of the user to be added.
      * @param email The email of the user to be added.
+     * @param currentDate The current date to be added.
      * @return True if the user was added successfully, false otherwise.
      */
-    fun addUser(username: String, password: String, email: String): Boolean {
+    fun addUser(username: String, password: String, email: String, currentDate: Date): Boolean {
         if (isUsernameAlreadyInUse(username)) {
             return false
         }
@@ -222,6 +241,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put(COLUMN_USERNAME, username)
             put(COLUMN_PASSWORD, hashedPassword)
             put(COLUMN_EMAIL, email)
+            put(COLUMN_CURRENT_DATE, currentDate.time) // Convert Date to Long
         }
         val success = db.insert(TABLE_USERS, null, values)
         db.close()
@@ -293,6 +313,46 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return storedToken == token
     }
 
+    /**
+     * Retrieves the current date associated with the specified username from the Users table.
+     *
+     * @param username The username of the user whose current date is to be retrieved.
+     * @return The current date as a [Date] object if found, null otherwise.
+     */
+    fun getCurrentDateByUsername(username: String): Date? {
+        val db = this.readableDatabase
+        var currentDate: Date? = null
+
+        val query = "SELECT $COLUMN_CURRENT_DATE FROM $TABLE_USERS WHERE $COLUMN_USERNAME = ?"
+        val cursor = db.rawQuery(query, arrayOf(username))
+
+        if (cursor.moveToFirst()) {
+            val currentDateMillis = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CURRENT_DATE))
+            currentDate = Date(currentDateMillis)
+        }
+
+        cursor.close()
+        db.close()
+        return currentDate
+    }
+
+    /**
+     * Updates the current date for the specified user in the database.
+     *
+     * @param username The username of the user whose current date is to be updated.
+     * @param currentDate The new current date to be updated in the database.
+     * @return True if the current date was successfully updated, false otherwise.
+     */
+    fun updateCurrentDateByUsername(username: String, currentDate: Date): Boolean {
+        val db = writableDatabase
+        val contentValues = ContentValues().apply {
+            put(COLUMN_CURRENT_DATE, currentDate.time) // Assuming COLUMN_CURRENT_DATE is the column name for storing the date
+        }
+        val whereClause = "$COLUMN_USERNAME = ?"
+        val whereArgs = arrayOf(username)
+        val rowsAffected = db.update(TABLE_USERS, contentValues, whereClause, whereArgs)
+        return rowsAffected > 0
+    }
 
     /**
      * Generates a new token for the user.

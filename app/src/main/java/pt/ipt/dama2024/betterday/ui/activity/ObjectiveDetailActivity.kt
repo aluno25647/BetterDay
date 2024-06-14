@@ -4,6 +4,7 @@ import SessionManager
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -50,10 +51,11 @@ class ObjectiveDetailActivity : AppCompatActivity() {
         }
 
         // Go back button click listener
-        val buttonBack: Button = findViewById(R.id.buttonBack)
+        val buttonBack: ImageView = findViewById(R.id.buttonBack)
         buttonBack.setOnClickListener {
             finish()
         }
+
     }
 
     override fun onResume() {

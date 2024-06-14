@@ -4,6 +4,7 @@ import SessionManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import pt.ipt.dama2024.betterday.R
@@ -45,7 +46,7 @@ class CreationActivity : AppCompatActivity() {
         }
 
         // Go back button click listener
-        val buttonBack: Button = findViewById(R.id.buttonGoBackFromCreation)
+        val buttonBack: ImageView = findViewById(R.id.buttonGoBackFromCreation)
         buttonBack.setOnClickListener {
             finish()
         }
