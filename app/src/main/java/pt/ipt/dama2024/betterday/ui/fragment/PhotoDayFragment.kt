@@ -5,7 +5,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +30,6 @@ import pt.ipt.dama2024.betterday.ui.activity.TakePhotoActivity
 @Suppress("DEPRECATION") // the method to retrieve a result from another activity is deprecated
 class PhotoDayFragment : Fragment() {
 
-    private lateinit var imageViewPhoto: ImageView
     private lateinit var buttonTakePhoto: Button
     private lateinit var userPhotoDay: UserPhotoDay
 
@@ -103,7 +100,6 @@ class PhotoDayFragment : Fragment() {
             }
         }
 
-        imageViewPhoto = view.findViewById(R.id.image_view_photo)
         buttonTakePhoto = view.findViewById(R.id.buttonTakePhoto)
         buttonTakePhoto.setOnClickListener{
             startTakePhotoActivityForResult()
@@ -121,21 +117,14 @@ class PhotoDayFragment : Fragment() {
         if (requestCode == TAKE_PHOTO_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val latitude = data?.getDoubleExtra("latitude", 0.0)
             val longitude = data?.getDoubleExtra("longitude", 0.0)
-            val photoByteArray = data?.getByteArrayExtra("photo")
 
-//TODO nome apenas
-            updateUI(latitude, longitude, photoByteArray)
+            updateUI(latitude, longitude)
         }
     }
 
-    private fun updateUI(latitude: Double?, longitude: Double?, photoByteArray: ByteArray?) {
-        // Update photo if available
-        if (photoByteArray != null) {
-            val bitmap = BitmapFactory.decodeByteArray(photoByteArray, 0, photoByteArray.size)
-            imageViewPhoto.setImageBitmap(bitmap)
-        }
+    private fun updateUI(latitude: Double?, longitude: Double?) {
 
-        // Default for the log
+        // Default for the log IPT O103
         val defaultLatitude = 39.6071754
         val defaultLongitude = -8.406121
 
@@ -163,8 +152,8 @@ class PhotoDayFragment : Fragment() {
 
     private fun loadInfo() {
         userPhotoDay = photoDayRepository.getUserCurrentPhotoDayById(sessionManager.getUsername())
-        userPhotoDay.let {if (userPhotoDay.photo != null && userPhotoDay.latitude != null && userPhotoDay.longitude != null){
-            updateUI(userPhotoDay.latitude, userPhotoDay.longitude, userPhotoDay.photo)
+        userPhotoDay.let {if (userPhotoDay.photo != null && userPhotoDay.latitude != null){
+            updateUI(userPhotoDay.latitude, userPhotoDay.longitude)
             }
         }
     }
@@ -175,7 +164,6 @@ class PhotoDayFragment : Fragment() {
 
     companion object {
         private const val TAKE_PHOTO_REQUEST_CODE = 101
-        private val REQUIRED_PERMISSIONS_GPS = Manifest.permission.ACCESS_FINE_LOCATION
     }
 
     private fun getGpsPermission() {

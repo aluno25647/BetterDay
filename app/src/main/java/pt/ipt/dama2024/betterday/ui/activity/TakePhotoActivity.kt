@@ -46,8 +46,8 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
     private lateinit var photoDayRepository: PhotoDayRepository
     private var location: Location? = null
     private val locationPermissionCode = 2
-    private var latitude = 0.0
-    private var longitude = 0.0
+    private var latitude = 39.6071754
+    private var longitude = -8.406121
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -253,14 +253,12 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
 
                     lifecycleScope.launch(Dispatchers.IO) {
                         val inputStream: InputStream? = contentResolver.openInputStream(output.savedUri!!)
-                        val photoByteArray = inputStream?.readBytes()
                         inputStream?.close()
 
 
                         val intent = Intent().apply {
                             putExtra("latitude", this@TakePhotoActivity.latitude )
                             putExtra("longitude", this@TakePhotoActivity.longitude)
-                            putExtra("photo", photoByteArray)
                         }
                         setResult(RESULT_OK, intent)
 
