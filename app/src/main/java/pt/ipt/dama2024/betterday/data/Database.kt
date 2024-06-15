@@ -80,8 +80,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 + "$COLUMN_LATITUDE REAL, "
                 + "$COLUMN_LONGITUDE REAL) ")
 
-
-
         db.execSQL(createObjectivesTable)
         db.execSQL(createUsersTable)
         db.execSQL(createUserDetailsTable)
@@ -449,7 +447,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put("photo", photo)
             put("latitude", latitude)
             put("longitude", longitude)
-            put("author", username)
+            put("photo_username", username)
         }
         return db.insert(TABLE_USER_DETAILS, null, values)
     }
