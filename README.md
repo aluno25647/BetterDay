@@ -17,6 +17,10 @@ Linguagens disponíveis:
 
 Português / Inglês
 
+API utilizada:
+
+https://cataas.com
+
 
 Livrarias utilizadas:
 
