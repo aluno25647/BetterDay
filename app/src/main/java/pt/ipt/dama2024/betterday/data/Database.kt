@@ -75,6 +75,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 + "$COLUMN_CURRENT_DATE INTEGER)")
 
         val createUserDetailsTable = ("CREATE TABLE $TABLE_USER_DETAILS ("
+                + "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "$COLUMN_PHOTO_USER TEXT UNIQUE, "
                 + "$COLUMN_PHOTO TEXT, "
                 + "$COLUMN_LATITUDE REAL, "
@@ -235,6 +236,8 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return db.delete(TABLE_OBJECTIVES, "$COLUMN_ID = ?", arrayOf(id.toString()))
     }
 
+    // ##################################################################################################
+
     /**
      * Adds a new user to the database.
      *
@@ -371,22 +374,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
     /**
-     * Updates user information including photo, latitude, and longitude.
-     */
-    fun updateUserPhotoDay(username: String, photo: String, latitude: Double?, longitude: Double?): Int {
-        val db = this.writableDatabase
-
-        val values = ContentValues().apply {
-            put(COLUMN_PHOTO_USER, username)
-            put(COLUMN_PHOTO, photo)
-            put(COLUMN_LATITUDE, latitude)
-            put(COLUMN_LONGITUDE, longitude)
-        }
-
-        return db.insertWithOnConflict(TABLE_USER_DETAILS, null, values, SQLiteDatabase.CONFLICT_REPLACE).toInt()
-    }
-
-    /**
      * Generates a new token for the user.
      *
      * @return A new token.
@@ -441,15 +428,41 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return count > 0
     }
 
-    fun insertPhotoDay(username: String, photo: String, latitude: Double, longitude: Double): Long {
+    // ##################################################################################################
+
+    fun insertOrUpdateUserPhotoDay(username: String, photo: String, latitude: Double?, longitude: Double?): Long {
         val db = this.writableDatabase
+
+        // Check if a record exists for the given username
+        val cursor = db.query(
+            TABLE_USER_DETAILS,
+            arrayOf(COLUMN_ID),
+            "$COLUMN_PHOTO_USER = ?",
+            arrayOf(username),
+            null,
+            null,
+            null
+        )
+
         val values = ContentValues().apply {
-            put("photo", photo)
-            put("latitude", latitude)
-            put("longitude", longitude)
-            put("photo_username", username)
+            put(COLUMN_PHOTO_USER, username)
+            put(COLUMN_PHOTO, photo)
+            put(COLUMN_LATITUDE, latitude)
+            put(COLUMN_LONGITUDE, longitude)
         }
-        return db.insert(TABLE_USER_DETAILS, null, values)
+
+        val id: Long
+        if (cursor.moveToFirst()) {
+            // Update existing entry
+            val rowId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID))
+            db.update(TABLE_USER_DETAILS, values, "$COLUMN_ID = ?", arrayOf(rowId.toString()))
+            id = rowId
+        } else {
+            // Insert new entry
+            id = db.insert(TABLE_USER_DETAILS, null, values)
+        }
+        cursor.close()
+        return id
     }
 
     fun getUserPhotoDayByUsername(username: String): UserPhotoDay {

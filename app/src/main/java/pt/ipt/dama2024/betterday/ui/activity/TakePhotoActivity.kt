@@ -265,10 +265,10 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
                         setResult(RESULT_OK, intent)
 
                         //insert new photoday in the DB
-                        photoDayRepository.insertUserCurrentPhotoDay(sessionManager.getUsername(),photoPath,this@TakePhotoActivity.latitude,this@TakePhotoActivity.longitude)
+                        photoDayRepository.insertOrUpdateUserPhotoDay(sessionManager.getUsername(),photoPath,this@TakePhotoActivity.latitude,this@TakePhotoActivity.longitude)
 
-                        finish()
                     }
+                    finish()
                 }
             })
     }
