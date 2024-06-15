@@ -24,11 +24,10 @@ import pt.ipt.dama2024.betterday.model.UserPhotoDay
 import pt.ipt.dama2024.betterday.ui.activity.TakePhotoActivity
 
 /**
- * SettingsFragment is responsible for displaying the settings options.
- * Users can change the app language and log out from the app.
+ * Fragment responsible for capturing and displaying photos with associated GPS coordinates.
  */
-@Suppress("DEPRECATION") // the method to retrieve a result from another activity is deprecated
-class PhotoDayFragment : Fragment() {
+@Suppress("DEPRECATION") // Deprecated method to retrieve results from another activity
+class PhotoFragment : Fragment() {
 
     private lateinit var buttonTakePhoto: Button
     private lateinit var userPhotoDay: UserPhotoDay
@@ -41,7 +40,7 @@ class PhotoDayFragment : Fragment() {
 
     private val locationPermissionCode = 2
 
-    //default values
+    // Default coordinates
     private var lat = 39.6071754
     private var lng = -8.406121
 
@@ -58,11 +57,11 @@ class PhotoDayFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.photo_day_fragment, container, false)
+        return inflater.inflate(R.layout.photo_fragment, container, false)
     }
 
     /**
-     * Called immediately after the view is created, to initialize UI components.
+     * Called immediately after the view is created, to initialize UI components and set up listeners.
      *
      * @param view The View returned by onCreateView(LayoutInflater, ViewGroup, Bundle).
      * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
@@ -72,14 +71,15 @@ class PhotoDayFragment : Fragment() {
 
         // Initialize osmdroid configuration
         Configuration.getInstance()
-            .load(requireContext(), requireActivity().getSharedPreferences("osmdroid",AppCompatActivity.MODE_PRIVATE))
+            .load(requireContext(), requireActivity().getSharedPreferences("osmdroid", AppCompatActivity.MODE_PRIVATE))
 
         sessionManager = SessionManager(requireContext())
         photoDayRepository = PhotoDayRepository(requireContext())
 
-        getGpsPermission() //TODO tentei meter as perms aqui (separando metade/metade)
+        // Request GPS permission if not granted
+        getGpsPermission()
 
-        // Open Google Maps with predefined coordinates
+        // Setup Google Maps button
         gps_google = view.findViewById(R.id.GPS_GOOGLE)
         gps_values = view.findViewById(R.id.GPS_Values)
 
@@ -100,16 +100,28 @@ class PhotoDayFragment : Fragment() {
             }
         }
 
+        // Setup Take Photo button
         buttonTakePhoto = view.findViewById(R.id.buttonTakePhoto)
-        buttonTakePhoto.setOnClickListener{
+        buttonTakePhoto.setOnClickListener {
             startTakePhotoActivityForResult()
         }
     }
 
+    /**
+     * Starts the TakePhotoActivity to capture a photo.
+     */
     private fun startTakePhotoActivityForResult() {
         val intent = Intent(requireContext(), TakePhotoActivity::class.java)
         startActivityForResult(intent, TAKE_PHOTO_REQUEST_CODE)
     }
+
+    /**
+     * Handles the result returned from the TakePhotoActivity.
+     *
+     * @param requestCode The request code passed to startActivityForResult().
+     * @param resultCode The result code returned from the activity.
+     * @param data An Intent with the result data.
+     */
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -122,50 +134,66 @@ class PhotoDayFragment : Fragment() {
         }
     }
 
+    /**
+     * Updates the UI with the given latitude and longitude coordinates.
+     *
+     * @param latitude The latitude coordinate to display.
+     * @param longitude The longitude coordinate to display.
+     */
     private fun updateUI(latitude: Double?, longitude: Double?) {
 
-        // Default for the log IPT O103
+        // Default coordinates for logging
         val defaultLatitude = 39.6071754
         val defaultLongitude = -8.406121
 
-        // Handle latitude and longitude
+        // Update fragment's latitude and longitude if provided
         if (latitude != null) {
-            this@PhotoDayFragment.lat = latitude
+            this@PhotoFragment.lat = latitude
         }
         if (longitude != null) {
-            this@PhotoDayFragment.lng = longitude
+            this@PhotoFragment.lng = longitude
         }
-        // Debug
+
+        // Debug logging
         Log.d("Coordinates", "Latitude: $latitude, Longitude: $longitude, Default Latitude: $defaultLatitude, Default Longitude: $defaultLongitude")
 
-        //display coordinates
-        gps_values.text =
-            "Latitude: ${lat} ,\n Longitude: ${lng}"
-
+        // Display coordinates in the UI
+        gps_values.text = "Latitude: ${lat} ,\n Longitude: ${lng}"
     }
 
+    /**
+     * Loads information when the fragment resumes.
+     */
     override fun onResume() {
         super.onResume()
-        loadInfo() // TODO o grande issue rn é isto, mas esta com o mesmo principio que o catsfrag
-
+        loadInfo()
     }
 
+    /**
+     * Loads information from the repository.
+     */
     private fun loadInfo() {
         userPhotoDay = photoDayRepository.getUserCurrentPhotoDayById(sessionManager.getUsername())
-        userPhotoDay.let {if (userPhotoDay.photo != null && userPhotoDay.latitude != null){
+        if (userPhotoDay.photo != null && userPhotoDay.latitude != null) {
             updateUI(userPhotoDay.latitude, userPhotoDay.longitude)
-            }
         }
     }
 
+    /**
+     * Pauses any operations when the fragment is paused.
+     */
     override fun onPause() {
         super.onPause()
+        // Any operations to be done on fragment pause
     }
 
     companion object {
         private const val TAKE_PHOTO_REQUEST_CODE = 101
     }
 
+    /**
+     * Requests permission to access GPS location.
+     */
     private fun getGpsPermission() {
         if ((ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -179,10 +207,12 @@ class PhotoDayFragment : Fragment() {
         }
     }
 
-
-
     /**
-     * Asks for authorization to access GPS
+     * Handles the result of permission requests.
+     *
+     * @param requestCode The request code passed to requestPermissions().
+     * @param permissions The requested permissions.
+     * @param grantResults The grant results for the corresponding permissions.
      */
     @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(

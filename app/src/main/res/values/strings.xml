@@ -89,5 +89,7 @@
     <string name="no_objectives_message">No objectives to display. Tap the button below to create a new objective.</string>
     <string name="gps_permission_granted">GPS Permission Granted</string>
     <string name="gps_permission_denied">GPS Permission Denied</string>
-
+    <string name="image_is_worth">A picture is worth a thousand words.</string>
+    <string name="what_made_you_smile">What made you smile today?</string>
+    <string name="take_photo_of_inspiration">Take a photo of what inspires you.</string>
 </resources>

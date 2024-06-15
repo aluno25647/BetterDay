@@ -34,9 +34,9 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 /**
- * Most of this was learned and used in class
- * The difference lies in the adaptation from only saving locally to also saving in the database
- * https://github.com/IPT-MEI-DAMA-2023-2024/Camera-X
+ * Activity for capturing photos using CameraX, saving them locally and in the database.
+ * Most of this code was adapted from https://github.com/IPT-MEI-DAMA-2023-2024/Camera-X,
+ * with modifications to integrate database storage and GPS location retrieval.
  */
 class TakePhotoActivity : AppCompatActivity(), LocationListener {
 
@@ -50,46 +50,49 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
     private var longitude = -8.406121
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        sessionManager = SessionManager(this)
+
+        // Set the language before the activity is created
+        sessionManager.setLanguage(sessionManager.getCurrentLanguage())
+
         super.onCreate(savedInstanceState)
         binding = ActivityTakePhotoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        sessionManager = SessionManager(this)
         photoDayRepository = PhotoDayRepository(this)
+
         // Check and request necessary permissions
         if (allPermissionsGranted()) {
             startCamera()
         } else {
             requestPermissions()
         }
-        getLocation()
 
+        // Retrieve current location
+        getLocation()
 
         // Set click listener for capture button
         binding.imageCaptureButton.setOnClickListener {
             takePhoto()
-
         }
     }
 
     /**
-     * Function to check if all required permissions are granted
+     * Function to check if all required permissions are granted.
      */
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(
-            this, it
-        ) == PackageManager.PERMISSION_GRANTED
+        ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
     }
 
     /**
-     * Function to request the necessary permissions
+     * Function to request the necessary permissions.
      */
     private fun requestPermissions() {
         requestMultiplePermissions.launch(REQUIRED_PERMISSIONS)
     }
 
     /**
-     * Function that define if all permissions has been granted
+     * Activity result contract to request multiple permissions.
      */
     private val requestMultiplePermissions =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -106,7 +109,7 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
         }
 
     /**
-     * Function to start the camera and bind it to the lifecycle of the activity
+     * Function to start the camera and bind it to the lifecycle of the activity.
      */
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
@@ -123,7 +126,7 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
 
             imageCapture = ImageCapture.Builder().build()
 
-            // Select back camera as a default
+            // Select back camera as default
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             try {
@@ -177,7 +180,7 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
         ) {
             var location: Location? = null
 
-            // Attempt to get the last known location from GPS_PROVIDER
+            // Attempt to get last known location from GPS_PROVIDER
             locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)?.let {
                 location = it
             }
@@ -211,16 +214,16 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
     }
 
     /**
-     * function to take the photo and retrieve coordinates
+     * Function to take a photo using the camera and save it with associated coordinates.
      */
     private fun takePhoto() {
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture
 
-        // Create a time stamped name
-        // import java.text.SimpleDateFormat
+        // Create a time-stamped name for the photo
         val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())
-        // define the type of image, and where it should be stored
+
+        // Define the type of image and where it should be stored
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
@@ -234,6 +237,7 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
             contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues
         ).build()
 
+        // Capture the image
         imageCapture.takePicture(
             outputOptions, ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
@@ -251,28 +255,36 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
                         Toast.LENGTH_SHORT
                     ).show()
 
+                    // Use Coroutine for IO operations
                     lifecycleScope.launch(Dispatchers.IO) {
+                        // Close the input stream after capturing the photo
                         val inputStream: InputStream? = contentResolver.openInputStream(output.savedUri!!)
                         inputStream?.close()
 
-
+                        // Prepare intent with location data to return to the calling activity
                         val intent = Intent().apply {
-                            putExtra("latitude", this@TakePhotoActivity.latitude )
+                            putExtra("latitude", this@TakePhotoActivity.latitude)
                             putExtra("longitude", this@TakePhotoActivity.longitude)
                         }
                         setResult(RESULT_OK, intent)
 
-                        //insert new photoday in the DB
-                        photoDayRepository.insertOrUpdateUserPhotoDay(sessionManager.getUsername(),photoPath,this@TakePhotoActivity.latitude,this@TakePhotoActivity.longitude)
-
+                        // Insert new photo day record into the database
+                        photoDayRepository.insertOrUpdateUserPhotoDay(
+                            sessionManager.getUsername(),
+                            photoPath,
+                            this@TakePhotoActivity.latitude,
+                            this@TakePhotoActivity.longitude
+                        )
                     }
+
+                    // Finish the activity after capturing and processing the photo
                     finish()
                 }
             })
     }
 
     /**
-     * Asks for authorization to access GPS
+     * Handles permission request results for accessing location.
      */
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -292,6 +304,23 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
         }
     }
 
+    /**
+     * Callback method when the location is changed.
+     */
+    override fun onLocationChanged(location: Location) {
+        Log.d(TAG, "Location update received: $location")
+        this.location = location // Update the current location
+        updateCoordinates(location.latitude, location.longitude)
+    }
+
+    /**
+     * Updates the latitude and longitude coordinates.
+     */
+    private fun updateCoordinates(latitude: Double, longitude: Double) {
+        this@TakePhotoActivity.latitude = latitude
+        this@TakePhotoActivity.longitude = longitude
+    }
+
     companion object {
         private const val TAG = "CameraXApp"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
@@ -305,16 +334,5 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
                     add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 }
             }.toTypedArray()
-    }
-
-    override fun onLocationChanged(location: Location) {
-        Log.d(TAG, "Location update received: $location")
-        this.location = location // Update the location
-        updateCoordinates(location.latitude, location.longitude)
-    }
-
-    private fun updateCoordinates(latitude: Double, longitude: Double) {
-        this@TakePhotoActivity.latitude =latitude
-        this@TakePhotoActivity.longitude = longitude
     }
 }

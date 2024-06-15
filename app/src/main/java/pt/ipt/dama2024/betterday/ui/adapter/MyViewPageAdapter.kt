@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import pt.ipt.dama2024.betterday.ui.fragment.CatsFragment
 import pt.ipt.dama2024.betterday.ui.fragment.ObjectivesFragment
-import pt.ipt.dama2024.betterday.ui.fragment.PhotoDayFragment
+import pt.ipt.dama2024.betterday.ui.fragment.PhotoFragment
 import pt.ipt.dama2024.betterday.ui.fragment.SettingsFragment
 
 /**
@@ -36,7 +36,7 @@ class MyViewPageAdapter(fragmentActivity: FragmentActivity) :
     override fun createFragment(position: Int): Fragment {
         return when(position){
             0-> ObjectivesFragment()
-            1-> PhotoDayFragment()
+            1-> PhotoFragment()
             2-> CatsFragment()
             3-> SettingsFragment()
             else -> ObjectivesFragment()

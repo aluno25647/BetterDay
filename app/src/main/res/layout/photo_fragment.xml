@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragment.PhotoDayFragment"
+    tools:context=".ui.fragment.PhotoFragment"
     android:padding="30dp">
 
     <!-- TextView for the title -->
@@ -19,16 +19,34 @@
         android:textStyle="bold"
         android:layout_marginBottom="30dp"/>
 
-    <!-- TextView for the title -->
+
     <TextView
-        android:id="@+id/takPhotoWithCoordsTitle"
+        android:id="@+id/image_is_worth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Take a photo and check its coords ;)"
-        android:textSize="22sp"
-        android:textStyle="bold"
+        android:text="@string/image_is_worth"
+        android:textSize="20sp"
         android:layout_marginBottom="30dp"/>
+
+    <TextView
+        android:id="@+id/what_made_you_smile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/what_made_you_smile"
+        android:textSize="20sp"
+        android:layout_marginBottom="30dp"/>
+
+    <TextView
+        android:id="@+id/take_photo_of_inspiration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/take_photo_of_inspiration"
+        android:textSize="20sp"
+        android:layout_marginBottom="30dp"/>
+
 
     <TextView
         android:id="@+id/GPS_Values"
