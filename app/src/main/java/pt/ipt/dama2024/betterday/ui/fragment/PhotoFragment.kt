@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import org.osmdroid.config.Configuration
@@ -37,6 +38,8 @@ class PhotoFragment : Fragment() {
 
     private lateinit var gps_google: Button
     private lateinit var gps_values: TextView
+
+    private lateinit var cardViewObjectiveDetail: CardView
 
     private val locationPermissionCode = 2
 
@@ -82,6 +85,8 @@ class PhotoFragment : Fragment() {
         // Setup Google Maps button
         gps_google = view.findViewById(R.id.GPS_GOOGLE)
         gps_values = view.findViewById(R.id.GPS_Values)
+        cardViewObjectiveDetail = view.findViewById(R.id.cardViewObjectiveDetail)
+        cardViewObjectiveDetail.visibility = View.GONE
 
         gps_google.setOnClickListener {
 
@@ -177,7 +182,11 @@ class PhotoFragment : Fragment() {
         userPhotoDay = photoDayRepository.getUserCurrentPhotoDayById(sessionManager.getUsername())
         if (userPhotoDay.photo != null && userPhotoDay.latitude != null) {
             updateUI(userPhotoDay.latitude, userPhotoDay.longitude)
+            cardViewObjectiveDetail.visibility = View.VISIBLE
+        } else {
+            cardViewObjectiveDetail.visibility = View.GONE
         }
+
     }
 
     /**
