@@ -46,8 +46,8 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
     private lateinit var photoDayRepository: PhotoDayRepository
     private var location: Location? = null
     private val locationPermissionCode = 2
-    private var latitude = 39.6071754
-    private var longitude = -8.406121
+    private var latitude = 0.0
+    private var longitude = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         sessionManager = SessionManager(this)

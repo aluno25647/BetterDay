@@ -158,7 +158,7 @@ class PhotoFragment : Fragment() {
         Log.d("Coordinates", "Latitude: $latitude, Longitude: $longitude, Default Latitude: $defaultLatitude, Default Longitude: $defaultLongitude")
 
         // Display coordinates in the UI
-        gps_values.text = "Latitude: ${lat} ,\n Longitude: ${lng}"
+        gps_values.text = "Latitude\n${lat}\n\nLongitude\n${lng}"
     }
 
     /**
