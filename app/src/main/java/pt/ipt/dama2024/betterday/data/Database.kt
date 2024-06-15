@@ -2,6 +2,7 @@ package pt.ipt.dama2024.betterday.data
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.sqlite.SQLiteConstraintException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Base64
@@ -84,6 +85,8 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         db.execSQL(createObjectivesTable)
         db.execSQL(createUsersTable)
         db.execSQL(createUserDetailsTable)
+
+        createDefaultUser(db)
     }
 
     /**
@@ -237,6 +240,48 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
     // ##################################################################################################
+
+    /**
+     * Inserts a default user into the database.
+     */
+    private fun createDefaultUser(db: SQLiteDatabase): Boolean {
+
+        // Verifica se já existem dados na tabela de usuários
+        val query = "SELECT COUNT(*) FROM $TABLE_USERS"
+        val cursor = db.rawQuery(query, null)
+        cursor.moveToFirst()
+        val count = cursor.getInt(0)
+        cursor.close()
+
+        // Se houver algum registro na tabela, não cria o usuário default novamente
+        if (count > 0) {
+            return false
+        }
+
+        val username = "defaultUser"
+        val email = "default_user@example.com"
+        val password = "defaultPass1"
+        val currentDate = Date()
+
+        val hashedPassword = hashPassword(password)
+        val values = ContentValues().apply {
+            put(COLUMN_USERNAME, username)
+            put(COLUMN_PASSWORD, hashedPassword)
+            put(COLUMN_EMAIL, email)
+            put(COLUMN_CURRENT_DATE, currentDate.time) // Convert Date to Long
+        }
+
+        try {
+            // Insere o usuário default na tabela de usuários
+            val success = db.insertOrThrow(TABLE_USERS, null, values)
+            return success != -1L
+        } catch (e: SQLiteConstraintException) {
+            e.printStackTrace()
+            return false
+        }
+    }
+
+
 
     /**
      * Adds a new user to the database.
