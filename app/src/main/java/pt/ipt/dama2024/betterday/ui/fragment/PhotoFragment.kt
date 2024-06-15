@@ -74,7 +74,10 @@ class PhotoFragment : Fragment() {
 
         // Initialize osmdroid configuration
         Configuration.getInstance()
-            .load(requireContext(), requireActivity().getSharedPreferences("osmdroid", AppCompatActivity.MODE_PRIVATE))
+            .load(
+                requireContext(),
+                requireActivity().getSharedPreferences("osmdroid", AppCompatActivity.MODE_PRIVATE)
+            )
 
         sessionManager = SessionManager(requireContext())
         photoDayRepository = PhotoDayRepository(requireContext())
@@ -101,8 +104,10 @@ class PhotoFragment : Fragment() {
                 startActivity(mapIntent)
             } else {
                 // Handle situation where no web browser is available
-                Toast.makeText(requireContext(),
-                    getString(R.string.no_app_available_to_handle_this_action), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.no_app_available_to_handle_this_action), Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -161,7 +166,10 @@ class PhotoFragment : Fragment() {
         }
 
         // Debug logging
-        Log.d("Coordinates", "Latitude: $latitude, Longitude: $longitude, Default Latitude: $defaultLatitude, Default Longitude: $defaultLongitude")
+        Log.d(
+            "Coordinates",
+            "Latitude: $latitude, Longitude: $longitude, Default Latitude: $defaultLatitude, Default Longitude: $defaultLongitude"
+        )
 
         // Display coordinates in the UI
         gps_values.text = "Latitude\n${lat}\n\nLongitude\n${lng}"
@@ -233,13 +241,18 @@ class PhotoFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == locationPermissionCode) {
             if (grantResults.isNotEmpty() &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(requireContext(),
-                    getString(R.string.gps_permission_granted), Toast.LENGTH_SHORT)
+                grantResults[0] == PackageManager.PERMISSION_GRANTED
+            ) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.gps_permission_granted), Toast.LENGTH_SHORT
+                )
                     .show()
             } else {
-                Toast.makeText(requireContext(),
-                    getString(R.string.gps_permission_denied), Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.gps_permission_denied), Toast.LENGTH_SHORT
+                )
                     .show()
             }
         }

@@ -82,11 +82,16 @@ class LoginActivity : AppCompatActivity() {
             }
             // Validate password length
             else if (!ValidationUtils.isPasswordLengthValid(password)) {
-                Toast.makeText(this, getString(R.string.password_length_error), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.password_length_error), Toast.LENGTH_SHORT)
+                    .show()
             }
             // Validate password complexity
             else if (!ValidationUtils.isPasswordComplexityValid(password)) {
-                Toast.makeText(this, getString(R.string.password_complexity_error), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.password_complexity_error),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             // Authenticate user
             else {
@@ -220,16 +225,24 @@ class LoginActivity : AppCompatActivity() {
                 val currentDateUpdated = userRepository.updateCurrentDate(username)
 
                 if (currentDateUpdated) {
-                    Toast.makeText(this,
-                        getString(R.string.successfully_updated_objectives_for_user), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.successfully_updated_objectives_for_user),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    Toast.makeText(this,
-                        getString(R.string.failed_to_update_current_date_for_user), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.failed_to_update_current_date_for_user),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             } else {
-                Toast.makeText(this,
-                    getString(R.string.no_objectives_were_updated_for_user), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.no_objectives_were_updated_for_user), Toast.LENGTH_SHORT
+                ).show()
             }
 
         }

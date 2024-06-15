@@ -72,13 +72,18 @@ class RegisterActivity : AppCompatActivity() {
             // Validate password length
             else if (!ValidationUtils.isPasswordLengthValid(password)) {
 
-                Toast.makeText(this, getString(R.string.password_length_error), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.password_length_error), Toast.LENGTH_SHORT)
+                    .show()
 
             }
             // Validate password complexity
             else if (!ValidationUtils.isPasswordComplexityValid(password)) {
 
-                Toast.makeText(this, getString(R.string.password_complexity_error), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.password_complexity_error),
+                    Toast.LENGTH_SHORT
+                ).show()
 
             }
             // Validate email
@@ -174,35 +179,35 @@ class RegisterActivity : AppCompatActivity() {
         // Second Password
 
         // Get the EditText and TextView views
-        val passwordEditText_2 = findViewById<EditText>(R.id.confirm_password)
-        val showPasswordTextView_2 = findViewById<TextView>(R.id.showPassword_2)
+        val passwordEditText2 = findViewById<EditText>(R.id.confirm_password)
+        val showPasswordTextView2 = findViewById<TextView>(R.id.showPassword_2)
 
         // Set a click listener on the TextView to toggle password visibility
-        showPasswordTextView_2.setOnClickListener {
-            togglePasswordVisibility(passwordEditText_2)
+        showPasswordTextView2.setOnClickListener {
+            togglePasswordVisibility(passwordEditText2)
         }
 
         // Set a focus change listener on the EditText to hide the password when it loses focus
-        passwordEditText_2.setOnFocusChangeListener { _, hasFocus ->
+        passwordEditText2.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                hidePassword(passwordEditText_2)
+                hidePassword(passwordEditText2)
             }
         }
 
-        var isPasswordVisible_2 = false
+        var isPasswordVisible2 = false
 
         // Set a click listener on the TextView to toggle password visibility
-        showPasswordTextView_2.setOnClickListener {
-            if (isPasswordVisible_2) {
+        showPasswordTextView2.setOnClickListener {
+            if (isPasswordVisible2) {
                 // If password is visible, hide it
-                passwordEditText_2.transformationMethod = PasswordTransformationMethod.getInstance()
-                showPasswordTextView_2.text = getString(R.string.show_password)
-                isPasswordVisible_2 = false
+                passwordEditText2.transformationMethod = PasswordTransformationMethod.getInstance()
+                showPasswordTextView2.text = getString(R.string.show_password)
+                isPasswordVisible2 = false
             } else {
                 // If password is hidden, show it
-                passwordEditText_2.transformationMethod = null
-                showPasswordTextView_2.text = getString(R.string.hide_password)
-                isPasswordVisible_2 = true
+                passwordEditText2.transformationMethod = null
+                showPasswordTextView2.text = getString(R.string.hide_password)
+                isPasswordVisible2 = true
             }
         }
 

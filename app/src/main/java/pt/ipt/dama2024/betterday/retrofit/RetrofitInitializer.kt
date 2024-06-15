@@ -1,4 +1,5 @@
 package pt.ipt.dama2024.betterday.retrofit
+
 import pt.ipt.dama2024.betterday.retrofit.service.CatService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

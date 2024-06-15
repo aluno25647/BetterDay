@@ -1,24 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:background="@color/blue"
     android:gravity="center"
-    android:padding="15dp"
-    android:background="@color/blue">
+    android:orientation="vertical"
+    android:padding="15dp">
 
     <ImageView
         android:layout_width="200dp"
         android:layout_height="150dp"
-        android:src="@drawable/betterday_image"/>
+        android:src="@drawable/betterday_image" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="25dp"
         android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
         app:cardCornerRadius="30dp"
         app:cardElevation="10dp">
 
@@ -44,8 +44,8 @@
                 android:layout_height="24dp"
                 android:layout_gravity="end"
                 android:layout_marginTop="15dp"
-                android:src="@drawable/info_icon"
-                android:contentDescription="@string/requirements" />
+                android:contentDescription="@string/requirements"
+                android:src="@drawable/info_icon" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -88,8 +88,8 @@
                 android:id="@+id/showPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/blue"
                 android:text="@string/show_password"
+                android:textColor="@color/blue"
                 android:textSize="15sp" />
 
             <TextView

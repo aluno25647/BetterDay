@@ -9,11 +9,11 @@
         android:id="@+id/buttonBack"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="25dp"
         android:layout_alignParentStart="true"
-        android:src="@drawable/baseline_keyboard_backspace_24"
-        android:contentDescription="@string/go_back" />
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/go_back"
+        android:src="@drawable/baseline_keyboard_backspace_24" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -24,40 +24,40 @@
             android:id="@+id/cardViewObjectiveDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="30dp"
-            android:layout_marginTop="15dp"
-            android:paddingBottom="30dp">
+            android:paddingBottom="30dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="30dp"
-                android:background="@drawable/blue_border_background">
+                android:background="@drawable/blue_border_background"
+                android:padding="30dp">
 
                 <!-- Title TextView -->
                 <TextView
                     android:id="@+id/textViewTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/blue"
                     android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/blue"/>
+                    android:textStyle="bold" />
 
                 <!-- Description Label TextView -->
                 <TextView
                     android:id="@+id/textViewCreationDateLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/creation_date_label"
-                    android:textSize="18sp"
                     android:layout_below="@id/textViewTitle"
-                    android:textStyle="bold"
                     android:paddingTop="20dp"
-                    android:textColor="@color/blue" />
+                    android:text="@string/creation_date_label"
+                    android:textColor="@color/blue"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <!-- Creation Date TextView -->
                 <TextView
@@ -72,12 +72,12 @@
                     android:id="@+id/textViewDescriptionLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/description_new_objective_creation"
-                    android:textSize="18sp"
                     android:layout_below="@id/textViewCreationDate"
-                    android:textStyle="bold"
                     android:paddingTop="20dp"
-                    android:textColor="@color/blue" />
+                    android:text="@string/description_new_objective_creation"
+                    android:textColor="@color/blue"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <!-- Description TextView -->
                 <TextView
@@ -92,12 +92,12 @@
                     android:id="@+id/textViewStatusLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/status_label"
-                    android:textSize="18sp"
                     android:layout_below="@id/textViewDescription"
-                    android:textStyle="bold"
                     android:paddingTop="20dp"
-                    android:textColor="@color/blue" />
+                    android:text="@string/status_label"
+                    android:textColor="@color/blue"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textViewStatus"
@@ -105,29 +105,29 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textViewStatusLabel"
                     android:paddingTop="8dp"
-                    android:textColor="@color/green"/>
+                    android:textColor="@color/green" />
 
                 <!-- Edit Objective Button -->
                 <Button
                     android:id="@+id/buttonEditObjective"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/button_edit_objective"
                     android:layout_below="@id/textViewStatus"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="25dp"
-                    android:backgroundTint="@color/blue"/>
+                    android:backgroundTint="@color/blue"
+                    android:text="@string/button_edit_objective" />
 
                 <!-- Delete Objective Button -->
                 <Button
                     android:id="@+id/buttonDeleteObjective"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/button_delete_objective"
                     android:layout_below="@id/buttonEditObjective"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:backgroundTint="@color/red"/>
+                    android:backgroundTint="@color/red"
+                    android:text="@string/button_delete_objective" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </ScrollView>

@@ -94,7 +94,11 @@ class SettingsFragment : Fragment() {
         sessionManager.setLanguage(languageCode)
 
         // Define transition animations
-        val slideIn = ActivityOptions.makeCustomAnimation(requireContext(), R.drawable.slide_in, R.drawable.slide_out)
+        val slideIn = ActivityOptions.makeCustomAnimation(
+            requireContext(),
+            R.drawable.slide_in,
+            R.drawable.slide_out
+        )
 
         // Restart the activity smoothly
         requireActivity().apply {

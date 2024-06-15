@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragment.PhotoFragment"
-    android:padding="30dp">
+    android:padding="30dp"
+    tools:context=".ui.fragment.PhotoFragment">
 
     <!-- TextView for the title -->
     <TextView
@@ -15,10 +14,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
         android:text="@string/travel_companion"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="30dp"/>
+        android:textStyle="bold" />
 
 
     <TextView
@@ -26,27 +25,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
         android:text="@string/image_is_worth"
-        android:textSize="15sp"
-        android:layout_marginBottom="15dp"/>
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/what_made_you_smile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
         android:text="@string/what_made_you_smile"
-        android:textSize="15sp"
-        android:layout_marginBottom="15dp"/>
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/take_photo_of_inspiration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
         android:text="@string/take_photo_of_inspiration"
-        android:textSize="15sp"/>
+        android:textSize="15sp" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewObjectiveDetail"
@@ -70,30 +69,30 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
+                android:paddingBottom="20dp"
                 android:text="@string/last_position"
-                android:textSize="20sp"
-                android:paddingBottom="20dp"/>
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/GPS_Values"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
                 android:text=""
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginBottom="16dp" />
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/GPS_GOOGLE"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/check_googlemaps"
-                android:textSize="18sp"
-                android:textColor="@android:color/white"
+                android:layout_gravity="center_horizontal"
                 android:backgroundTint="@color/blue"
-                android:layout_gravity="center_horizontal" />
+                android:text="@string/check_googlemaps"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -104,10 +103,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="@string/capture_the_moment"
-        android:textSize="18sp"
         android:backgroundTint="@color/blue"
+        android:text="@string/capture_the_moment"
         android:textColor="@android:color/white"
-        />
+        android:textSize="18sp" />
 
 </LinearLayout>

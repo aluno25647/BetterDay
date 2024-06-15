@@ -27,7 +27,8 @@ class ObjectiveAdapter(
      */
     inner class ObjectiveViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val titleTextView: TextView = itemView.findViewById(R.id.textViewTitleObjective)
-        private val descriptionTextView: TextView = itemView.findViewById(R.id.textViewDescriptionObjective)
+        private val descriptionTextView: TextView =
+            itemView.findViewById(R.id.textViewDescriptionObjective)
         private val checkBox: CheckBox = itemView.findViewById(R.id.checkBoxObjective)
 
         /**

@@ -258,7 +258,8 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
                     // Use Coroutine for IO operations
                     lifecycleScope.launch(Dispatchers.IO) {
                         // Close the input stream after capturing the photo
-                        val inputStream: InputStream? = contentResolver.openInputStream(output.savedUri!!)
+                        val inputStream: InputStream? =
+                            contentResolver.openInputStream(output.savedUri!!)
                         inputStream?.close()
 
                         // Prepare intent with location data to return to the calling activity
@@ -294,7 +295,8 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == locationPermissionCode) {
             if (grantResults.isNotEmpty() &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                grantResults[0] == PackageManager.PERMISSION_GRANTED
+            ) {
                 Toast.makeText(this, getString(R.string.permission_granted), Toast.LENGTH_SHORT)
                     .show()
             } else {

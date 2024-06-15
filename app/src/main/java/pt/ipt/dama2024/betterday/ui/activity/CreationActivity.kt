@@ -65,7 +65,8 @@ class CreationActivity : AppCompatActivity() {
         }
 
         if (description.isEmpty()) {
-            Toast.makeText(this, getString(R.string.empty_description_toast), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.empty_description_toast), Toast.LENGTH_SHORT)
+                .show()
             return
         }
 
@@ -83,12 +84,17 @@ class CreationActivity : AppCompatActivity() {
         // Verification of correct insertion
         // If successful, clear the text boxes for new creations
         if (id != -1L) {  // Common check in SQLite to verify if it was inserted in a correct row
-            Toast.makeText(this, getString(R.string.new_objective_saved_toast), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.new_objective_saved_toast), Toast.LENGTH_SHORT)
+                .show()
             editTextObjectiveTitle.text.clear()
             editTextObjectiveDescription.text.clear()
             finish()
         } else {
-            Toast.makeText(this, getString(R.string.error_saving_new_objective_toast), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.error_saving_new_objective_toast),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

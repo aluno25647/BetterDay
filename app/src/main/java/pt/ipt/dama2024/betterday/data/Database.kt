@@ -17,7 +17,8 @@ import java.util.UUID
  *
  * @param context The application context.
  */
-class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class Database(context: Context) :
+    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     /**
      * Declaration of variables representing the different column names for the data base
@@ -180,14 +181,24 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val objectives = mutableListOf<Objective>()
         val db = this.readableDatabase
 
-        val cursor = db.query(TABLE_OBJECTIVES, null, "$COLUMN_AUTHOR = ?", arrayOf(username), null, null, null)
+        val cursor = db.query(
+            TABLE_OBJECTIVES,
+            null,
+            "$COLUMN_AUTHOR = ?",
+            arrayOf(username),
+            null,
+            null,
+            null
+        )
         with(cursor) {
             while (moveToNext()) {
                 val id = getLong(getColumnIndexOrThrow(COLUMN_ID))
                 val title = getString(getColumnIndexOrThrow(COLUMN_TITLE))
                 val description = getString(getColumnIndexOrThrow(COLUMN_DESCRIPTION))
-                val creationDate = Date(getLong(getColumnIndexOrThrow(COLUMN_CREATION_DATE))) // Convert Long to Date
-                val checked = getInt(getColumnIndexOrThrow(COLUMN_CHECKED)) == 1 // Convert int to boolean
+                val creationDate =
+                    Date(getLong(getColumnIndexOrThrow(COLUMN_CREATION_DATE))) // Convert Long to Date
+                val checked =
+                    getInt(getColumnIndexOrThrow(COLUMN_CHECKED)) == 1 // Convert int to boolean
                 val author = getString(getColumnIndexOrThrow(COLUMN_AUTHOR))
                 objectives.add(Objective(id, title, description, creationDate, checked, author))
             }
@@ -211,7 +222,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put(COLUMN_CHECKED, if (objective.checked) 1 else 0) // Convert boolean to int
             put(COLUMN_AUTHOR, objective.author)
         }
-        return db.update(TABLE_OBJECTIVES, values, "$COLUMN_ID = ?", arrayOf(objective.id.toString()))
+        return db.update(
+            TABLE_OBJECTIVES,
+            values,
+            "$COLUMN_ID = ?",
+            arrayOf(objective.id.toString())
+        )
     }
 
     /**
@@ -280,7 +296,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             return false
         }
     }
-
 
 
     /**
@@ -391,7 +406,8 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val cursor = db.rawQuery(query, arrayOf(username))
 
         if (cursor.moveToFirst()) {
-            val currentDateMillis = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CURRENT_DATE))
+            val currentDateMillis =
+                cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CURRENT_DATE))
             currentDate = Date(currentDateMillis)
         }
 
@@ -410,7 +426,10 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     fun updateCurrentDateByUsername(username: String, currentDate: Date): Boolean {
         val db = writableDatabase
         val contentValues = ContentValues().apply {
-            put(COLUMN_CURRENT_DATE, currentDate.time) // Assuming COLUMN_CURRENT_DATE is the column name for storing the date
+            put(
+                COLUMN_CURRENT_DATE,
+                currentDate.time
+            ) // Assuming COLUMN_CURRENT_DATE is the column name for storing the date
         }
         val whereClause = "$COLUMN_USERNAME = ?"
         val whereArgs = arrayOf(username)
@@ -475,7 +494,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     // ##################################################################################################
 
-    fun insertOrUpdateUserPhotoDay(username: String, photo: String, latitude: Double?, longitude: Double?): Long {
+    fun insertOrUpdateUserPhotoDay(
+        username: String,
+        photo: String,
+        latitude: Double?,
+        longitude: Double?
+    ): Long {
         val db = this.writableDatabase
 
         // Check if a record exists for the given username

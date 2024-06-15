@@ -4,55 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.SettingsFragment"
-    android:padding="35dp">
+    android:padding="35dp"
+    tools:context=".ui.fragment.SettingsFragment">
 
     <TextView
         android:id="@+id/settings_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:paddingBottom="30dp"
         android:text="@string/settings"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/language_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/settings_title"
+        android:layout_centerHorizontal="true"
         android:paddingBottom="10dp"
         android:text="@string/change_language"
-        android:textSize="20sp"
-        android:layout_below="@id/settings_title"
-        android:layout_centerHorizontal="true" />
+        android:textSize="20sp" />
 
     <RadioGroup
         android:id="@+id/language_radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="30dp"
         android:layout_below="@id/language_label"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:paddingBottom="30dp">
 
         <RadioButton
             android:id="@+id/english_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/english"
-            android:textSize="20sp"
             android:layout_marginEnd="20dp"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:text="@string/english"
+            android:textSize="20sp" />
 
         <RadioButton
             android:id="@+id/portuguese_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/portuguese"
-            android:textSize="20sp"
             android:layout_marginStart="20dp"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:text="@string/portuguese"
+            android:textSize="20sp" />
     </RadioGroup>
 
 
@@ -60,32 +60,32 @@
         android:id="@+id/about_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/language_radio_group"
+        android:layout_centerHorizontal="true"
         android:paddingBottom="10dp"
         android:text="@string/about_app"
-        android:textSize="20sp"
-        android:layout_below="@id/language_radio_group"
-        android:layout_centerHorizontal="true" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button_about_app"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/about_app"
+        android:layout_below="@id/about_label"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/blue"
-        android:layout_below="@id/about_label"
-        android:layout_centerHorizontal="true" />
+        android:text="@string/about_app" />
 
     <Button
         android:id="@+id/logout_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/blue"
         android:text="@string/logout"
-        android:textSize="18sp"
         android:textColor="@android:color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:textSize="18sp" />
 
 </RelativeLayout>

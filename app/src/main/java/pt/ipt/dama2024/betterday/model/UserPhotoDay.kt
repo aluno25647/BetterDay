@@ -10,7 +10,7 @@ package pt.ipt.dama2024.betterday.model
 data class UserPhotoDay(
     val photo: ByteArray? = null,
     val latitude: Double? = null,
-    val longitude: Double?= null
+    val longitude: Double? = null
 ) {
     /**
      * Since we are using an array type data class, android studio recommends us to generate

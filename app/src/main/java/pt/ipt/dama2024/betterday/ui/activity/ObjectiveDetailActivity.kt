@@ -46,7 +46,11 @@ class ObjectiveDetailActivity : AppCompatActivity() {
         objectiveId = intent.getLongExtra("objectiveId", -1L)
 
         if (objectiveId == -1L) {
-            Toast.makeText(this, getString(R.string.toast_objective_id_not_provided), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.toast_objective_id_not_provided),
+                Toast.LENGTH_SHORT
+            ).show()
             finish()
         }
 
@@ -68,7 +72,11 @@ class ObjectiveDetailActivity : AppCompatActivity() {
                 // Update UI with fetched objective data
                 updateUIWithObjective(objective)
             } else {
-                Toast.makeText(this, getString(R.string.toast_objective_not_found), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.toast_objective_not_found),
+                    Toast.LENGTH_SHORT
+                ).show()
                 finish()
             }
         }
@@ -96,7 +104,7 @@ class ObjectiveDetailActivity : AppCompatActivity() {
             statusTextView.text = getString(R.string.objective_detail_completed)
             statusTextView.setTextColor(ContextCompat.getColor(this, R.color.green))
         } else {
-            statusTextView.text =  getString(R.string.objective_detail_not_completed)
+            statusTextView.text = getString(R.string.objective_detail_not_completed)
             statusTextView.setTextColor(ContextCompat.getColor(this, R.color.red))
         }
 
@@ -132,10 +140,18 @@ class ObjectiveDetailActivity : AppCompatActivity() {
     private fun deleteObjective(objectiveId: Long) {
         val rowsAffected = objectiveRepository.deleteObjective(objectiveId)
         if (rowsAffected > 0) {
-            Toast.makeText(this, getString(R.string.toast_objective_deleted_success), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.toast_objective_deleted_success),
+                Toast.LENGTH_SHORT
+            ).show()
             finish()
         } else {
-            Toast.makeText(this, getString(R.string.toast_failed_to_delete_objective), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.toast_failed_to_delete_objective),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

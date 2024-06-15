@@ -109,7 +109,6 @@ class UserRepository(context: Context) {
     }
 
 
-
     /**
      * Updates the current date for the specified user to today's date.
      *
