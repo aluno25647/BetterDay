@@ -21,6 +21,7 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
@@ -142,28 +143,72 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
         }, ContextCompat.getMainExecutor(this))
     }
 
+    /**
+     * Requests location permission and retrieves last known location if permission is granted.
+     */
     private fun getLocation() {
-        locationManager = getSystemService(Context.LOCATION_SERVICE)
-                as LocationManager
-        if ((ContextCompat.checkSelfPermission(
+        if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED)
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
-            requestPermissions(
+            // Permission not granted, request it
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                locationPermissionCode
+            )
+        } else {
+            // Permission already granted, get last known location
+            getLastLocation()
+        }
+    }
+
+    /**
+     * Retrieves the last known location using GPS_PROVIDER or NETWORK_PROVIDER.
+     */
+    private fun getLastLocation() {
+        val locationManager =
+            getSystemService(Context.LOCATION_SERVICE) as? LocationManager
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            var location: Location? = null
+
+            // Attempt to get the last known location from GPS_PROVIDER
+            locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)?.let {
+                location = it
+            }
+
+            // If GPS_PROVIDER location is not available, try NETWORK_PROVIDER
+            if (location == null) {
+                locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)?.let {
+                    location = it
+                }
+            }
+
+            // Handle the location update or error case
+            location?.let { loc ->
+                onLocationChanged(loc)
+            } ?: run {
+                // Handle case where no last known location is found
+                Toast.makeText(
+                    this,
+                    "Last known location not found",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        } else {
+            // Permission not granted, request it
+            ActivityCompat.requestPermissions(
+                this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 locationPermissionCode
             )
         }
-        /*  Inicia o GPS, que vai autilizar a posição de 5 em 5 segundos,
-            se a nova localização estiver pelo menos a 5 metros da última
-            localização  */
-        locationManager.requestLocationUpdates(
-            LocationManager.GPS_PROVIDER,
-            500,
-            5f,
-            this
-        )
     }
 
     /**
