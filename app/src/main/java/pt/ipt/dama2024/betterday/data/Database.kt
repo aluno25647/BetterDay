@@ -454,9 +454,9 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return db.insert(TABLE_USER_DETAILS, null, values)
     }
 
-    fun getUserPhotoDayByUsername(username: String): UserPhotoDay? {
+    fun getUserPhotoDayByUsername(username: String): UserPhotoDay {
         val db = this.readableDatabase
-        var userPhotoDay: UserPhotoDay? = null
+        var userPhotoDay = UserPhotoDay()
 
         val columns = arrayOf(COLUMN_PHOTO, COLUMN_LATITUDE, COLUMN_LONGITUDE)
         val selection = "$COLUMN_PHOTO_USER = ?"

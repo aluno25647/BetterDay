@@ -30,7 +30,7 @@ class PhotoDayRepository(context: Context) {
      * @param username The username of the user whose current photoDay is to be retrieved.
      * @return The UserPhotoDay object associated with the username, or null if not found.
      */
-    fun getUserCurrentPhotoDayById(username: String): UserPhotoDay? {
+    fun getUserCurrentPhotoDayById(username: String): UserPhotoDay {
         return db.getUserPhotoDayByUsername(username)
     }
 

@@ -135,7 +135,7 @@ class PhotoDayFragment : Fragment() {
     }
 
     private fun loadInfo() {
-        userPhotoDay = photoDayRepository.getUserCurrentPhotoDayById(sessionManager.getUsername())!!
+        userPhotoDay = photoDayRepository.getUserCurrentPhotoDayById(sessionManager.getUsername())
         userPhotoDay.let {if (userPhotoDay.photo != null && userPhotoDay.latitude != null && userPhotoDay.longitude != null){
             updateUI(userPhotoDay.latitude, userPhotoDay.longitude, userPhotoDay.photo)
             }
