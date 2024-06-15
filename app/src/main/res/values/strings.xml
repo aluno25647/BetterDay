@@ -87,5 +87,7 @@
     <string name="requirements">Username must have at least 5 characters.\nPassword must have at least 6 characters, with at least one capital letter and one number.</string>
     <string name="take_photo_of_the_day_button">Take photo of the day</string>
     <string name="no_objectives_message">No objectives to display. Tap the button below to create a new objective.</string>
+    <string name="gps_permission_granted">Gps Permission Granted</string>
+    <string name="gps_permission_denied">Gps Permission Denied</string>
 
 </resources>

@@ -87,5 +87,7 @@
     <string name="requirements_title">Requisitos</string>
     <string name="take_photo_of_the_day_button">Tirar foto do dia</string>
     <string name="no_objectives_message">Sem objetivos para mostrar. Toque no botão abaixo para criar um novo objetivo.</string>
+    <string name="gps_permission_granted">Permissão GPS Aceite</string>
+    <string name="gps_permission_denied">Permissão GPS Negada</string>
 
 </resources>

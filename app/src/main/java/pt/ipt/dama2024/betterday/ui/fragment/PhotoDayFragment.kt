@@ -1,7 +1,10 @@
 package pt.ipt.dama2024.betterday.ui.fragment
 
+import SessionManager
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -10,12 +13,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import pt.ipt.dama2024.betterday.R
+import pt.ipt.dama2024.betterday.data.PhotoDayRepository
+import pt.ipt.dama2024.betterday.model.UserPhotoDay
 import pt.ipt.dama2024.betterday.ui.activity.TakePhotoActivity
 
 /**
@@ -28,6 +35,12 @@ class PhotoDayFragment : Fragment() {
     private lateinit var imageViewPhoto: ImageView
     private lateinit var mapView: MapView
     private lateinit var buttonTakePhoto: Button
+    private lateinit var userPhotoDay: UserPhotoDay
+
+    private lateinit var sessionManager: SessionManager
+    private lateinit var photoDayRepository: PhotoDayRepository
+
+    private val locationPermissionCode = 2
 
     /**
      * Creates the view hierarchy associated with the fragment.
@@ -58,6 +71,10 @@ class PhotoDayFragment : Fragment() {
         Configuration.getInstance()
             .load(requireContext(), requireActivity().getSharedPreferences("osmdroid",AppCompatActivity.MODE_PRIVATE))
 
+        sessionManager = SessionManager(requireContext())
+        photoDayRepository = PhotoDayRepository(requireContext())
+
+        getGpsPermission() //TODO tentei meter as perms aqui (separando metade/metade)
         // Find the MapView and set its properties
         mapView = view.findViewById(R.id.mapView)
         mapView.setMultiTouchControls(true)
@@ -84,6 +101,8 @@ class PhotoDayFragment : Fragment() {
             val photoByteArray = data?.getByteArrayExtra("photo")
 
             // Update UI or process the latitude, longitude, and photoByteArray as needed
+            updateDB(sessionManager.getUsername(),photoByteArray,latitude,longitude)
+
             updateUI(latitude, longitude, photoByteArray)
         }
     }
@@ -105,9 +124,22 @@ class PhotoDayFragment : Fragment() {
         mapView.controller.setCenter(startPoint)
     }
 
+    private fun updateDB(username: String, photo: ByteArray?, latitude: Double?, longitude: Double?) {
+        photoDayRepository.updateUserCurrentPhotoDay(username,photo,latitude,longitude)
+    }
+
     override fun onResume() {
         super.onResume()
+        loadInfo() // TODO o grande issue rn é isto, mas esta com o mesmo principio que o catsfrag
         mapView.onResume() // Needed for compass, my location overlays, v6.0.0 and up
+    }
+
+    private fun loadInfo() {
+        userPhotoDay = photoDayRepository.getUserCurrentPhotoDayById(sessionManager.getUsername())!!
+        userPhotoDay.let {if (userPhotoDay.photo != null && userPhotoDay.latitude != null && userPhotoDay.longitude != null){
+            updateUI(userPhotoDay.latitude, userPhotoDay.longitude, userPhotoDay.photo)
+            }
+        }
     }
 
     override fun onPause() {
@@ -117,6 +149,43 @@ class PhotoDayFragment : Fragment() {
 
     companion object {
         private const val TAKE_PHOTO_REQUEST_CODE = 101
+        private val REQUIRED_PERMISSIONS_GPS = Manifest.permission.ACCESS_FINE_LOCATION
     }
 
+    private fun getGpsPermission() {
+        if ((ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED)
+        ) {
+            requestPermissions(
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                locationPermissionCode
+            )
+        }
+    }
+
+    /**
+     * Asks for authorization to access GPS
+     */
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == locationPermissionCode) {
+            if (grantResults.isNotEmpty() &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(requireContext(),
+                    getString(R.string.gps_permission_granted), Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(requireContext(),
+                    getString(R.string.gps_permission_denied), Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+    }
 }

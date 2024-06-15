@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Base64
 import pt.ipt.dama2024.betterday.model.Objective
+import pt.ipt.dama2024.betterday.model.UserPhotoDay
 import java.security.MessageDigest
 import java.util.Date
 import java.util.UUID
@@ -41,6 +42,13 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val COLUMN_PASSWORD = "password"
         private const val COLUMN_TOKEN = "token"
         private const val COLUMN_CURRENT_DATE = "currentDate"
+
+        //Details table columns
+        private const val TABLE_USER_DETAILS = "user_details"
+        private const val COLUMN_PHOTO_USER = "photo_username"
+        private const val COLUMN_PHOTO = "photo"
+        private const val COLUMN_LATITUDE = "latitude"
+        private const val COLUMN_LONGITUDE = "longitude"
     }
 
     /**
@@ -56,7 +64,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 + "$COLUMN_DESCRIPTION TEXT, "
                 + "$COLUMN_CREATION_DATE INTEGER, "
                 + "$COLUMN_CHECKED INTEGER, "
-                + "$COLUMN_AUTHOR TEXT, ")
+                + "$COLUMN_AUTHOR TEXT)")
 
         val createUsersTable = ("CREATE TABLE $TABLE_USERS ("
                 + "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -66,8 +74,17 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 + "$COLUMN_TOKEN TEXT, "
                 + "$COLUMN_CURRENT_DATE INTEGER)")
 
+        val createUserDetailsTable = ("CREATE TABLE $TABLE_USER_DETAILS ("
+                + "$COLUMN_PHOTO_USER TEXT PRIMARY KEY, "
+                + "$COLUMN_PHOTO BLOB, "
+                + "$COLUMN_LATITUDE REAL, "
+                + "$COLUMN_LONGITUDE REAL) ")
+
+
+
         db.execSQL(createObjectivesTable)
         db.execSQL(createUsersTable)
+        db.execSQL(createUserDetailsTable)
     }
 
     /**
@@ -79,6 +96,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS $TABLE_OBJECTIVES")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_USERS")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_USER_DETAILS")
         onCreate(db)
     }
 
@@ -355,6 +373,22 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
     /**
+     * Updates user information including photo, latitude, and longitude.
+     */
+    fun updateUserPhotoDay(username: String, photo: ByteArray?, latitude: Double?, longitude: Double?): Int {
+        val db = this.writableDatabase
+
+        val values = ContentValues().apply {
+            put(COLUMN_PHOTO_USER, username)
+            put(COLUMN_PHOTO, photo)
+            put(COLUMN_LATITUDE, latitude)
+            put(COLUMN_LONGITUDE, longitude)
+        }
+
+        return db.insertWithOnConflict(TABLE_USER_DETAILS, null, values, SQLiteDatabase.CONFLICT_REPLACE).toInt()
+    }
+
+    /**
      * Generates a new token for the user.
      *
      * @return A new token.
@@ -408,4 +442,51 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         db.close()
         return count > 0
     }
+
+    fun insertPhotoDay(username: String, photo: ByteArray, latitude: Double, longitude: Double): Long {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put("photo", photo)
+            put("latitude", latitude)
+            put("longitude", longitude)
+            put("author", username)
+        }
+        return db.insert(TABLE_USER_DETAILS, null, values)
+    }
+
+    fun getUserPhotoDayByUsername(username: String): UserPhotoDay? {
+        val db = this.readableDatabase
+        var userPhotoDay: UserPhotoDay? = null
+
+        val columns = arrayOf(COLUMN_PHOTO, COLUMN_LATITUDE, COLUMN_LONGITUDE)
+        val selection = "$COLUMN_PHOTO_USER = ?"
+        val selectionArgs = arrayOf(username)
+
+        val cursor = db.query(
+            TABLE_USER_DETAILS,
+            columns,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            null
+        )
+
+        cursor.use { cursor ->
+            if (cursor.moveToFirst()) {
+                val photoIndex = cursor.getColumnIndex(COLUMN_PHOTO)
+                val latitudeIndex = cursor.getColumnIndex(COLUMN_LATITUDE)
+                val longitudeIndex = cursor.getColumnIndex(COLUMN_LONGITUDE)
+
+                val photo = cursor.getBlob(photoIndex)
+                val latitude = cursor.getDouble(latitudeIndex)
+                val longitude = cursor.getDouble(longitudeIndex)
+
+                userPhotoDay = UserPhotoDay(photo, latitude, longitude)
+            }
+        }
+
+        return userPhotoDay
+    }
+
 }

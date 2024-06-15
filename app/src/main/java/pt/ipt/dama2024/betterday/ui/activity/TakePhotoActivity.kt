@@ -1,5 +1,6 @@
 package pt.ipt.dama2024.betterday.ui.activity
 
+import SessionManager
 import android.Manifest
 import android.content.ContentValues
 import android.content.Context
@@ -25,6 +26,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pt.ipt.dama2024.betterday.R
+import pt.ipt.dama2024.betterday.data.PhotoDayRepository
 import pt.ipt.dama2024.betterday.databinding.ActivityTakePhotoBinding
 import java.io.InputStream
 import java.text.SimpleDateFormat
@@ -40,6 +42,8 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
     private lateinit var binding: ActivityTakePhotoBinding
     private lateinit var imageCapture: ImageCapture
     private lateinit var locationManager: LocationManager
+    private lateinit var sessionManager: SessionManager
+    private lateinit var photoDayRepository: PhotoDayRepository
     private var location: Location? = null
     private val locationPermissionCode = 2
     private var latitude = 0.0
@@ -50,6 +54,8 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
         binding = ActivityTakePhotoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        sessionManager = SessionManager(this)
+        photoDayRepository = PhotoDayRepository(this)
         // Check and request necessary permissions
         if (allPermissionsGranted()) {
             startCamera()
@@ -202,6 +208,10 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
                         val inputStream: InputStream? = contentResolver.openInputStream(output.savedUri!!)
                         val photoByteArray = inputStream?.readBytes()
                         inputStream?.close()
+
+                        if (photoByteArray != null) {
+                            photoDayRepository.insertUserCurrentPhotoDay(sessionManager.getUsername(),photoByteArray,this@TakePhotoActivity.latitude,this@TakePhotoActivity.longitude)
+                        } //TODO in a possible refactor this substitutes the whole process of setResult
 
 
                         val intent = Intent().apply {
