@@ -12,17 +12,22 @@ object ValidationUtils {
      * @return True if the username is valid, false otherwise.
      */
     fun isValidUsername(username: String): Boolean {
-        return username.length >= 5
+        // Trim the username to remove leading and trailing spaces
+        val trimmedUsername = username.trim()
+
+        // Check if the trimmed username length is at least 5 characters
+        return trimmedUsername.length >= 5
     }
 
     /**
-     * Validates if the password meets the minimum length requirement.
+     * Validates if the password meets the minimum length requirement and does not contain spaces
      *
      * @param password The password to be validated.
-     * @return True if the password meets the minimum length requirement, false otherwise.
+     * @return True if the password meets the minimum length requirement and does not contain spaces, false otherwise.
      */
     fun isPasswordLengthValid(password: String): Boolean {
-        return password.length >= 6
+        // Check if the password length is at least 6 characters and does not contain spaces
+        return password.length >= 6 && !password.contains(" ")
     }
 
     /**
