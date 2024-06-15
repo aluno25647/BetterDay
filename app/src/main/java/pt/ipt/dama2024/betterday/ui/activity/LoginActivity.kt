@@ -217,14 +217,11 @@ class LoginActivity : AppCompatActivity() {
             val updatedCount = repository.uncheckAllObjectives(username)
 
             if (updatedCount > 0) {
-                Toast.makeText(this,
-                    getString(R.string.successfully_updated_objectives_for_user), Toast.LENGTH_SHORT).show()
-
                 val currentDateUpdated = userRepository.updateCurrentDate(username)
 
                 if (currentDateUpdated) {
                     Toast.makeText(this,
-                        getString(R.string.current_date_updated_successfully_for_user), Toast.LENGTH_SHORT).show()
+                        getString(R.string.successfully_updated_objectives_for_user), Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this,
                         getString(R.string.failed_to_update_current_date_for_user), Toast.LENGTH_SHORT).show()
@@ -235,8 +232,6 @@ class LoginActivity : AppCompatActivity() {
                     getString(R.string.no_objectives_were_updated_for_user), Toast.LENGTH_SHORT).show()
             }
 
-        } else {
-            Toast.makeText(this, getString(R.string.everything_is_ok), Toast.LENGTH_SHORT).show()
         }
     }
 

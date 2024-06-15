@@ -96,11 +96,9 @@
     <string name="last_position">Último Momento Observado:</string>
     <string name="capture_the_moment">Captura o Momento</string>
     <string name="check_googlemaps">Abrir no GoogleMaps</string>
-    <string name="successfully_updated_objectives_for_user">Objetivos atualizados com sucesso para o utilizador.</string>
-    <string name="current_date_updated_successfully_for_user">Data atual atualizada com sucesso para o utilizador.</string>
+    <string name="successfully_updated_objectives_for_user">Objetivos atualizados com sucesso.</string>
     <string name="failed_to_update_current_date_for_user">Falha ao atualizar a data atual para o utilizador.</string>
     <string name="no_objectives_were_updated_for_user">Nenhum objetivo foi atualizado para o utilizador.</string>
-    <string name="everything_is_ok">Tudo está bem.</string>
     <string name="last_known_location_not_found">Última localização conhecida não encontrada.</string>
     <string name="permission_granted">Permissão concedida.</string>
     <string name="permission_denied">Permissão negada.</string>
