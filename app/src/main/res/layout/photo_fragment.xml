@@ -27,8 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/image_is_worth"
-        android:textSize="20sp"
-        android:layout_marginBottom="30dp"/>
+        android:textSize="15sp"
+        android:layout_marginBottom="15dp"/>
 
     <TextView
         android:id="@+id/what_made_you_smile"
@@ -36,8 +36,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/what_made_you_smile"
-        android:textSize="20sp"
-        android:layout_marginBottom="30dp"/>
+        android:textSize="15sp"
+        android:layout_marginBottom="15dp"/>
 
     <TextView
         android:id="@+id/take_photo_of_inspiration"
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/take_photo_of_inspiration"
-        android:textSize="20sp"/>
+        android:textSize="15sp"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewObjectiveDetail"
