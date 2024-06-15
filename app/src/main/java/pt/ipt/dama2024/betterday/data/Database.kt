@@ -75,8 +75,8 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 + "$COLUMN_CURRENT_DATE INTEGER)")
 
         val createUserDetailsTable = ("CREATE TABLE $TABLE_USER_DETAILS ("
-                + "$COLUMN_PHOTO_USER TEXT PRIMARY KEY, "
-                + "$COLUMN_PHOTO BLOB, "
+                + "$COLUMN_PHOTO_USER TEXT UNIQUE, "
+                + "$COLUMN_PHOTO TEXT, "
                 + "$COLUMN_LATITUDE REAL, "
                 + "$COLUMN_LONGITUDE REAL) ")
 
@@ -373,7 +373,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     /**
      * Updates user information including photo, latitude, and longitude.
      */
-    fun updateUserPhotoDay(username: String, photo: ByteArray?, latitude: Double?, longitude: Double?): Int {
+    fun updateUserPhotoDay(username: String, photo: String, latitude: Double?, longitude: Double?): Int {
         val db = this.writableDatabase
 
         val values = ContentValues().apply {
@@ -441,7 +441,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return count > 0
     }
 
-    fun insertPhotoDay(username: String, photo: ByteArray, latitude: Double, longitude: Double): Long {
+    fun insertPhotoDay(username: String, photo: String, latitude: Double, longitude: Double): Long {
         val db = this.writableDatabase
         val values = ContentValues().apply {
             put("photo", photo)

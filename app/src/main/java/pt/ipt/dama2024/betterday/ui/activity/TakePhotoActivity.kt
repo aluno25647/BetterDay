@@ -42,7 +42,6 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
 
     private lateinit var binding: ActivityTakePhotoBinding
     private lateinit var imageCapture: ImageCapture
-    private lateinit var locationManager: LocationManager
     private lateinit var sessionManager: SessionManager
     private lateinit var photoDayRepository: PhotoDayRepository
     private var location: Location? = null
@@ -243,6 +242,9 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val photoUri = output.savedUri
+                    val photoPath = photoUri?.toString() ?: ""
+
                     Toast.makeText(
                         this@TakePhotoActivity,
                         getString(R.string.photo_capture_succeeded),
@@ -254,10 +256,6 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
                         val photoByteArray = inputStream?.readBytes()
                         inputStream?.close()
 
-                        if (photoByteArray != null) {
-                            photoDayRepository.insertUserCurrentPhotoDay(sessionManager.getUsername(),photoByteArray,this@TakePhotoActivity.latitude,this@TakePhotoActivity.longitude)
-                        } //TODO in a possible refactor this substitutes the whole process of setResult
-
 
                         val intent = Intent().apply {
                             putExtra("latitude", this@TakePhotoActivity.latitude )
@@ -265,6 +263,10 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
                             putExtra("photo", photoByteArray)
                         }
                         setResult(RESULT_OK, intent)
+
+                        //insert new photoday in the DB
+                        photoDayRepository.insertUserCurrentPhotoDay(sessionManager.getUsername(),photoPath,this@TakePhotoActivity.latitude,this@TakePhotoActivity.longitude)
+
                         finish()
                     }
                 }

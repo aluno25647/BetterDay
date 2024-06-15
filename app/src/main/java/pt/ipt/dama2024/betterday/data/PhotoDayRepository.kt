@@ -20,7 +20,7 @@ class PhotoDayRepository(context: Context) {
      * @param longitude The longitude coordinate associated with the photo location.
      * @return The number of rows affected (typically 1 if successful, 0 otherwise).
      */
-    fun updateUserCurrentPhotoDay(username: String, photo: ByteArray?, latitude: Double?, longitude: Double?): Int {
+    fun updateUserCurrentPhotoDay(username: String, photo: String, latitude: Double?, longitude: Double?): Int {
         return db.updateUserPhotoDay(username, photo, latitude, longitude)
     }
 
@@ -43,7 +43,7 @@ class PhotoDayRepository(context: Context) {
      * @param longitude The longitude coordinate associated with the photo location.
      * @return The row ID of the newly inserted record, or -1 if insertion failed.
      */
-    fun insertUserCurrentPhotoDay(username: String, photo: ByteArray, latitude: Double, longitude: Double): Long {
+    fun insertUserCurrentPhotoDay(username: String, photo: String, latitude: Double, longitude: Double): Long {
         return db.insertPhotoDay(username, photo, latitude, longitude)
     }
 }

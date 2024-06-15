@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,13 +14,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import org.osmdroid.config.Configuration
-import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.MapView
 import pt.ipt.dama2024.betterday.R
 import pt.ipt.dama2024.betterday.data.PhotoDayRepository
 import pt.ipt.dama2024.betterday.model.UserPhotoDay
@@ -33,14 +33,20 @@ import pt.ipt.dama2024.betterday.ui.activity.TakePhotoActivity
 class PhotoDayFragment : Fragment() {
 
     private lateinit var imageViewPhoto: ImageView
-    private lateinit var mapView: MapView
     private lateinit var buttonTakePhoto: Button
     private lateinit var userPhotoDay: UserPhotoDay
 
     private lateinit var sessionManager: SessionManager
     private lateinit var photoDayRepository: PhotoDayRepository
 
+    private lateinit var gps_google: Button
+    private lateinit var gps_values: TextView
+
     private val locationPermissionCode = 2
+
+    //default values
+    private var lat = 39.6071754
+    private var lng = -8.406121
 
     /**
      * Creates the view hierarchy associated with the fragment.
@@ -75,10 +81,27 @@ class PhotoDayFragment : Fragment() {
         photoDayRepository = PhotoDayRepository(requireContext())
 
         getGpsPermission() //TODO tentei meter as perms aqui (separando metade/metade)
-        // Find the MapView and set its properties
-        mapView = view.findViewById(R.id.mapView)
-        mapView.setMultiTouchControls(true)
-        mapView.controller.setZoom(15.0)
+
+        // Open Google Maps with predefined coordinates
+        gps_google = view.findViewById(R.id.GPS_GOOGLE)
+        gps_values = view.findViewById(R.id.GPS_Values)
+
+        gps_google.setOnClickListener {
+
+            // Construct the geo URI
+            val geoUri = "http://maps.google.com/maps?q=loc:$lat,$lng"
+
+            // Create an Intent to open a web browser
+            val mapIntent = Intent(Intent.ACTION_VIEW, Uri.parse(geoUri))
+
+            // Verify if there is a web browser available to handle the intent
+            if (mapIntent.resolveActivity(requireActivity().packageManager) != null) {
+                startActivity(mapIntent)
+            } else {
+                // Handle situation where no web browser is available
+                Toast.makeText(requireContext(), "No app available to handle this action", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         imageViewPhoto = view.findViewById(R.id.image_view_photo)
         buttonTakePhoto = view.findViewById(R.id.buttonTakePhoto)
@@ -100,9 +123,7 @@ class PhotoDayFragment : Fragment() {
             val longitude = data?.getDoubleExtra("longitude", 0.0)
             val photoByteArray = data?.getByteArrayExtra("photo")
 
-            // Update UI or process the latitude, longitude, and photoByteArray as needed
-            updateDB(sessionManager.getUsername(),photoByteArray,latitude,longitude)
-
+//TODO nome apenas
             updateUI(latitude, longitude, photoByteArray)
         }
     }
@@ -114,24 +135,30 @@ class PhotoDayFragment : Fragment() {
             imageViewPhoto.setImageBitmap(bitmap)
         }
 
-        // Handle latitude and longitude for mapView
-        val defaultLatitude = 0.0
-        val defaultLongitude = 0.0
+        // Default for the log
+        val defaultLatitude = 39.6071754
+        val defaultLongitude = -8.406121
 
+        // Handle latitude and longitude
+        if (latitude != null) {
+            this@PhotoDayFragment.lat = latitude
+        }
+        if (longitude != null) {
+            this@PhotoDayFragment.lng = longitude
+        }
         // Debug
         Log.d("Coordinates", "Latitude: $latitude, Longitude: $longitude, Default Latitude: $defaultLatitude, Default Longitude: $defaultLongitude")
-        val startPoint = GeoPoint(latitude ?: defaultLatitude, longitude ?: defaultLongitude)
-        mapView.controller.setCenter(startPoint)
-    }
 
-    private fun updateDB(username: String, photo: ByteArray?, latitude: Double?, longitude: Double?) {
-        photoDayRepository.updateUserCurrentPhotoDay(username,photo,latitude,longitude)
+        //display coordinates
+        gps_values.text =
+            "Latitude: ${lat} ,\n Longitude: ${lng}"
+
     }
 
     override fun onResume() {
         super.onResume()
         loadInfo() // TODO o grande issue rn é isto, mas esta com o mesmo principio que o catsfrag
-        mapView.onResume() // Needed for compass, my location overlays, v6.0.0 and up
+
     }
 
     private fun loadInfo() {
@@ -144,7 +171,6 @@ class PhotoDayFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        mapView.onPause() // Needed for compass, my location overlays, v6.0.0 and up
     }
 
     companion object {
@@ -164,6 +190,8 @@ class PhotoDayFragment : Fragment() {
             )
         }
     }
+
+
 
     /**
      * Asks for authorization to access GPS

@@ -27,12 +27,25 @@
         android:contentDescription="Photo of the Day"
         android:layout_margin="20dp"/>
 
-    <org.osmdroid.views.MapView
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_margin="20dp"/>
+    <TextView
+        android:id="@+id/GPS_Values"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text=""
+        android:textSize="20sp"
+        android:layout_marginBottom="30dp"/>
+
+    <Button
+        android:id="@+id/GPS_GOOGLE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/blue"
+        android:text="Check GoogleMaps"
+        android:textSize="18sp"
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/buttonTakePhoto"
