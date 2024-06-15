@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Travel Companion"
+        android:text="@string/travel_companion"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginBottom="30dp"/>
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Last position:"
+                android:text="@string/last_position"
                 android:textSize="20sp"
                 android:paddingBottom="20dp"/>
 
@@ -86,7 +86,7 @@
                 android:id="@+id/GPS_GOOGLE"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Check GoogleMaps"
+                android:text="@string/check_googlemaps"
                 android:textSize="18sp"
                 android:textColor="@android:color/white"
                 android:backgroundTint="@color/blue"
@@ -100,7 +100,7 @@
         android:id="@+id/buttonTakePhoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/take_photo_of_the_day_button"
+        android:text="@string/capture_the_moment"
         android:textSize="18sp"
         android:backgroundTint="@color/blue"
         android:textColor="@android:color/white"

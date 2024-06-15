@@ -40,7 +40,7 @@
     <string name="about_app_creators_title">Criadores:</string>
     <string name="about_app_creators">Luís Costa - Nº 25647\nPaulo Peixoto - Nº 26097</string>
     <string name="about_app_libraries_title">Frameworks e Bibliotecas Utilizadas:</string>
-    <string name="about_app_libraries">Retrofit\n</string>
+    <string name="about_app_libraries">Retrofit\n Kotlinx.Coroutines\n CameraX\n Picasso\n CircleImageView\n</string>
     <string name="show_password">Mostrar Palavra-passe</string>
     <string name="hide_password">Ocultar Palavra-passe</string>
     <string name="create_a_new_objective">Criar novo objetivo</string>
@@ -85,11 +85,14 @@
     <string name="confirm_delete_objective">Tem a certeza de que deseja eliminar este objetivo?</string>
     <string name="requirements">O nome de utilizador deve ter pelo menos 5 caracteres.\nA palavra-passe deve ter pelo menos 6 caracteres, com pelo menos uma letra maiúscula e um número.</string>
     <string name="requirements_title">Requisitos</string>
-    <string name="take_photo_of_the_day_button">Tirar foto do dia</string>
     <string name="no_objectives_message">Sem objetivos para mostrar. Toque no botão abaixo para criar um novo objetivo.</string>
     <string name="gps_permission_granted">Permissão GPS Aceite</string>
     <string name="gps_permission_denied">Permissão GPS Negada</string>
     <string name="image_is_worth">Uma imagem vale mais que mil palavras.</string>
     <string name="what_made_you_smile">O que te fez sorrir hoje?</string>
     <string name="take_photo_of_inspiration">Tire uma foto do que te inspira.</string>
+    <string name="travel_companion">Companheiro de Viagem</string>
+    <string name="last_position">Último Momento Observado:</string>
+    <string name="capture_the_moment">Captura o Momento</string>
+    <string name="check_googlemaps">Abrir no GoogleMaps</string>
 </resources>
