@@ -10,6 +10,9 @@ import pt.ipt.dama2024.betterday.R
 import pt.ipt.dama2024.betterday.data.ObjectiveRepository
 import pt.ipt.dama2024.betterday.model.Objective
 
+/**
+ * Activity responsible for the edition of new Objectives elements
+ */
 class EditObjectiveActivity : AppCompatActivity() {
 
     private lateinit var objective: Objective

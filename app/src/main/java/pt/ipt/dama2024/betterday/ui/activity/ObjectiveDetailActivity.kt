@@ -74,6 +74,11 @@ class ObjectiveDetailActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Updates the user interface with data from a given objective.
+     *
+     * @param objective The objective object containing data to update the UI.
+     */
     private fun updateUIWithObjective(objective: Objective) {
         // Find views by ID
         val titleTextView = findViewById<TextView>(R.id.textViewTitle)
@@ -108,12 +113,22 @@ class ObjectiveDetailActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Shows a confirmation dialog to confirm the deletion of an objective.
+     *
+     * @param objectiveId The ID of the objective to be deleted.
+     */
     private fun showDeleteConfirmationDialog(objectiveId: Long) {
         DialogHelper.showDeleteConfirmationDialog(this) {
             deleteObjective(objectiveId)
         }
     }
 
+    /**
+     * Deletes an objective from the database.
+     *
+     * @param objectiveId The ID of the objective to be deleted.
+     */
     private fun deleteObjective(objectiveId: Long) {
         val rowsAffected = objectiveRepository.deleteObjective(objectiveId)
         if (rowsAffected > 0) {
@@ -124,6 +139,12 @@ class ObjectiveDetailActivity : AppCompatActivity() {
         }
     }
 
+
+    /**
+     * Navigates to the EditObjectiveActivity to edit the specified objective.
+     *
+     * @param objectiveId The ID of the objective to be edited.
+     */
     private fun navigateToEditObjective(objectiveId: Long) {
         val intent = Intent(this, EditObjectiveActivity::class.java).apply {
             putExtra("objectiveId", objectiveId)
@@ -131,6 +152,12 @@ class ObjectiveDetailActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    /**
+     * Formats a Date object into a string with the format "dd MMM yyyy".
+     *
+     * @param date The date to be formatted.
+     * @return A string representing the formatted date.
+     */
     private fun formatDate(date: Date): String {
         val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
         return sdf.format(date)

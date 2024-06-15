@@ -4,6 +4,16 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.Date
 
+/**
+ * Model class that represents an objective object
+ *
+ * @property id Unique identifier for the objective. Automatically generated.
+ * @property title Title of the objective.
+ * @property description Description of the objective.
+ * @property creationDate Date when the objective was created.
+ * @property checked Whether the objective has been checked/completed. Defaults to false.
+ * @property author User ID or username of the author/creator.
+ */
 @Entity(tableName = "objectives")
 data class Objective(
     @PrimaryKey(autoGenerate = true) val id: Long = 0, // Unique identifier for the objective

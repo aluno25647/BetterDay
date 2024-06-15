@@ -2,12 +2,12 @@ package pt.ipt.dama2024.betterday.ui.fragment
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -17,6 +17,9 @@ import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
+/**
+ * Fragment to display a cat photo retrieved from an API
+ */
 class CatsFragment : Fragment() {
 
     private lateinit var catImageView: ImageView

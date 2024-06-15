@@ -12,6 +12,9 @@ import pt.ipt.dama2024.betterday.data.ObjectiveRepository
 import pt.ipt.dama2024.betterday.model.Objective
 import java.util.Date
 
+/**
+ * Activity responsible for the creation of new Objectives
+ */
 class CreationActivity : AppCompatActivity() {
     private lateinit var editTextObjectiveTitle: EditText
     private lateinit var editTextObjectiveDescription: EditText
