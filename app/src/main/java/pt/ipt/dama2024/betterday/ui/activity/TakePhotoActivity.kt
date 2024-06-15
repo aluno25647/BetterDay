@@ -199,7 +199,7 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
                 // Handle case where no last known location is found
                 Toast.makeText(
                     this,
-                    "Last known location not found",
+                    getString(R.string.last_known_location_not_found),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -295,10 +295,10 @@ class TakePhotoActivity : AppCompatActivity(), LocationListener {
         if (requestCode == locationPermissionCode) {
             if (grantResults.isNotEmpty() &&
                 grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT)
+                Toast.makeText(this, getString(R.string.permission_granted), Toast.LENGTH_SHORT)
                     .show()
             } else {
-                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT)
+                Toast.makeText(this, getString(R.string.permission_denied), Toast.LENGTH_SHORT)
                     .show()
             }
         }

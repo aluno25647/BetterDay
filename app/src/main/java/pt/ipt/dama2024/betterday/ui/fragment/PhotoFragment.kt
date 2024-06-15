@@ -96,7 +96,8 @@ class PhotoFragment : Fragment() {
                 startActivity(mapIntent)
             } else {
                 // Handle situation where no web browser is available
-                Toast.makeText(requireContext(), "No app available to handle this action", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.no_app_available_to_handle_this_action), Toast.LENGTH_SHORT).show()
             }
         }
 

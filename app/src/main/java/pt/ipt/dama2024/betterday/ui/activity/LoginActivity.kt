@@ -3,7 +3,6 @@ package pt.ipt.dama2024.betterday.ui.activity
 import SessionManager
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.widget.Button
 import android.widget.EditText
@@ -214,22 +213,26 @@ class LoginActivity : AppCompatActivity() {
             val updatedCount = repository.uncheckAllObjectives(username)
 
             if (updatedCount > 0) {
-                Toast.makeText(this, "Successfully updated objectives for user.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.successfully_updated_objectives_for_user), Toast.LENGTH_SHORT).show()
 
                 val currentDateUpdated = userRepository.updateCurrentDate(username)
 
                 if (currentDateUpdated) {
-                    Toast.makeText(this, "Current date updated successfully for user.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.current_date_updated_successfully_for_user), Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this, "Failed to update current date for user.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.failed_to_update_current_date_for_user), Toast.LENGTH_SHORT).show()
                 }
 
             } else {
-                Toast.makeText(this, "No objectives were updated for user.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.no_objectives_were_updated_for_user), Toast.LENGTH_SHORT).show()
             }
 
         } else {
-            Toast.makeText(this, "Everything is ok.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.everything_is_ok), Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -43,7 +43,7 @@
     <string name="about_app_libraries">Retrofit\n Kotlinx.Coroutines\n CameraX\n Picasso\n CircleImageView\n</string>
     <string name="show_password">Show Password</string>
     <string name="hide_password">Hide Password</string>
-    <string name="create_a_new_objective">Create a new Objective</string>
+    <string name="create_a_new_objective">Create a New Objective</string>
     <string name="title_new_objective_creation">Title</string>
     <string name="enter_your_objective_title">Enter your objective title</string>
     <string name="description_new_objective_creation">Description</string>
@@ -95,4 +95,13 @@
     <string name="last_position">Last Moment Experienced:</string>
     <string name="capture_the_moment">Capture the Moment</string>
     <string name="check_googlemaps">Open GoogleMaps</string>
+    <string name="successfully_updated_objectives_for_user">Successfully updated objectives for user.</string>
+    <string name="current_date_updated_successfully_for_user">Current date updated successfully for user.</string>
+    <string name="failed_to_update_current_date_for_user">Failed to update current date for user.</string>
+    <string name="no_objectives_were_updated_for_user">No objectives were updated for user.</string>
+    <string name="everything_is_ok">Everything is ok.</string>
+    <string name="last_known_location_not_found">Last known location not found</string>
+    <string name="permission_granted">Permission Granted</string>
+    <string name="permission_denied">Permission Denied</string>
+    <string name="no_app_available_to_handle_this_action">No app available to handle this action</string>
 </resources>
