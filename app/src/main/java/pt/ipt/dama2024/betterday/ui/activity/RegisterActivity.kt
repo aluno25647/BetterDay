@@ -69,10 +69,16 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.username_error), Toast.LENGTH_SHORT).show()
 
             }
-            // Validate password
-            else if (!ValidationUtils.isValidPassword(password)) {
+            // Validate password length
+            else if (!ValidationUtils.isPasswordLengthValid(password)) {
 
-                Toast.makeText(this, getString(R.string.password_error), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.password_length_error), Toast.LENGTH_SHORT).show()
+
+            }
+            // Validate password complexity
+            else if (!ValidationUtils.isPasswordComplexityValid(password)) {
+
+                Toast.makeText(this, getString(R.string.password_complexity_error), Toast.LENGTH_SHORT).show()
 
             }
             // Validate email

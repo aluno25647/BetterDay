@@ -16,16 +16,25 @@ object ValidationUtils {
     }
 
     /**
-     * Validates if the password meets the requirements:
-     * at least 6 characters long, contains at least one uppercase letter and one digit.
+     * Validates if the password meets the minimum length requirement.
      *
      * @param password The password to be validated.
-     * @return True if the password is valid, false otherwise.
+     * @return True if the password meets the minimum length requirement, false otherwise.
      */
-    fun isValidPassword(password: String): Boolean {
+    fun isPasswordLengthValid(password: String): Boolean {
+        return password.length >= 6
+    }
+
+    /**
+     * Validates if the password contains at least one uppercase letter and one digit.
+     *
+     * @param password The password to be validated.
+     * @return True if the password contains at least one uppercase letter and one digit, false otherwise.
+     */
+    fun isPasswordComplexityValid(password: String): Boolean {
         val containsUpperCase = password.any { it.isUpperCase() }
         val containsDigit = password.any { it.isDigit() }
-        return password.length >= 6 && containsUpperCase && containsDigit
+        return containsUpperCase && containsDigit
     }
 
     /**

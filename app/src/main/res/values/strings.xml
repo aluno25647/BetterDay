@@ -10,7 +10,8 @@
     <string name="email">Email</string>
     <string name="repeat_password">Repeat Password</string>
     <string name="username_error">Username must have at least 5 characters</string>
-    <string name="password_error">Password must have at least 6 characters, with at least one capital letter and one number</string>
+    <string name="password_length_error">Password must be at least 6 characters long.</string>
+    <string name="password_complexity_error">Password must contain at least one capital letter and one number.</string>
     <string name="login_success">Login successful</string>
     <string name="login_failed">Login failed</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
