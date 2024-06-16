@@ -14,7 +14,7 @@
     <string name="login_success">Login successful</string>
     <string name="login_failed">Login failed</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
-    <string name="empty_fields_error">Username or password cannot be empty</string>
+    <string name="empty_fields_error">Username and Password cannot be empty.</string>
     <string name="username_in_use">Username is already in use</string>
     <string name="registration_success">Registration successful</string>
     <string name="registration_failed">Registration failed</string>

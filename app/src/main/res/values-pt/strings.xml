@@ -14,7 +14,7 @@
     <string name="login_success">Login bem-sucedido</string>
     <string name="login_failed">Login falhou</string>
     <string name="passwords_do_not_match">As palavras-passe não coincidem</string>
-    <string name="empty_fields_error">O nome de utilizador ou palavra-passe não podem estar vazios</string>
+    <string name="empty_fields_error">Nome de Utilizador e Palavra-passe não podem estar vazios.</string>
     <string name="username_in_use">O nome de utilizador já está em uso</string>
     <string name="registration_success">Registo bem-sucedido</string>
     <string name="registration_failed">Registo falhou</string>
