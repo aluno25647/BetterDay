@@ -41,7 +41,7 @@
     <string name="about_app_creators_title">Creators:</string>
     <string name="about_app_creators">Luís Costa - Nº 25647\nPaulo Peixoto - Nº 26097</string>
     <string name="about_app_libraries_title">Frameworks and Libraries Used:</string>
-    <string name="about_app_libraries">Retrofit\n Kotlinx.Coroutines\n CameraX\n Picasso\n CircleImageView\n</string>
+    <string name="about_app_libraries">Retrofit\n Kotlinx.Coroutines\n CameraX\n Picasso\n CircleImageView\n CATAAS API\n</string>
     <string name="show_password">Show Password</string>
     <string name="hide_password">Hide Password</string>
     <string name="create_a_new_objective">Create a New Objective</string>
