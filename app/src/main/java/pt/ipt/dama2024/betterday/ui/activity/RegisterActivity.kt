@@ -46,7 +46,6 @@ class RegisterActivity : AppCompatActivity() {
         registerButton.setOnClickListener {
             // Retrieve user input
             val username = findViewById<EditText>(R.id.new_username).text.toString()
-            val email = findViewById<EditText>(R.id.new_email).text.toString()
             val password = findViewById<EditText>(R.id.new_password).text.toString()
             val confirmPassword = findViewById<EditText>(R.id.confirm_password).text.toString()
 
@@ -57,7 +56,7 @@ class RegisterActivity : AppCompatActivity() {
 
             }
             // Validate empty fields
-            else if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
+            else if (username.isEmpty() || password.isEmpty()) {
 
                 Toast.makeText(this, getString(R.string.empty_fields_error), Toast.LENGTH_SHORT)
                     .show()
@@ -86,18 +85,6 @@ class RegisterActivity : AppCompatActivity() {
                 ).show()
 
             }
-            // Validate email
-            else if (!ValidationUtils.isValidEmail(email)) {
-
-                Toast.makeText(this, getString(R.string.email_error), Toast.LENGTH_SHORT).show()
-
-            }
-            // Check if email is already in use
-            else if (userRepository.isEmailAlreadyInUse(email)) {
-
-                Toast.makeText(this, getString(R.string.email_in_use), Toast.LENGTH_SHORT).show()
-
-            }
             // Check if username is already in use
             else if (userRepository.isUsernameAlreadyInUse(username)) {
 
@@ -105,7 +92,7 @@ class RegisterActivity : AppCompatActivity() {
 
             } else {
                 // Register user
-                if (userRepository.addUser(username, password, email, Date())) {
+                if (userRepository.addUser(username, password, Date())) {
                     // SUCCESS
                     Toast.makeText(
                         this,

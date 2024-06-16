@@ -42,15 +42,4 @@ object ValidationUtils {
         return containsUpperCase && containsDigit
     }
 
-    /**
-     * Validates if the email is in a proper format.
-     *
-     * @param email The email to be validated.
-     * @return True if the email is valid, false otherwise.
-     */
-    fun isValidEmail(email: String): Boolean {
-        // Regular expression for basic email validation
-        val emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\$"
-        return email.matches(emailPattern.toRegex())
-    }
 }

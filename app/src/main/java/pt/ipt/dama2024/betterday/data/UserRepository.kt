@@ -19,11 +19,11 @@ class UserRepository(context: Context) {
      *
      * @param username The username of the new user.
      * @param password The password of the new user.
-     * @param email The email address of the new user.
+     * @param currentDate The current Date.
      * @return True if the user was successfully added, false otherwise.
      */
-    fun addUser(username: String, password: String, email: String, currentDate: Date): Boolean {
-        return db.addUser(username, password, email, currentDate)
+    fun addUser(username: String, password: String, currentDate: Date): Boolean {
+        return db.addUser(username, password, currentDate)
     }
 
     /**
@@ -56,16 +56,6 @@ class UserRepository(context: Context) {
      */
     fun isUsernameAlreadyInUse(username: String): Boolean {
         return db.isUsernameAlreadyInUse(username)
-    }
-
-    /**
-     * Checks if the provided email is already in use.
-     *
-     * @param email The email address to be checked.
-     * @return True if the email is already in use, false otherwise.
-     */
-    fun isEmailAlreadyInUse(email: String): Boolean {
-        return db.isEmailAlreadyInUse(email)
     }
 
     /**

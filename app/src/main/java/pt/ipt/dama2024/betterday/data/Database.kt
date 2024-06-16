@@ -40,7 +40,6 @@ class Database(context: Context) :
         // Users table columns
         private const val TABLE_USERS = "users"
         private const val COLUMN_USERNAME = "username"
-        private const val COLUMN_EMAIL = "email"
         private const val COLUMN_PASSWORD = "password"
         private const val COLUMN_TOKEN = "token"
         private const val COLUMN_CURRENT_DATE = "currentDate"
@@ -72,7 +71,6 @@ class Database(context: Context) :
                 + "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "$COLUMN_USERNAME TEXT UNIQUE, "
                 + "$COLUMN_PASSWORD TEXT, "
-                + "$COLUMN_EMAIL TEXT UNIQUE, "
                 + "$COLUMN_TOKEN TEXT, "
                 + "$COLUMN_CURRENT_DATE INTEGER)")
 
@@ -262,20 +260,17 @@ class Database(context: Context) :
      */
     private fun createDefaultUser(db: SQLiteDatabase): Boolean {
 
-        // Verifica se já existem dados na tabela de usuários
         val query = "SELECT COUNT(*) FROM $TABLE_USERS"
         val cursor = db.rawQuery(query, null)
         cursor.moveToFirst()
         val count = cursor.getInt(0)
         cursor.close()
 
-        // Se houver algum registro na tabela, não cria o usuário default novamente
         if (count > 0) {
             return false
         }
 
         val username = "defaultUser"
-        val email = "default_user@example.com"
         val password = "defaultPass1"
         val currentDate = Date()
 
@@ -283,12 +278,10 @@ class Database(context: Context) :
         val values = ContentValues().apply {
             put(COLUMN_USERNAME, username)
             put(COLUMN_PASSWORD, hashedPassword)
-            put(COLUMN_EMAIL, email)
-            put(COLUMN_CURRENT_DATE, currentDate.time) // Convert Date to Long
+            put(COLUMN_CURRENT_DATE, currentDate.time)
         }
 
         try {
-            // Insere o usuário default na tabela de usuários
             val success = db.insertOrThrow(TABLE_USERS, null, values)
             return success != -1L
         } catch (e: SQLiteConstraintException) {
@@ -303,15 +296,11 @@ class Database(context: Context) :
      *
      * @param username The username of the user to be added.
      * @param password The password of the user to be added.
-     * @param email The email of the user to be added.
      * @param currentDate The current date to be added.
      * @return True if the user was added successfully, false otherwise.
      */
-    fun addUser(username: String, password: String, email: String, currentDate: Date): Boolean {
+    fun addUser(username: String, password: String, currentDate: Date): Boolean {
         if (isUsernameAlreadyInUse(username)) {
-            return false
-        }
-        if (isEmailAlreadyInUse(email)) {
             return false
         }
         val db = this.writableDatabase
@@ -319,7 +308,6 @@ class Database(context: Context) :
         val values = ContentValues().apply {
             put(COLUMN_USERNAME, username)
             put(COLUMN_PASSWORD, hashedPassword)
-            put(COLUMN_EMAIL, email)
             put(COLUMN_CURRENT_DATE, currentDate.time) // Convert Date to Long
         }
         val success = db.insert(TABLE_USERS, null, values)
@@ -475,22 +463,6 @@ class Database(context: Context) :
         return count > 0
     }
 
-    /**
-     * Checks if the specified email is already in use.
-     *
-     * @param email The email to be checked.
-     * @return True if the email is already in use, false otherwise.
-     */
-    fun isEmailAlreadyInUse(email: String): Boolean {
-        val db = this.readableDatabase
-        val query = "SELECT COUNT(*) FROM $TABLE_USERS WHERE $COLUMN_EMAIL = ?"
-        val cursor = db.rawQuery(query, arrayOf(email))
-        cursor.moveToFirst()
-        val count = cursor.getInt(0)
-        cursor.close()
-        db.close()
-        return count > 0
-    }
 
     // ##################################################################################################
 
