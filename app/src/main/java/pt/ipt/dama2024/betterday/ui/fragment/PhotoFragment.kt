@@ -141,7 +141,12 @@ class PhotoFragment : Fragment() {
             val latitude = data?.getDoubleExtra("latitude", 0.0)
             val longitude = data?.getDoubleExtra("longitude", 0.0)
 
-            updateUI(latitude, longitude)
+            if (latitude != null && longitude != null) {
+                updateUI(latitude, longitude)
+                cardViewObjectiveDetail.visibility = View.VISIBLE
+            } else {
+                cardViewObjectiveDetail.visibility = View.GONE
+            }
         }
     }
 
