@@ -494,6 +494,18 @@ class Database(context: Context) :
 
     // ##################################################################################################
 
+    /**
+     * Inserts or updates a user's photo day information in the database.
+     *
+     * If a record for the given username exists, it updates the entry with the new photo, latitude, and longitude.
+     * Otherwise, it inserts a new record with the provided data.
+     *
+     * @param username The username of the user.
+     * @param photo The photo in String format to be associated with the user.
+     * @param latitude The latitude where the photo was taken, can be null.
+     * @param longitude The longitude where the photo was taken, can be null.
+     * @return The row ID of the newly inserted or updated row.
+     */
     fun insertOrUpdateUserPhotoDay(
         username: String,
         photo: String,
@@ -534,6 +546,13 @@ class Database(context: Context) :
         return id
     }
 
+    /**
+     * Retrieves the photo day information for a given username from the database.
+     *
+     * @param username The username of the user whose photo day information is to be retrieved.
+     * @return A UserPhotoDay object containing the photo, latitude, and longitude.
+     *         If no record is found, returns an empty UserPhotoDay object.
+     */
     fun getUserPhotoDayByUsername(username: String): UserPhotoDay {
         val db = this.readableDatabase
         var userPhotoDay = UserPhotoDay()

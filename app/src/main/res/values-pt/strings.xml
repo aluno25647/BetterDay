@@ -41,7 +41,9 @@
     <string name="about_app_creators_title">Criadores:</string>
     <string name="about_app_creators">Luís Costa - Nº 25647\nPaulo Peixoto - Nº 26097</string>
     <string name="about_app_libraries_title">Frameworks e Bibliotecas Utilizadas:</string>
-    <string name="about_app_libraries">Retrofit\n Kotlinx.Coroutines\n CameraX\n Picasso\n CircleImageView\n  CATAAS API\n</string>
+    <string name="about_app_libraries">Retrofit\nKotlinx.Coroutines\nCameraX\nPicasso\nCircleImageView\nCATAAS API</string>
+    <string name="default_user_title">Credenciais de Utilizador Padrão:</string>
+    <string name="default_user_credentials">Nome de Utilizador: defaultUser\nPalavra-passe: defaultPass1</string>
     <string name="show_password">Mostrar Palavra-passe</string>
     <string name="hide_password">Ocultar Palavra-passe</string>
     <string name="create_a_new_objective">Criar Novo Objetivo</string>
