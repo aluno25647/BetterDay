@@ -27,7 +27,8 @@
             android:paddingStart="30dp"
             android:paddingTop="15dp"
             android:paddingEnd="30dp"
-            android:paddingBottom="30dp">
+            android:paddingBottom="30dp"
+            android:id="@+id/edit_layout">
 
             <!-- TextView for the title -->
             <TextView

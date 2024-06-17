@@ -5,7 +5,8 @@
     android:background="@color/blue"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="15dp">
+    android:padding="15dp"
+    android:id="@+id/login_layout">
 
     <ImageView
         android:layout_width="200dp"

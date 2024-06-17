@@ -1,7 +1,10 @@
 package pt.ipt.dama2024.betterday.ui.activity
 
 import SessionManager
+import android.content.Context
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -53,6 +56,26 @@ class CreationActivity : AppCompatActivity() {
         buttonBack.setOnClickListener {
             finish()
         }
+
+        // hide keyboard
+        val rootLayout: View = findViewById(R.id.creation_layout)
+        rootLayout.setOnTouchListener { _, _ ->
+            hideKeyboard(rootLayout)
+            true
+        }
+    }
+
+    /**
+     * Hides the soft keyboard from the screen.
+     *
+     * This function takes a view as a parameter and hides the soft keyboard if it is currently visible.
+     * It uses the InputMethodManager to handle the keyboard operations.
+     *
+     * @param view The view from which the keyboard should be hidden. This view must be a part of the currently focused window.
+     */
+    private fun hideKeyboard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun saveNewObjective() {
