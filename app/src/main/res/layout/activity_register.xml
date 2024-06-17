@@ -5,7 +5,8 @@
     android:background="@color/blue"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="15dp">
+    android:padding="15dp"
+    android:id="@+id/register_layout">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
